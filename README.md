@@ -1,1 +1,1 @@
-Proyecto para la gesti¢n de una biblioteca. Creado durante la formaciÛn en atSistemas.
+Proyecto para la gesti√≥n de una biblioteca. Realizado para formaci√≥n.
