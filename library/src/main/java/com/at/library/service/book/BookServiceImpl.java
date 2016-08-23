@@ -8,7 +8,7 @@ import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.at.library.dao.BookDao;
+import com.at.library.dao.BookDAO;
 import com.at.library.dto.BookDTO;
 import com.at.library.model.Book;
 
@@ -16,7 +16,7 @@ import com.at.library.model.Book;
 public class BookServiceImpl implements BookService {
 
 	@Autowired
-	private BookDao bookDao;
+	private BookDAO bookDao;
 
 	@Autowired
 	private DozerBeanMapper dozer;
