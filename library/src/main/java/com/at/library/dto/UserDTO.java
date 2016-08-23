@@ -14,7 +14,7 @@ public class UserDTO implements Serializable {
 
 	private String surname;
 	
-	private Address address;
+	private AddressDTO address;
 
 	public String getDni() {
 		return dni;
@@ -39,12 +39,13 @@ public class UserDTO implements Serializable {
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
-	
-	public Address getAddress() {
+
+	public AddressDTO getAddress() {
 		return address;
 	}
 
-	public void setAddress(Address address) {
+	public void setAddress(AddressDTO address) {
 		this.address = address;
 	}
+	
 }
