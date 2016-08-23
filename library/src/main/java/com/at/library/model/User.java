@@ -3,8 +3,11 @@ package com.at.library.model;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class User implements Serializable {
@@ -20,6 +23,10 @@ public class User implements Serializable {
 	private String name;
 
 	private String surname;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "address_id")
+	private Address address;
 
 	public Integer getId() {
 		return id;
@@ -53,5 +60,12 @@ public class User implements Serializable {
 		this.surname = surname;
 	}
 
-	
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+
 }
