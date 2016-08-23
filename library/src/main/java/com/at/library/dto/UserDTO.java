@@ -2,8 +2,6 @@ package com.at.library.dto;
 
 import java.io.Serializable;
 
-import com.at.library.model.Address;
-
 public class UserDTO implements Serializable {
 
 	private static final long serialVersionUID = 3827455324138571715L;
