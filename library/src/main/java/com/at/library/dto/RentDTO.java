@@ -4,37 +4,28 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-import com.at.library.model.Book;
-import com.at.library.model.User;
-
 public class RentDTO implements Serializable {
 
 	private static final long serialVersionUID = 7364756623634860483L;
-	
-	private User user;
-	
-	private List<Book> books;
-	
+
+	private Integer id;
+
 	private Date startDate;
-	
+
 	private Date returnDate;
-	
+
 	private Date realReturnDate;
 
-	public User getUser() {
-		return user;
+	private UserDTO user;
+
+	private List<BookDTO> books;
+
+	public Integer getId() {
+		return id;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	public List<Book> getBooks() {
-		return books;
-	}
-
-	public void setBooks(List<Book> books) {
-		this.books = books;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public Date getStartDate() {
@@ -59,6 +50,22 @@ public class RentDTO implements Serializable {
 
 	public void setRealReturnDate(Date realReturnDate) {
 		this.realReturnDate = realReturnDate;
+	}
+
+	public UserDTO getUser() {
+		return user;
+	}
+
+	public void setUser(UserDTO user) {
+		this.user = user;
+	}
+
+	public List<BookDTO> getBooks() {
+		return books;
+	}
+
+	public void setBooks(List<BookDTO> books) {
+		this.books = books;
 	}
 
 }
