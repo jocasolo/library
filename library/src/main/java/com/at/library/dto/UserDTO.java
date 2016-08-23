@@ -2,6 +2,8 @@ package com.at.library.dto;
 
 import java.io.Serializable;
 
+import com.at.library.model.Address;
+
 public class UserDTO implements Serializable {
 
 	private static final long serialVersionUID = 3827455324138571715L;
@@ -11,6 +13,8 @@ public class UserDTO implements Serializable {
 	private String name;
 
 	private String surname;
+	
+	private Address address;
 
 	public String getDni() {
 		return dni;
@@ -36,5 +40,11 @@ public class UserDTO implements Serializable {
 		this.surname = surname;
 	}
 	
-	
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
+	}
 }
