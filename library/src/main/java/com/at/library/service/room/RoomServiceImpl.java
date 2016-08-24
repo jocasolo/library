@@ -45,8 +45,9 @@ public class RoomServiceImpl implements RoomService {
 	}
 
 	@Override
-	public void update(RoomDTO roomDTO) {
-		final Room room = transform(roomDTO);
+	public void update(Integer id, RoomDTO roomDTO) {
+		Room room = transform(roomDTO);
+		room.setId(id);
 		roomDao.save(room);
 	}
 

@@ -44,7 +44,7 @@ public class RoomController {
 	@RequestMapping(value = "/{id}", method = { RequestMethod.PUT })
 	public void update(@PathVariable("id") Integer id, @RequestBody RoomDTO roomDTO) {
 		log.debug(String.format("Modificando la sala: %s", roomDTO));
-		roomService.update(roomDTO);
+		roomService.update(id, roomDTO);
 	}
 
 	@RequestMapping(value = "/{id}", method = { RequestMethod.DELETE })

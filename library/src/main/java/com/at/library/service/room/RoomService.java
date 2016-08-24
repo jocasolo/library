@@ -36,7 +36,7 @@ public interface RoomService {
 	 * @param id
 	 * @param room
 	 */
-	void update(RoomDTO roomDTO);
+	void update(Integer id, RoomDTO roomDTO);
 
 	/**
 	 * Elimina la sala correspondiente al id dado.
