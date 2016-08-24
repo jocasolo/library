@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.at.library.dao.UserDAO;
 import com.at.library.dto.UserDTO;
+import com.at.library.dto.UserPutDTO;
 import com.at.library.model.User;
 
 @Service
@@ -25,12 +26,34 @@ public class UserServiceImpl implements UserService {
 	public List<UserDTO> findAll() {
 		final Iterator<User> iterator = userDao.findAll().iterator();
 		final List<UserDTO> res = new ArrayList<>();
-
 		while (iterator.hasNext()) {
-			final User u = iterator.next();
-			res.add(transform(u));
+			final User r = iterator.next();
+			res.add(transform(r));
 		}
 		return res;
+	}
+
+	@Override
+	public UserDTO findOne(Integer id) {
+		final User user = userDao.findOne(id);
+		return transform(user);
+	}
+
+	@Override
+	public UserDTO create(UserDTO userDto) {
+		final User user = transform(userDto);
+		return transform(userDao.save(user));
+	}
+
+	@Override
+	public void update(UserPutDTO userDto) {
+		User user = transform(userDto);
+		userDao.save(user);
+	}
+
+	@Override
+	public void delete(Integer id) {
+		userDao.delete(id);
 	}
 
 	@Override
@@ -39,8 +62,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User transform(UserDTO user) {
-		return dozer.map(user, User.class);
+	public <T> User transform(T userDto) {
+		return dozer.map(userDto, User.class);
 	}
 
 }
