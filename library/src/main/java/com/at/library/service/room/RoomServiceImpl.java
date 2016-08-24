@@ -25,12 +25,34 @@ public class RoomServiceImpl implements RoomService {
 	public List<RoomDTO> findAll() {
 		final Iterator<Room> iterator = roomDao.findAll().iterator();
 		final List<RoomDTO> res = new ArrayList<>();
-		
 		while (iterator.hasNext()) {
 			final Room r = iterator.next();
 			res.add(transform(r));
 		}
 		return res;
+	}
+
+	@Override
+	public RoomDTO findOne(Integer id) {
+		final Room room = roomDao.findOne(id);
+		return transform(room);
+	}
+
+	@Override
+	public RoomDTO create(RoomDTO roomDTO) {
+		final Room room = transform(roomDTO);
+		return transform(roomDao.save(room));
+	}
+
+	@Override
+	public void update(RoomDTO roomDTO) {
+		final Room room = transform(roomDTO);
+		roomDao.save(room);
+	}
+
+	@Override
+	public void delete(Integer id) {
+		roomDao.delete(id);
 	}
 
 	@Override

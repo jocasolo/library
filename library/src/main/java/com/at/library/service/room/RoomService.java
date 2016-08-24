@@ -15,6 +15,37 @@ public interface RoomService {
 	List<RoomDTO> findAll();
 
 	/**
+	 * Realiza la búsqueda de una sala por id.
+	 * 
+	 * @param id
+	 * @return Sala correspondiente al id buscado.
+	 */
+	RoomDTO findOne(Integer id);
+
+	/**
+	 * Crea una nueva sala.
+	 * 
+	 * @param roomDTO
+	 * @return La sala creada.
+	 */
+	RoomDTO create(RoomDTO roomDTO);
+
+	/**
+	 * Actualiza una sala.
+	 * 
+	 * @param id
+	 * @param room
+	 */
+	void update(RoomDTO roomDTO);
+
+	/**
+	 * Elimina la sala correspondiente al id dado.
+	 * 
+	 * @param id
+	 */
+	void delete(Integer id);
+
+	/**
 	 * Transforma un Room en un RoomDTO
 	 * 
 	 * @param room

@@ -15,6 +15,7 @@ public interface BookService {
 	
 	/**
 	 * Realiza la búsqueda de un libro por id.
+	 * 
 	 * @param id
 	 * @return Libro correspondiente al id buscado.
 	 */
@@ -22,6 +23,7 @@ public interface BookService {
 
 	/**
 	 * Crea un nuevo libro.
+	 * 
 	 * @param bookDTO
 	 * @return El libro creado.
 	 */
@@ -29,6 +31,7 @@ public interface BookService {
 
 	/**
 	 * Actualiza un libro.
+	 * 
 	 * @param id
 	 * @param book
 	 */
@@ -36,6 +39,7 @@ public interface BookService {
 
 	/**
 	 * Elimina el libro correspondiente al id dado.
+	 * 
 	 * @param id
 	 */
 	void delete(Integer id);
