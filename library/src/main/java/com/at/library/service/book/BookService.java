@@ -27,7 +27,7 @@ public interface BookService {
 	 * @param bookDTO
 	 * @return El libro creado.
 	 */
-	BookDTO create(BookDTO bookDTO);
+	BookDTO create(BookDTO bookDto);
 
 	/**
 	 * Actualiza un libro.
@@ -35,7 +35,7 @@ public interface BookService {
 	 * @param id
 	 * @param book
 	 */
-	void update(BookDTO bookDTO);
+	void update(BookDTO bookDto);
 
 	/**
 	 * Elimina el libro correspondiente al id dado.

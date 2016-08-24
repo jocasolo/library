@@ -29,14 +29,14 @@ public interface RoomService {
 	 * @param roomDTO
 	 * @return La sala creada.
 	 */
-	RoomDTO create(RoomDTO roomDTO);
+	RoomDTO create(RoomDTO roomDto);
 
 	/**
 	 * Actualiza una sala.
 	 * 
 	 * @param room
 	 */
-	void update(RoomPutDTO roomDTO);
+	void update(RoomPutDTO roomDto);
 
 	/**
 	 * Elimina la sala correspondiente al id dado.
@@ -58,6 +58,6 @@ public interface RoomService {
 	 * @param room
 	 * @return
 	 */
-	<T> Room transform(T room);
+	<T> Room transform(T roomDto);
 
 }

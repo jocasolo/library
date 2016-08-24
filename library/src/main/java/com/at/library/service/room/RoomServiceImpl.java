@@ -40,14 +40,14 @@ public class RoomServiceImpl implements RoomService {
 	}
 
 	@Override
-	public RoomDTO create(RoomDTO roomDTO) {
-		final Room room = transform(roomDTO);
+	public RoomDTO create(RoomDTO roomDto) {
+		final Room room = transform(roomDto);
 		return transform(roomDao.save(room));
 	}
 
 	@Override
-	public void update(RoomPutDTO roomDTO) {
-		Room room = transform(roomDTO);
+	public void update(RoomPutDTO roomDto) {
+		Room room = transform(roomDto);
 		roomDao.save(room);
 	}
 
@@ -62,8 +62,8 @@ public class RoomServiceImpl implements RoomService {
 	}
 
 	@Override
-	public <T> Room transform(T room) {
-		return dozer.map(room, Room.class);
+	public <T> Room transform(T roomDto) {
+		return dozer.map(roomDto, Room.class);
 	}
 
 }

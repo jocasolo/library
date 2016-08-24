@@ -39,14 +39,14 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public BookDTO create(BookDTO bookDTO) {
-		final Book book = transform(bookDTO);
+	public BookDTO create(BookDTO bookDto) {
+		final Book book = transform(bookDto);
 		return transform(bookDao.save(book));
 	}
 
 	@Override
-	public void update(BookDTO bookDTO) {
-		final Book book = transform(bookDTO);
+	public void update(BookDTO bookDto) {
+		final Book book = transform(bookDto);
 		bookDao.save(book);
 	}
 
