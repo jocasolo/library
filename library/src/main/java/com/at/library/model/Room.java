@@ -62,5 +62,13 @@ public class Room implements Serializable {
 	public void setShelves(List<Shelf> shelves) {
 		this.shelves = shelves;
 	}
+	
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
+	}
 
 }
