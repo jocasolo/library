@@ -3,7 +3,7 @@ package com.at.library.dto;
 import java.io.Serializable;
 import java.util.List;
 
-public class RoomDTO implements Serializable {
+public class RoomDTO extends DTO implements Serializable {
 
 	private static final long serialVersionUID = 8900147020824277792L;
 
@@ -45,6 +45,11 @@ public class RoomDTO implements Serializable {
 
 	public void setAddress(AddressDTO address) {
 		this.address = address;
+	}
+
+	@Override
+	public String toString() {
+		return "RoomDTO [name=" + name + ", description=" + description + "]";
 	}
 
 }

@@ -2,7 +2,7 @@ package com.at.library.dto;
 
 import java.io.Serializable;
 
-public class AddressDTO implements Serializable {
+public class AddressDTO extends DTO implements Serializable {
 
 	private static final long serialVersionUID = 6340514670107903705L;
 
@@ -64,6 +64,11 @@ public class AddressDTO implements Serializable {
 
 	public void setCountry(String country) {
 		this.country = country;
+	}
+
+	@Override
+	public String toString() {
+		return "AddressDTO [line1=" + line1 + ", line2=" + line2 + "]";
 	}
 
 }

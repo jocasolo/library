@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class RentDTO implements Serializable {
+public class RentDTO extends DTO implements Serializable {
 
 	private static final long serialVersionUID = 7364756623634860483L;
 
@@ -76,6 +76,11 @@ public class RentDTO implements Serializable {
 
 	public void setEmployee(UserDTO employee) {
 		this.employee = employee;
+	}
+
+	@Override
+	public String toString() {
+		return "RentDTO [id=" + id + ", startDate=" + startDate + ", returnDate=" + returnDate + "]";
 	}
 
 }

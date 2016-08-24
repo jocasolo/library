@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import com.at.library.enums.UserEnum;
 
-public class UserDTO implements Serializable {
+public class UserDTO extends DTO implements Serializable {
 
 	private static final long serialVersionUID = 3827455324138571715L;
 
@@ -56,6 +56,11 @@ public class UserDTO implements Serializable {
 
 	public void setType(UserEnum type) {
 		this.type = type;
+	}
+
+	@Override
+	public String toString() {
+		return "UserDTO [dni=" + dni + ", name=" + name + ", surname=" + surname + ", type=" + type + "]";
 	}
 
 }
