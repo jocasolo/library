@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.at.library.dto.RoomDTO;
+import com.at.library.dto.RoomPutDTO;
 import com.at.library.service.room.RoomService;
 
 @RestController
@@ -42,9 +43,9 @@ public class RoomController {
 	}
 
 	@RequestMapping(value = "/{id}", method = { RequestMethod.PUT })
-	public void update(@PathVariable("id") Integer id, @RequestBody RoomDTO roomDTO) {
+	public void update(@PathVariable("id") Integer id, @RequestBody RoomPutDTO roomDTO) {
 		log.debug(String.format("Modificando la sala: %s", roomDTO));
-		roomService.update(id, roomDTO);
+		roomService.update(roomDTO);
 	}
 
 	@RequestMapping(value = "/{id}", method = { RequestMethod.DELETE })

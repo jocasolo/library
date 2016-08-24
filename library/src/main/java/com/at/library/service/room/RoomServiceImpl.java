@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.at.library.dao.RoomDAO;
 import com.at.library.dto.RoomDTO;
+import com.at.library.dto.RoomPutDTO;
 import com.at.library.model.Room;
 
 @Service
@@ -45,9 +46,8 @@ public class RoomServiceImpl implements RoomService {
 	}
 
 	@Override
-	public void update(Integer id, RoomDTO roomDTO) {
+	public void update(RoomPutDTO roomDTO) {
 		Room room = transform(roomDTO);
-		room.setId(id);
 		roomDao.save(room);
 	}
 
@@ -62,7 +62,7 @@ public class RoomServiceImpl implements RoomService {
 	}
 
 	@Override
-	public Room transform(RoomDTO room) {
+	public <T> Room transform(T room) {
 		return dozer.map(room, Room.class);
 	}
 

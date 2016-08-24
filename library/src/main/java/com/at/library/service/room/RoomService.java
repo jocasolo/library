@@ -3,6 +3,7 @@ package com.at.library.service.room;
 import java.util.List;
 
 import com.at.library.dto.RoomDTO;
+import com.at.library.dto.RoomPutDTO;
 import com.at.library.model.Room;
 
 public interface RoomService {
@@ -33,10 +34,9 @@ public interface RoomService {
 	/**
 	 * Actualiza una sala.
 	 * 
-	 * @param id
 	 * @param room
 	 */
-	void update(Integer id, RoomDTO roomDTO);
+	void update(RoomPutDTO roomDTO);
 
 	/**
 	 * Elimina la sala correspondiente al id dado.
@@ -54,11 +54,10 @@ public interface RoomService {
 	RoomDTO transform(Room room);
 
 	/**
-	 * Transforma un RoomDTO en un Room
-	 * 
+	 * Transforma un DTO en un objeto Room. 
 	 * @param room
 	 * @return
 	 */
-	Room transform(RoomDTO room);
+	<T> Room transform(T room);
 
 }
