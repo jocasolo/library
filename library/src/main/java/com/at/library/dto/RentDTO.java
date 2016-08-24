@@ -18,6 +18,8 @@ public class RentDTO implements Serializable {
 
 	private UserDTO user;
 
+	private UserDTO employee;
+
 	private List<BookDTO> books;
 
 	public Integer getId() {
@@ -66,6 +68,14 @@ public class RentDTO implements Serializable {
 
 	public void setBooks(List<BookDTO> books) {
 		this.books = books;
+	}
+
+	public UserDTO getEmployee() {
+		return employee;
+	}
+
+	public void setEmployee(UserDTO employee) {
+		this.employee = employee;
 	}
 
 }

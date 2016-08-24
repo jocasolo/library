@@ -27,8 +27,11 @@ public class Rent implements Serializable {
 	@JoinColumn(name = "user_id")
 	private User user;
 
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "employee_id")
+	private User employee;
+
 	@ManyToMany(fetch = FetchType.LAZY)
-	// @JoinTable(name="rent_books")
 	private List<Book> books;
 
 	@Temporal(TemporalType.DATE)
@@ -54,6 +57,14 @@ public class Rent implements Serializable {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public User getEmployee() {
+		return employee;
+	}
+
+	public void setEmployee(User employee) {
+		this.employee = employee;
 	}
 
 	public List<Book> getBooks() {
