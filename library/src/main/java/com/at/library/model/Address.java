@@ -1,14 +1,10 @@
 package com.at.library.model;
 
 import java.io.Serializable;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 
 @Entity
 public class Address implements Serializable {
@@ -30,9 +26,6 @@ public class Address implements Serializable {
 	private Integer postalCode;
 
 	private String country;
-
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "address")
-	private List<User> users;
 
 	public Integer getId() {
 		return id;
@@ -88,14 +81,6 @@ public class Address implements Serializable {
 
 	public void setCountry(String country) {
 		this.country = country;
-	}
-
-	public List<User> getUsers() {
-		return users;
-	}
-
-	public void setUsers(List<User> users) {
-		this.users = users;
 	}
 
 }
