@@ -2,6 +2,8 @@ package com.at.library.dto;
 
 import java.io.Serializable;
 
+import com.at.library.enums.UserEnum;
+
 public class UserDTO implements Serializable {
 
 	private static final long serialVersionUID = 3827455324138571715L;
@@ -11,7 +13,9 @@ public class UserDTO implements Serializable {
 	private String name;
 
 	private String surname;
-	
+
+	private UserEnum type;
+
 	private AddressDTO address;
 
 	public String getDni() {
@@ -44,6 +48,14 @@ public class UserDTO implements Serializable {
 
 	public void setAddress(AddressDTO address) {
 		this.address = address;
+	}
+
+	public UserEnum getType() {
+		return type;
+	}
+
+	public void setType(UserEnum type) {
+		this.type = type;
 	}
 
 }
