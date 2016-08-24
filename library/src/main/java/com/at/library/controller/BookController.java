@@ -42,9 +42,9 @@ public class BookController {
 	}
 
 	@RequestMapping(value = "/{id}", method = { RequestMethod.PUT })
-	public void update(@PathVariable("id") Integer id, @RequestBody BookDTO book) {
-		log.debug(String.format("Modificando el libro: %s", book));
-		bookservice.update(id, book);
+	public void update(@PathVariable("id") Integer id, @RequestBody BookDTO bookDTO) {
+		log.debug(String.format("Modificando el libro: %s", bookDTO));
+		bookservice.update(bookDTO);
 	}
 
 	@RequestMapping(value = "/{id}", method = { RequestMethod.DELETE })

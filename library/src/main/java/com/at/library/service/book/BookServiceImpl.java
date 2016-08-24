@@ -23,17 +23,38 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public List<BookDTO> findAll() {
-		final Iterable<Book> findAll = bookDao.findAll();
-		final Iterator<Book> iterator = findAll.iterator();
+		final Iterator<Book> iterator = bookDao.findAll().iterator();
 		final List<BookDTO> res = new ArrayList<>();
 		while (iterator.hasNext()) {
 			final Book b = iterator.next();
-			final BookDTO bDTO = transform(b);
-			res.add(bDTO);
+			res.add(transform(b));
 		}
 		return res;
 	}
 
+	@Override
+	public BookDTO findOne(Integer id) {
+		final Book book = bookDao.findOne(id);
+		return transform(book);
+	}
+
+	@Override
+	public BookDTO create(BookDTO bookDTO) {
+		final Book book = transform(bookDTO);
+		return transform(bookDao.save(book));
+	}
+
+	@Override
+	public void update(BookDTO bookDTO) {
+		final Book book = transform(bookDTO);
+		bookDao.save(book);
+	}
+
+	@Override
+	public void delete(Integer id) {
+		bookDao.delete(id);
+	}
+	
 	@Override
 	public BookDTO transform(Book book) {
 		return dozer.map(book, BookDTO.class);
