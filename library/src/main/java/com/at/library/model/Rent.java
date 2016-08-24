@@ -34,8 +34,8 @@ public class Rent implements Serializable {
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "rent_book", 
-		joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"), 
-		inverseJoinColumns = @JoinColumn(name = "rent_id", referencedColumnName = "id"))
+		joinColumns = @JoinColumn(name = "rent_id", referencedColumnName = "id"), 
+		inverseJoinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"))
 	private List<Book> books;
 
 	@Temporal(TemporalType.DATE)
