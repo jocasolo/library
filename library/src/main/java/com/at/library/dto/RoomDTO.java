@@ -3,8 +3,6 @@ package com.at.library.dto;
 import java.io.Serializable;
 import java.util.List;
 
-import com.at.library.model.Address;
-
 public class RoomDTO implements Serializable {
 
 	private static final long serialVersionUID = 8900147020824277792L;
@@ -14,8 +12,8 @@ public class RoomDTO implements Serializable {
 	private String description;
 
 	private List<ShelfDTO> shelves;
-	
-	private Address address;
+
+	private AddressDTO address;
 
 	public String getName() {
 		return name;
@@ -40,12 +38,12 @@ public class RoomDTO implements Serializable {
 	public void setShelves(List<ShelfDTO> shelves) {
 		this.shelves = shelves;
 	}
-	
-	public Address getAddress() {
+
+	public AddressDTO getAddress() {
 		return address;
 	}
 
-	public void setAddress(Address address) {
+	public void setAddress(AddressDTO address) {
 		this.address = address;
 	}
 
