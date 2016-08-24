@@ -1,6 +1,10 @@
 package com.at.library.dto;
 
-public class AddressDTO {
+import java.io.Serializable;
+
+public class AddressDTO implements Serializable {
+
+	private static final long serialVersionUID = 6340514670107903705L;
 
 	private String line1;
 

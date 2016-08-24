@@ -45,5 +45,5 @@ public class UserDTO implements Serializable {
 	public void setAddress(AddressDTO address) {
 		this.address = address;
 	}
-	
+
 }

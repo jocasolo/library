@@ -38,10 +38,10 @@ public class Book implements Serializable {
 
 	@Temporal(TemporalType.DATE)
 	private Date startDate;
-	
+
 	@ManyToMany(fetch = FetchType.LAZY)
 	private List<Rent> rents;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "shelf_id")
 	private Shelf shelf;
@@ -93,13 +93,21 @@ public class Book implements Serializable {
 	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
-	
+
 	public List<Rent> getRents() {
 		return rents;
 	}
 
 	public void setRents(List<Rent> rents) {
 		this.rents = rents;
+	}
+	
+	public Shelf getShelf() {
+		return shelf;
+	}
+
+	public void setShelf(Shelf shelf) {
+		this.shelf = shelf;
 	}
 
 }

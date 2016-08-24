@@ -26,5 +26,5 @@ public class ShelfDTO implements Serializable {
 	public void setBooks(List<BookDTO> books) {
 		this.books = books;
 	}
-	
+
 }

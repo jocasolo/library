@@ -53,4 +53,12 @@ public class Shelf implements Serializable {
 		this.books = books;
 	}
 
+	public Room getRoom() {
+		return room;
+	}
+
+	public void setRoom(Room room) {
+		this.room = room;
+	}
+
 }
