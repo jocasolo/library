@@ -39,7 +39,7 @@ public class Book implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date startDate;
 
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "books")
 	private List<Rent> rents;
 
 	@ManyToOne(fetch = FetchType.LAZY)

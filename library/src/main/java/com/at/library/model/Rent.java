@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
@@ -32,6 +33,9 @@ public class Rent implements Serializable {
 	private User employee;
 
 	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "rent_book", 
+		joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"), 
+		inverseJoinColumns = @JoinColumn(name = "rent_id", referencedColumnName = "id"))
 	private List<Book> books;
 
 	@Temporal(TemporalType.DATE)
