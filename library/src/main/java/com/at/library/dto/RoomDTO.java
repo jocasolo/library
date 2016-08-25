@@ -7,26 +7,16 @@ public class RoomDTO extends DTO implements Serializable {
 
 	private static final long serialVersionUID = 8900147020824277792L;
 
-	private String name;
-
-	private String description;
+	private String code;
 
 	private List<BookshelfDTO> shelves;
 
-	public String getName() {
-		return name;
+	public String getCode() {
+		return code;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 	public List<BookshelfDTO> getShelves() {
@@ -39,7 +29,7 @@ public class RoomDTO extends DTO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "RoomDTO [name=" + name + ", description=" + description + "]";
+		return "RoomDTO [code=" + code + "]";
 	}
 
 }
