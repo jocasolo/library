@@ -4,14 +4,10 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-
-import com.at.library.enums.UserEnum;
 
 @Entity
 public class User implements Serializable {
@@ -27,9 +23,6 @@ public class User implements Serializable {
 	private String name;
 
 	private String surname;
-
-	@Enumerated(EnumType.STRING)
-	private UserEnum type;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
 	private List<Rent> rents;
@@ -72,14 +65,6 @@ public class User implements Serializable {
 
 	public void setRents(List<Rent> rents) {
 		this.rents = rents;
-	}
-
-	public UserEnum getType() {
-		return type;
-	}
-
-	public void setType(UserEnum type) {
-		this.type = type;
 	}
 
 }
