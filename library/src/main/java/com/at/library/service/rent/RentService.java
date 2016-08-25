@@ -2,7 +2,10 @@ package com.at.library.service.rent;
 
 import java.util.List;
 
+import com.at.library.dto.BookDTO;
+import com.at.library.dto.EmployeeDTO;
 import com.at.library.dto.RentDTO;
+import com.at.library.dto.UserDTO;
 import com.at.library.model.Rent;
 
 public interface RentService {
@@ -29,5 +32,16 @@ public interface RentService {
 	 * @return
 	 */
 	Rent transform(RentDTO rent);
+	
+	/**
+	 * Realiza el alquiler de un libro a un determinado usario y realizado
+	 * por un determinado empleado.
+	 * 
+	 * @param book
+	 * @param user
+	 * @param employee
+	 * @return
+	 */
+	RentDTO rentBook(BookDTO book, UserDTO user, EmployeeDTO employee);
 
 }

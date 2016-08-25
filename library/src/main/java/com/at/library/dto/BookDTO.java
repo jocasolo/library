@@ -2,6 +2,8 @@ package com.at.library.dto;
 
 import java.io.Serializable;
 
+import com.at.library.enums.StatusEnum;
+
 public class BookDTO extends DTO implements Serializable {
 
 	private static final long serialVersionUID = 1583585532736761521L;
@@ -13,6 +15,8 @@ public class BookDTO extends DTO implements Serializable {
 	private String title;
 
 	private String author;
+
+	private StatusEnum status;
 
 	public Integer getId() {
 		return id;
@@ -44,6 +48,14 @@ public class BookDTO extends DTO implements Serializable {
 
 	public void setAuthor(String author) {
 		this.author = author;
+	}
+
+	public StatusEnum getStatus() {
+		return status;
+	}
+
+	public void setStatus(StatusEnum status) {
+		this.status = status;
 	}
 
 	@Override

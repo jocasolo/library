@@ -11,12 +11,13 @@ import com.at.library.dto.RentDTO;
 import com.at.library.service.rent.RentService;
 
 @RestController
+@RequestMapping(value = "/rent")
 public class RentController {
 	
 	@Autowired
 	private RentService rentService;
 	
-	@RequestMapping(value = "/rent", method = { RequestMethod.GET })
+	@RequestMapping(method = { RequestMethod.GET })
 	public List<RentDTO> getAll(){
 		return rentService.findAll();
 	}

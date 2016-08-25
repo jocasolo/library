@@ -17,7 +17,7 @@ public class Rent implements Serializable {
 	private static final long serialVersionUID = -4158742374158942716L;
 	
 	@EmbeddedId
-	private RentPK pk;
+	private RentPK pk = new RentPK();
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	private User user;

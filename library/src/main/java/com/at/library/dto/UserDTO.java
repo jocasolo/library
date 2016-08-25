@@ -5,12 +5,22 @@ import java.io.Serializable;
 public class UserDTO extends DTO implements Serializable {
 
 	private static final long serialVersionUID = 3827455324138571715L;
+	
+	private Integer id;
 
 	private String dni;
 
 	private String name;
 
 	private String surname;
+	
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
 	public String getDni() {
 		return dni;

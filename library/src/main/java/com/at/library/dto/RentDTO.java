@@ -7,35 +7,17 @@ public class RentDTO extends DTO implements Serializable {
 
 	private static final long serialVersionUID = 7364756623634860483L;
 
-	private Integer id;
+	private Date initDate;
 
-	private Date startDate;
+	private Date endDate;
 
 	private Date returnDate;
 
-	private Date realReturnDate;
-
 	private UserDTO user;
 
-	private UserDTO employee;
+	private EmployeeDTO employee;
 
-	private BookDTO books;
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public Date getStartDate() {
-		return startDate;
-	}
-
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
-	}
+	private BookDTO book;
 
 	public Date getReturnDate() {
 		return returnDate;
@@ -43,14 +25,6 @@ public class RentDTO extends DTO implements Serializable {
 
 	public void setReturnDate(Date returnDate) {
 		this.returnDate = returnDate;
-	}
-
-	public Date getRealReturnDate() {
-		return realReturnDate;
-	}
-
-	public void setRealReturnDate(Date realReturnDate) {
-		this.realReturnDate = realReturnDate;
 	}
 
 	public UserDTO getUser() {
@@ -61,25 +35,41 @@ public class RentDTO extends DTO implements Serializable {
 		this.user = user;
 	}
 
-	public UserDTO getEmployee() {
+	public BookDTO getBook() {
+		return book;
+	}
+
+	public void setBook(BookDTO book) {
+		this.book = book;
+	}
+
+	public Date getInitDate() {
+		return initDate;
+	}
+
+	public void setInitDate(Date initDate) {
+		this.initDate = initDate;
+	}
+
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
+	
+	public EmployeeDTO getEmployee() {
 		return employee;
 	}
 
-	public void setEmployee(UserDTO employee) {
+	public void setEmployee(EmployeeDTO employee) {
 		this.employee = employee;
-	}
-
-	public BookDTO getBooks() {
-		return books;
-	}
-
-	public void setBooks(BookDTO books) {
-		this.books = books;
 	}
 
 	@Override
 	public String toString() {
-		return "RentDTO [id=" + id + ", startDate=" + startDate + ", returnDate=" + returnDate + "]";
+		return "RentDTO [book=" + book + ", initDate=" + initDate + ", endDate=" + endDate + "]";
 	}
 
 }
