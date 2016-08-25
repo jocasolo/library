@@ -7,16 +7,16 @@ public class BookshelfDTO extends DTO implements Serializable {
 
 	private static final long serialVersionUID = 1769863489245854198L;
 
-	private String description;
+	private String code;
 
 	private List<BookDTO> books;
 
-	public String getDescription() {
-		return description;
+	public String getCode() {
+		return code;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 	public List<BookDTO> getBooks() {
@@ -29,7 +29,7 @@ public class BookshelfDTO extends DTO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "ShelfDTO [description=" + description + "]";
+		return "ShelfDTO [code=" + code + "]";
 	}
 
 }

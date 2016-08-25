@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import com.at.library.dao.ShelfDAO;
 import com.at.library.dto.BookshelfDTO;
-import com.at.library.dto.BookshelfPutDTO;
 import com.at.library.model.Bookshelf;
 
 @Service
@@ -46,7 +45,7 @@ public class ShelfServiceImpl implements ShelfService {
 	}
 
 	@Override
-	public void update(BookshelfPutDTO shelfDto) {
+	public void update(BookshelfDTO shelfDto) {
 		Bookshelf shelf = transform(shelfDto);
 		shelfDao.save(shelf);
 	}

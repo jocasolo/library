@@ -3,7 +3,6 @@ package com.at.library.service.bookshelf;
 import java.util.List;
 
 import com.at.library.dto.BookshelfDTO;
-import com.at.library.dto.BookshelfPutDTO;
 import com.at.library.model.Bookshelf;
 
 public interface ShelfService {
@@ -36,7 +35,7 @@ public interface ShelfService {
 	 * 
 	 * @param bookshelf
 	 */
-	void update(BookshelfPutDTO bookshelfDto);
+	void update(BookshelfDTO bookshelfDto);
 
 	/**
 	 * Elimina la estantería correspondiente al id dado.

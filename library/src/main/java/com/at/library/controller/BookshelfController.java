@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.at.library.dto.BookshelfDTO;
-import com.at.library.dto.BookshelfPutDTO;
 import com.at.library.service.bookshelf.ShelfService;
 
 @RestController
@@ -43,7 +42,7 @@ public class BookshelfController {
 	}
 
 	@RequestMapping(value = "/{id}", method = { RequestMethod.PUT })
-	public void update(@PathVariable("id") Integer id, @RequestBody BookshelfPutDTO shelfDTO) {
+	public void update(@PathVariable("id") Integer id, @RequestBody BookshelfDTO shelfDTO) {
 		log.debug(String.format("Modificando la estantería: %s", shelfDTO));
 		shelfService.update(shelfDTO);
 	}
