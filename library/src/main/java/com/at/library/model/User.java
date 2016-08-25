@@ -1,13 +1,10 @@
 package com.at.library.model;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 
 @Entity
 public class User implements Serializable {
@@ -23,9 +20,6 @@ public class User implements Serializable {
 	private String name;
 
 	private String surname;
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-	private List<Rent> rents;
 
 	public Integer getId() {
 		return id;
@@ -57,14 +51,6 @@ public class User implements Serializable {
 
 	public void setSurname(String surname) {
 		this.surname = surname;
-	}
-
-	public List<Rent> getRents() {
-		return rents;
-	}
-
-	public void setRents(List<Rent> rents) {
-		this.rents = rents;
 	}
 
 }
