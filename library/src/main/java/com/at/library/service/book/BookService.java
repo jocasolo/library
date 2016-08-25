@@ -45,7 +45,7 @@ public interface BookService {
 	void delete(Integer id);
 	
 	/**
-	 * Transfrma un libro en un libroDTO
+	 * Transfrma un libro en un libroDTO.
 	 * 
 	 * @param book
 	 * @return
@@ -53,11 +53,27 @@ public interface BookService {
 	BookDTO transform(Book book);
 
 	/**
-	 * Transforma un libroDTO en un libro
+	 * Transforma un libroDTO en un libro.
 	 * 
 	 * @param book
 	 * @return
 	 */
 	Book transform(BookDTO book);
+	
+	/**
+	 * Comprueba la disponibilidad de un libro.
+	 * 
+	 * @param book
+	 * @return 
+	 */
+	Boolean isAvailable(BookDTO book);
+	
+	/**
+	 * Comprueba la disponibilidad de un libro dado su id.
+	 * 
+	 * @param id
+	 * @return
+	 */
+	Boolean isAvailable(Integer id);
 
 }

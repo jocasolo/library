@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.at.library.dao.BookDAO;
 import com.at.library.dto.BookDTO;
+import com.at.library.enums.StatusEnum;
 import com.at.library.model.Book;
 
 @Service
@@ -63,6 +64,18 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public Book transform(BookDTO book) {
 		return dozer.map(book, Book.class);
+	}
+
+	@Override
+	public Boolean isAvailable(BookDTO book) {
+		final Book b = transform(book);
+		return b.getStatus().equals(StatusEnum.ACTIVE);
+	}
+
+	@Override
+	public Boolean isAvailable(Integer id) {
+		final Book b = bookDao.findOne(id);
+		return b.getStatus().equals(StatusEnum.ACTIVE);
 	}
 
 }
