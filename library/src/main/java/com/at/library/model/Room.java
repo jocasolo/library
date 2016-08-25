@@ -23,7 +23,7 @@ public class Room implements Serializable {
 	private String description;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "room")
-	private List<Shelf> shelves;
+	private List<Bookshelf> shelves;
 
 	public Integer getId() {
 		return id;
@@ -49,11 +49,11 @@ public class Room implements Serializable {
 		this.description = description;
 	}
 
-	public List<Shelf> getShelves() {
+	public List<Bookshelf> getShelves() {
 		return shelves;
 	}
 
-	public void setShelves(List<Shelf> shelves) {
+	public void setShelves(List<Bookshelf> shelves) {
 		this.shelves = shelves;
 	}
 

@@ -44,7 +44,7 @@ public class Book implements Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "shelf_id")
-	private Shelf shelf;
+	private Bookshelf shelf;
 
 	public Integer getId() {
 		return id;
@@ -102,11 +102,11 @@ public class Book implements Serializable {
 		this.rents = rents;
 	}
 	
-	public Shelf getShelf() {
+	public Bookshelf getShelf() {
 		return shelf;
 	}
 
-	public void setShelf(Shelf shelf) {
+	public void setShelf(Bookshelf shelf) {
 		this.shelf = shelf;
 	}
 

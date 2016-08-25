@@ -1,10 +1,10 @@
-package com.at.library.service.shelf;
+package com.at.library.service.bookshelf;
 
 import java.util.List;
 
-import com.at.library.dto.ShelfDTO;
-import com.at.library.dto.ShelfPutDTO;
-import com.at.library.model.Shelf;
+import com.at.library.dto.BookshelfDTO;
+import com.at.library.dto.BookshelfPutDTO;
+import com.at.library.model.Bookshelf;
 
 public interface ShelfService {
 
@@ -13,7 +13,7 @@ public interface ShelfService {
 	 * 
 	 * @return listado de estanterías
 	 */
-	List<ShelfDTO> findAll();
+	List<BookshelfDTO> findAll();
 
 	/**
 	 * Realiza la búsqueda de una estantería por id.
@@ -21,22 +21,22 @@ public interface ShelfService {
 	 * @param id
 	 * @return Sala correspondiente al id buscado.
 	 */
-	ShelfDTO findOne(Integer id);
+	BookshelfDTO findOne(Integer id);
 
 	/**
 	 * Crea una nueva estantería.
 	 * 
-	 * @param shelfDTO
+	 * @param bookshelfDTO
 	 * @return La estantería creada.
 	 */
-	ShelfDTO create(ShelfDTO shelfDto);
+	BookshelfDTO create(BookshelfDTO bookshelfDto);
 
 	/**
 	 * Actualiza una estantería.
 	 * 
-	 * @param shelf
+	 * @param bookshelf
 	 */
-	void update(ShelfPutDTO shelfDto);
+	void update(BookshelfPutDTO bookshelfDto);
 
 	/**
 	 * Elimina la estantería correspondiente al id dado.
@@ -48,16 +48,16 @@ public interface ShelfService {
 	/**
 	 * Transforma un Shelf en un ShelfDTO
 	 * 
-	 * @param shelf
+	 * @param bookshelfDto
 	 * @return
 	 */
-	ShelfDTO transform(Shelf shelf);
+	BookshelfDTO transform(Bookshelf bookshelf);
 
 	/**
 	 * Transforma un DTO en un objeto Shelf. 
-	 * @param shelf
+	 * @param bookshelfDto
 	 * @return
 	 */
-	<T> Shelf transform(T shelfDto);
+	<T> Bookshelf transform(T bookshelfDto);
 
 }

@@ -12,7 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Shelf implements Serializable {
+public class Bookshelf implements Serializable {
 
 	private static final long serialVersionUID = 3010858839926101L;
 

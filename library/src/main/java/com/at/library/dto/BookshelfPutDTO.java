@@ -2,7 +2,7 @@ package com.at.library.dto;
 
 import java.io.Serializable;
 
-public class ShelfPutDTO extends DTO implements Serializable {
+public class BookshelfPutDTO extends DTO implements Serializable {
 
 	private static final long serialVersionUID = -6254629839897117753L;
 

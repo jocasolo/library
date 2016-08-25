@@ -11,7 +11,7 @@ public class RoomDTO extends DTO implements Serializable {
 
 	private String description;
 
-	private List<ShelfDTO> shelves;
+	private List<BookshelfDTO> shelves;
 
 	public String getName() {
 		return name;
@@ -29,11 +29,11 @@ public class RoomDTO extends DTO implements Serializable {
 		this.description = description;
 	}
 
-	public List<ShelfDTO> getShelves() {
+	public List<BookshelfDTO> getShelves() {
 		return shelves;
 	}
 
-	public void setShelves(List<ShelfDTO> shelves) {
+	public void setShelves(List<BookshelfDTO> shelves) {
 		this.shelves = shelves;
 	}
 

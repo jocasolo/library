@@ -11,39 +11,39 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.at.library.dto.ShelfDTO;
-import com.at.library.dto.ShelfPutDTO;
-import com.at.library.service.shelf.ShelfService;
+import com.at.library.dto.BookshelfDTO;
+import com.at.library.dto.BookshelfPutDTO;
+import com.at.library.service.bookshelf.ShelfService;
 
 @RestController
-@RequestMapping(value = "/shelf")
-public class ShelfController {
+@RequestMapping(value = "/bookshelf")
+public class BookshelfController {
 
 	@Autowired
 	private ShelfService shelfService;
 	
-	private static final Logger log = LoggerFactory.getLogger(ShelfController.class);
+	private static final Logger log = LoggerFactory.getLogger(BookshelfController.class);
 
 	@RequestMapping(method = { RequestMethod.GET })
-	public List<ShelfDTO> getAll() {
+	public List<BookshelfDTO> getAll() {
 		log.debug("Buscando todas las estanterías en el sistema.");
 		return shelfService.findAll();
 	}
 
 	@RequestMapping(method = { RequestMethod.POST })
-	public ShelfDTO create(@RequestBody ShelfDTO shelf) {
+	public BookshelfDTO create(@RequestBody BookshelfDTO shelf) {
 		log.debug(String.format("Creando la estantería: %s", shelf));
 		return shelfService.create(shelf);
 	}
 
 	@RequestMapping(value = "/{id}", method = { RequestMethod.GET })
-	public ShelfDTO findOne(@PathVariable("id") Integer id) {
+	public BookshelfDTO findOne(@PathVariable("id") Integer id) {
 		log.debug(String.format("Buscando la estantería con id: %s", id));
 		return shelfService.findOne(id);
 	}
 
 	@RequestMapping(value = "/{id}", method = { RequestMethod.PUT })
-	public void update(@PathVariable("id") Integer id, @RequestBody ShelfPutDTO shelfDTO) {
+	public void update(@PathVariable("id") Integer id, @RequestBody BookshelfPutDTO shelfDTO) {
 		log.debug(String.format("Modificando la estantería: %s", shelfDTO));
 		shelfService.update(shelfDTO);
 	}
