@@ -9,8 +9,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.at.library.enums.UserEnum;
@@ -32,10 +30,6 @@ public class User implements Serializable {
 
 	@Enumerated(EnumType.STRING)
 	private UserEnum type;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "address_id")
-	private Address address;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
 	private List<Rent> rents;
@@ -70,14 +64,6 @@ public class User implements Serializable {
 
 	public void setSurname(String surname) {
 		this.surname = surname;
-	}
-
-	public Address getAddress() {
-		return address;
-	}
-
-	public void setAddress(Address address) {
-		this.address = address;
 	}
 
 	public List<Rent> getRents() {

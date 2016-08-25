@@ -14,8 +14,6 @@ public class UserPutDTO extends DTO implements Serializable {
 
 	private String surname;
 	
-	private AddressDTO address;
-
 	public String getDni() {
 		return dni;
 	}
@@ -46,14 +44,6 @@ public class UserPutDTO extends DTO implements Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public AddressDTO getAddress() {
-		return address;
-	}
-
-	public void setAddress(AddressDTO address) {
-		this.address = address;
 	}
 
 	@Override

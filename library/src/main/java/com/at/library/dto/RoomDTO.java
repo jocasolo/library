@@ -13,8 +13,6 @@ public class RoomDTO extends DTO implements Serializable {
 
 	private List<ShelfDTO> shelves;
 
-	private AddressDTO address;
-
 	public String getName() {
 		return name;
 	}
@@ -37,14 +35,6 @@ public class RoomDTO extends DTO implements Serializable {
 
 	public void setShelves(List<ShelfDTO> shelves) {
 		this.shelves = shelves;
-	}
-
-	public AddressDTO getAddress() {
-		return address;
-	}
-
-	public void setAddress(AddressDTO address) {
-		this.address = address;
 	}
 
 	@Override

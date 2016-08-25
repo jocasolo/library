@@ -16,8 +16,6 @@ public class UserDTO extends DTO implements Serializable {
 
 	private UserEnum type;
 
-	private AddressDTO address;
-
 	public String getDni() {
 		return dni;
 	}
@@ -40,14 +38,6 @@ public class UserDTO extends DTO implements Serializable {
 
 	public void setSurname(String surname) {
 		this.surname = surname;
-	}
-
-	public AddressDTO getAddress() {
-		return address;
-	}
-
-	public void setAddress(AddressDTO address) {
-		this.address = address;
 	}
 
 	public UserEnum getType() {
