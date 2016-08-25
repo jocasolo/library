@@ -9,7 +9,7 @@ public class RoomDTO extends DTO implements Serializable {
 
 	private String code;
 
-	private List<BookshelfDTO> shelves;
+	private List<BookshelfDTO> bookShelves;
 
 	public String getCode() {
 		return code;
@@ -19,17 +19,17 @@ public class RoomDTO extends DTO implements Serializable {
 		this.code = code;
 	}
 
-	public List<BookshelfDTO> getShelves() {
-		return shelves;
-	}
-
-	public void setShelves(List<BookshelfDTO> shelves) {
-		this.shelves = shelves;
-	}
-
 	@Override
 	public String toString() {
 		return "RoomDTO [code=" + code + "]";
+	}
+
+	public List<BookshelfDTO> getBookShelves() {
+		return bookShelves;
+	}
+
+	public void setBookShelves(List<BookshelfDTO> bookShelves) {
+		this.bookShelves = bookShelves;
 	}
 
 }

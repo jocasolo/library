@@ -3,7 +3,6 @@ package com.at.library.service.room;
 import java.util.List;
 
 import com.at.library.dto.RoomDTO;
-import com.at.library.dto.RoomPutDTO;
 import com.at.library.model.Room;
 
 public interface RoomService {
@@ -36,7 +35,7 @@ public interface RoomService {
 	 * 
 	 * @param room
 	 */
-	void update(RoomPutDTO roomDto);
+	void update(RoomDTO roomDto);
 
 	/**
 	 * Elimina la sala correspondiente al id dado.

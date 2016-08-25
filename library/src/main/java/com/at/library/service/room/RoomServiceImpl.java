@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import com.at.library.dao.RoomDAO;
 import com.at.library.dto.RoomDTO;
-import com.at.library.dto.RoomPutDTO;
 import com.at.library.model.Room;
 
 @Service
@@ -46,7 +45,7 @@ public class RoomServiceImpl implements RoomService {
 	}
 
 	@Override
-	public void update(RoomPutDTO roomDto) {
+	public void update(RoomDTO roomDto) {
 		Room room = transform(roomDto);
 		roomDao.save(room);
 	}

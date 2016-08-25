@@ -19,6 +19,14 @@ public class Bookshelf implements Serializable {
 	@OneToMany(fetch = FetchType.LAZY)
 	private List<Book> books;
 
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
 	public List<Book> getBooks() {
 		return books;
 	}

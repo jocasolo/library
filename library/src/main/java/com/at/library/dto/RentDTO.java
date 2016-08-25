@@ -2,7 +2,6 @@ package com.at.library.dto;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 public class RentDTO extends DTO implements Serializable {
 
@@ -20,7 +19,7 @@ public class RentDTO extends DTO implements Serializable {
 
 	private UserDTO employee;
 
-	private List<BookDTO> books;
+	private BookDTO books;
 
 	public Integer getId() {
 		return id;
@@ -62,20 +61,20 @@ public class RentDTO extends DTO implements Serializable {
 		this.user = user;
 	}
 
-	public List<BookDTO> getBooks() {
-		return books;
-	}
-
-	public void setBooks(List<BookDTO> books) {
-		this.books = books;
-	}
-
 	public UserDTO getEmployee() {
 		return employee;
 	}
 
 	public void setEmployee(UserDTO employee) {
 		this.employee = employee;
+	}
+
+	public BookDTO getBooks() {
+		return books;
+	}
+
+	public void setBooks(BookDTO books) {
+		this.books = books;
 	}
 
 	@Override
