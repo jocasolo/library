@@ -18,7 +18,7 @@ public class Room implements Serializable {
 	private String code;
 
 	@OneToMany(fetch = FetchType.LAZY)
-	private List<Bookshelf> bookShelves = new ArrayList<>();
+	private List<Bookshelf> bookshelves = new ArrayList<>();
 
 	public String getCode() {
 		return code;
@@ -29,11 +29,11 @@ public class Room implements Serializable {
 	}
 
 	public List<Bookshelf> getBookShelves() {
-		return bookShelves;
+		return bookshelves;
 	}
 
-	public void setBookShelves(List<Bookshelf> bookShelves) {
-		this.bookShelves = bookShelves;
+	public void setBookShelves(List<Bookshelf> bookshelves) {
+		this.bookshelves = bookshelves;
 	}
 
 }

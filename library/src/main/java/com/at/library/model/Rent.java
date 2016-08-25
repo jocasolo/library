@@ -25,10 +25,10 @@ public class Rent implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Employee employee;
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date endDate;
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date returnDate;
 
 	public RentPK getPk() {
