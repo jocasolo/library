@@ -2,57 +2,41 @@ package com.at.library.model;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 @Entity
 public class Rent implements Serializable {
 
 	private static final long serialVersionUID = -4158742374158942716L;
-
-	@Id
-	@GeneratedValue
-	private Integer id;
+	
+	@EmbeddedId
+	private RentPK pk;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id")
 	private User user;
-
+	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "employee_id")
-	private User employee;
-
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "rent_book", 
-		joinColumns = @JoinColumn(name = "rent_id", referencedColumnName = "id"), 
-		inverseJoinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"))
-	private List<Book> books;
+	private Employee employee;
 
 	@Temporal(TemporalType.DATE)
-	private Date startDate;
+	private Date endDate;
 
 	@Temporal(TemporalType.DATE)
 	private Date returnDate;
 
-	@Temporal(TemporalType.DATE)
-	private Date realReturnDate;
-
-	public Integer getId() {
-		return id;
+	public RentPK getPk() {
+		return pk;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setPk(RentPK pk) {
+		this.pk = pk;
 	}
 
 	public User getUser() {
@@ -63,28 +47,20 @@ public class Rent implements Serializable {
 		this.user = user;
 	}
 
-	public User getEmployee() {
+	public Employee getEmployee() {
 		return employee;
 	}
 
-	public void setEmployee(User employee) {
+	public void setEmployee(Employee employee) {
 		this.employee = employee;
 	}
 
-	public List<Book> getBooks() {
-		return books;
+	public Date getEndDate() {
+		return endDate;
 	}
 
-	public void setBooks(List<Book> books) {
-		this.books = books;
-	}
-
-	public Date getStartDate() {
-		return startDate;
-	}
-
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
 	}
 
 	public Date getReturnDate() {
@@ -94,13 +70,25 @@ public class Rent implements Serializable {
 	public void setReturnDate(Date returnDate) {
 		this.returnDate = returnDate;
 	}
-
-	public Date getRealReturnDate() {
-		return realReturnDate;
+	
+	@Transient
+	public Book getBook(){
+		return pk.getBook();
 	}
-
-	public void setRealReturnDate(Date realReturnDate) {
-		this.realReturnDate = realReturnDate;
+	
+	@Transient
+	public void setBook(Book book){
+		pk.setBook(book);
+	}
+	
+	@Transient
+	public Date getInitDate(){
+		return pk.getInitDate();
+	}
+	
+	@Transient
+	public void setInitDate(Date initDate){
+		pk.setInitDate(initDate);
 	}
 
 }
