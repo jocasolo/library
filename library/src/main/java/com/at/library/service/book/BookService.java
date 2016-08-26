@@ -3,6 +3,7 @@ package com.at.library.service.book;
 import java.util.List;
 
 import com.at.library.dto.BookDTO;
+import com.at.library.enums.StatusEnum;
 import com.at.library.model.Book;
 
 public interface BookService {
@@ -19,7 +20,7 @@ public interface BookService {
 	 * @param id
 	 * @return Libro correspondiente al id buscado.
 	 */
-	BookDTO findOne(Integer id);
+	Book findOne(Integer id);
 
 	/**
 	 * Crea un nuevo libro.
@@ -66,7 +67,7 @@ public interface BookService {
 	 * @param book
 	 * @return 
 	 */
-	Boolean isAvailable(BookDTO book);
+	Boolean isAvailable(Book book);
 	
 	/**
 	 * Comprueba la disponibilidad de un libro dado su id.
@@ -75,5 +76,13 @@ public interface BookService {
 	 * @return
 	 */
 	Boolean isAvailable(Integer id);
+	
+	/**
+	 * Cambia el estado de un libro.
+	 * 
+	 * @param book
+	 * @param newStatus
+	 */
+	void changeStatus(Book book, StatusEnum newStatus);
 
 }

@@ -38,7 +38,7 @@ public class EmployeeController {
 	@RequestMapping(value = "/{id}", method = { RequestMethod.GET })
 	public EmployeeDTO findOne(@PathVariable("id") Integer id) {
 		log.debug(String.format("Buscando el empleado con id: %s", id));
-		return employeeService.findOne(id);
+		return employeeService.transform(employeeService.findOne(id));
 	}
 
 	@RequestMapping(value = "/{id}", method = { RequestMethod.PUT })

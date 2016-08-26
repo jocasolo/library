@@ -7,6 +7,7 @@ import java.util.List;
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.at.library.dao.BookDAO;
 import com.at.library.dto.BookDTO;
@@ -23,6 +24,7 @@ public class BookServiceImpl implements BookService {
 	private DozerBeanMapper dozer;
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<BookDTO> findAll() {
 		final Iterator<Book> iterator = bookDao.findAll().iterator();
 		final List<BookDTO> res = new ArrayList<>();
@@ -34,9 +36,10 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public BookDTO findOne(Integer id) {
+	@Transactional(readOnly = true)
+	public Book findOne(Integer id) {
 		final Book book = bookDao.findOne(id);
-		return transform(book);
+		return book;
 	}
 
 	@Override
@@ -67,15 +70,20 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public Boolean isAvailable(BookDTO book) {
-		final Book b = transform(book);
-		return b.getStatus().equals(StatusEnum.ACTIVE);
+	public Boolean isAvailable(Book book) {
+		return book.getStatus().equals(StatusEnum.ACTIVE);
 	}
 
 	@Override
 	public Boolean isAvailable(Integer id) {
 		final Book b = bookDao.findOne(id);
 		return b.getStatus().equals(StatusEnum.ACTIVE);
+	}
+
+	@Override
+	public void changeStatus(Book book, StatusEnum newStatus) {
+		if(!book.getStatus().equals(newStatus))
+			book.setStatus(newStatus);
 	}
 
 }

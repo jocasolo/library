@@ -20,7 +20,7 @@ public interface EmployeeService {
 	 * @param id
 	 * @return Empleado correspondiente al id buscado.
 	 */
-	EmployeeDTO findOne(Integer id);
+	Employee findOne(Integer id);
 
 	/**
 	 * Crea un nuevo empleado.

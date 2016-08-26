@@ -21,7 +21,7 @@ public interface UserService {
 	 * @param id
 	 * @return Usuario correspondiente al id buscado.
 	 */
-	UserDTO findOne(Integer id);
+	User findOne(Integer id);
 
 	/**
 	 * Crea un nuevo usuario.

@@ -28,17 +28,17 @@ public class BookController {
 		log.debug("Buscando todos los libros en el sistema.");
 		return bookservice.findAll();
 	}
+	
+	@RequestMapping(value = "/{id}", method = { RequestMethod.GET })
+	public BookDTO findOne(@PathVariable("id") Integer id) {
+		log.debug(String.format("Buscando el libro con id: %s", id));
+		return bookservice.transform(bookservice.findOne(id));
+	}
 
 	@RequestMapping(method = { RequestMethod.POST })
 	public BookDTO create(@RequestBody BookDTO book) {
 		log.debug(String.format("Creando el libro: %s", book));
 		return bookservice.create(book);
-	}
-
-	@RequestMapping(value = "/{id}", method = { RequestMethod.GET })
-	public BookDTO findOne(@PathVariable("id") Integer id) {
-		log.debug(String.format("Buscando el libro con id: %s", id));
-		return bookservice.findOne(id);
 	}
 
 	@RequestMapping(value = "/{id}", method = { RequestMethod.PUT })

@@ -10,12 +10,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.at.library.dao.RentDAO;
-import com.at.library.dto.BookDTO;
-import com.at.library.dto.EmployeeDTO;
 import com.at.library.dto.RentDTO;
-import com.at.library.dto.UserDTO;
+import com.at.library.dto.RentPostDTO;
+import com.at.library.enums.StatusEnum;
+import com.at.library.model.Book;
+import com.at.library.model.Employee;
 import com.at.library.model.Rent;
+import com.at.library.model.User;
 import com.at.library.service.book.BookService;
+import com.at.library.service.employee.EmployeeService;
+import com.at.library.service.user.UserService;
 
 @Service
 public class RentServiceImpl implements RentService {
@@ -25,6 +29,12 @@ public class RentServiceImpl implements RentService {
 	
 	@Autowired
 	private BookService bookService;
+	
+	@Autowired 
+	private UserService userService;
+	
+	@Autowired
+	private EmployeeService employeeService;
 
 	@Autowired
 	private DozerBeanMapper dozer;
@@ -52,17 +62,25 @@ public class RentServiceImpl implements RentService {
 	}
 
 	@Override
-	public RentDTO rentBook(BookDTO book, UserDTO user, EmployeeDTO employee) {		
+	public RentDTO create(RentPostDTO rentDto) {
+		
+		final Book book = bookService.findOne(rentDto.getIdBook());
+		
 		if(bookService.isAvailable(book)){
-			RentDTO rent = new RentDTO();
+			final User user = userService.findOne(rentDto.getIdUser());
+			final Employee employee = employeeService.findOne(rentDto.getIdEmployee());
+			
+			bookService.changeStatus(book, StatusEnum.DISABLE);
+			
+			Rent rent = new Rent();
 			rent.setBook(book);
 			rent.setUser(user);
 			rent.setEmployee(employee);
 			rent.setInitDate(new Date());
 			rent.setEndDate(new Date());
 			
-			rentDao.save(transform(rent));
-			return rent;
+			rentDao.save(rent);
+			return transform(rent);
 		}
 		
 		return new RentDTO();
