@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.at.library.dto.RentDTO;
 import com.at.library.dto.RentPostDTO;
+import com.at.library.dto.RentReturnDTO;
 import com.at.library.model.Rent;
 
 public interface RentService {
@@ -42,6 +43,14 @@ public interface RentService {
 	 * @return
 	 */
 	RentDTO create(RentPostDTO rentDto);
+	
+	/**
+	 * Realiza la devolución de un libro de un determinado alquiler.
+	 * 
+	 * @param rentDto
+	 * @return
+	 */
+	RentDTO restore(RentReturnDTO rentDto);
 	
 	/**
 	 * Calcula la fecha en que se debe devolver un libro dada la inicial.
