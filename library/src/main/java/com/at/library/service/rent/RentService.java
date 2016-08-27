@@ -1,5 +1,6 @@
 package com.at.library.service.rent;
 
+import java.util.Date;
 import java.util.List;
 
 import com.at.library.dto.RentDTO;
@@ -41,5 +42,13 @@ public interface RentService {
 	 * @return
 	 */
 	RentDTO create(RentPostDTO rentDto);
+	
+	/**
+	 * Calcula la fecha en que se debe devolver un libro dada la inicial.
+	 * 
+	 * @param initDate
+	 * @return
+	 */
+	Date calcEndDate(Date initDate);
 
 }

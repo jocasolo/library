@@ -1,6 +1,7 @@
 package com.at.library.service.rent;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -77,7 +78,7 @@ public class RentServiceImpl implements RentService {
 			rent.setUser(user);
 			rent.setEmployee(employee);
 			rent.setInitDate(new Date());
-			rent.setEndDate(new Date());
+			rent.setEndDate(calcEndDate(new Date()));
 			
 			rentDao.save(rent);
 			return transform(rent);
@@ -85,5 +86,21 @@ public class RentServiceImpl implements RentService {
 		
 		return new RentDTO();
 	}
+
+	@Override
+	public Date calcEndDate(Date initDate) {
+		Calendar c = Calendar.getInstance(); 
+		c.setTime(initDate); 
+		c.add(Calendar.DATE, 3); // Suponemos que siempre es 3 días después.
+		
+		if(c.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY)
+			c.add(Calendar.DATE, 2);
+		if(c.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY)
+			c.add(Calendar.DATE, 1);
+		
+		return c.getTime();
+	}
+	
+	
 
 }
