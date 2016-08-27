@@ -10,11 +10,9 @@ import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.at.library.dao.BookDAO;
 import com.at.library.dao.RentDAO;
 import com.at.library.dto.RentDTO;
 import com.at.library.dto.RentPostDTO;
-import com.at.library.dto.RentReturnDTO;
 import com.at.library.enums.StatusEnum;
 import com.at.library.model.Book;
 import com.at.library.model.Employee;
@@ -88,8 +86,8 @@ public class RentServiceImpl implements RentService {
 	}
 
 	@Override
-	public RentDTO restore(RentReturnDTO rentDto) {
-		Book book = bookService.findOne(rentDto.getIdBook());
+	public RentDTO restore(Integer idBook) {
+		Book book = bookService.findOne(idBook);
 		Rent rent = rentDao.findByPkBookAndReturnDateIsNull(book).get(0);
 
 		bookService.changeStatus(book, StatusEnum.ACTIVE);
