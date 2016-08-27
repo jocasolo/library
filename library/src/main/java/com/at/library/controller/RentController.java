@@ -33,4 +33,11 @@ public class RentController {
 		log.debug(String.format("Creando el alquiler: %s", rent));
 		return rentService.create(rent);
 	}
+	
+	@RequestMapping(value = "/restore/{idBook}", method = { RequestMethod.POST })
+	public RentDTO restore(Integer idBook){
+		log.debug(String.format("Devolviendo alquiler con el libro con id: %s", idBook));
+		return rentService.restore(idBook);
+	}
+	
 }
