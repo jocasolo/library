@@ -72,7 +72,6 @@ public class RentServiceImpl implements RentService {
 			final Employee employee = employeeService.findOne(rentDto.getIdEmployee());
 			
 			bookService.changeStatus(book, StatusEnum.DISABLE);
-			
 			Rent rent = new Rent();
 			rent.setBook(book);
 			rent.setUser(user);

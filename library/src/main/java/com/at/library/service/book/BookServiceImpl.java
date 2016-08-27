@@ -82,8 +82,10 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public void changeStatus(Book book, StatusEnum newStatus) {
-		if(!book.getStatus().equals(newStatus))
+		if(!book.getStatus().equals(newStatus)){
 			book.setStatus(newStatus);
+			bookDao.save(book);
+		}
 	}
 
 }
