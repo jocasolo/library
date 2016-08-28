@@ -43,6 +43,11 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
+	public List<BookDTO> search(String isbn, String title, String author, StatusEnum status) {
+		return bookDao.findByIsbnOrTitleOrAuthorOrStatus(isbn, title, author, status);
+	}
+
+	@Override
 	public BookDTO create(BookDTO bookDto) {
 		final Book book = transform(bookDto);
 		return transform(bookDao.save(book));
@@ -58,16 +63,6 @@ public class BookServiceImpl implements BookService {
 	public void delete(Integer id) {
 		bookDao.delete(id);
 	}
-	
-	@Override
-	public BookDTO transform(Book book) {
-		return dozer.map(book, BookDTO.class);
-	}
-
-	@Override
-	public Book transform(BookDTO book) {
-		return dozer.map(book, Book.class);
-	}
 
 	@Override
 	public Boolean isAvailable(Book book) {
@@ -82,10 +77,27 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public void changeStatus(Book book, StatusEnum newStatus) {
-		if(!book.getStatus().equals(newStatus)){
+		if (!book.getStatus().equals(newStatus)) {
 			book.setStatus(newStatus);
 			bookDao.save(book);
 		}
+	}
+	
+	@Override
+	public BookDTO transform(Book book) {
+		return dozer.map(book, BookDTO.class);
+	}
+
+	@Override
+	public <T> Book transform(T book) {
+		return dozer.map(book, Book.class);
+	}
+	
+	public List<BookDTO> transform(List<Book> books){
+		List<BookDTO> res = new ArrayList<>();
+		for(Book b : books)
+			res.add(transform(b));
+		return res;
 	}
 
 }

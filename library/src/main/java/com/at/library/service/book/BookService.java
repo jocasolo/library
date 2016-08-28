@@ -21,6 +21,13 @@ public interface BookService {
 	 * @return Libro correspondiente al id buscado.
 	 */
 	Book findOne(Integer id);
+	
+	/**
+	 * Realiza una búsqueda de libros según los parámetros incluidos.
+	 * 
+	 * @return
+	 */
+	List<BookDTO> search(String isbn, String title, String author, StatusEnum status);
 
 	/**
 	 * Crea un nuevo libro.
@@ -54,12 +61,20 @@ public interface BookService {
 	BookDTO transform(Book book);
 
 	/**
-	 * Transforma un libroDTO en un libro.
+	 * Transforma un DTO de libro en un libro.
 	 * 
 	 * @param book
 	 * @return
 	 */
-	Book transform(BookDTO book);
+	<T> Book transform(T book);
+	
+	/**
+	 * Transforma una lista de libros en una lista de libros DTO.
+	 * 
+	 * @param books
+	 * @return
+	 */
+	List<BookDTO> transform(List<Book> books);
 	
 	/**
 	 * Comprueba la disponibilidad de un libro.
