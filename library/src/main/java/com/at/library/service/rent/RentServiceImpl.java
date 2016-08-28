@@ -88,7 +88,7 @@ public class RentServiceImpl implements RentService {
 	@Override
 	public RentDTO restore(Integer idBook) {
 		Book book = bookService.findOne(idBook);
-		Rent rent = rentDao.findByPkBookAndReturnDateIsNull(book).get(0);
+		Rent rent = rentDao.findOneByPkBookAndReturnDateIsNull(book);
 
 		bookService.changeStatus(book, StatusEnum.ACTIVE);
 		rent.setReturnDate(new Date());
