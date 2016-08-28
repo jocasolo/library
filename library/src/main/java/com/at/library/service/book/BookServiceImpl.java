@@ -1,6 +1,7 @@
 package com.at.library.service.book;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -44,12 +45,13 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public List<BookDTO> search(String isbn, String title, String author, StatusEnum status) {
-		return bookDao.findByIsbnOrTitleOrAuthorOrStatus(isbn, title, author, status);
+		return bookDao.findByIsbnOrTitleOrAuthorOrStatusAllIgnoreCase(isbn, title, author, status);
 	}
 
 	@Override
 	public BookDTO create(BookDTO bookDto) {
-		final Book book = transform(bookDto);
+		Book book = transform(bookDto);
+		book.setStartDate(new Date());
 		return transform(bookDao.save(book));
 	}
 

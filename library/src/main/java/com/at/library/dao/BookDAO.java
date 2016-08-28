@@ -16,6 +16,6 @@ public interface BookDAO extends CrudRepository<Book, Integer> {
 	@Query(value = "SELECT new com.at.library.dto.BookDTO(b.id, b.isbn, b.title, b.author) from Book as b WHERE b.id IN (SELECT r.pk.book.id FROM Rent as r WHERE r.returnDate IS NULL)")
 	public List<BookDTO> findNoAvailable();
 	
-	public List<BookDTO> findByIsbnOrTitleOrAuthorOrStatus(String isbn, String title, String author, StatusEnum status);
+	public List<BookDTO> findByIsbnOrTitleOrAuthorOrStatusAllIgnoreCase(String isbn, String title, String author, StatusEnum status);
 
 }
