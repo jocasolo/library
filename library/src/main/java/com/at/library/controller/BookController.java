@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.at.library.dto.BookDTO;
 import com.at.library.enums.StatusEnum;
 import com.at.library.exceptions.BookNotFoundException;
+import com.at.library.exceptions.BookWrongUpdateException;
 import com.at.library.service.book.BookService;
 
 @RestController
@@ -55,13 +56,13 @@ public class BookController {
 	}
 
 	@RequestMapping(value = "/{id}", method = { RequestMethod.PUT })
-	public void update(@PathVariable("id") Integer id, @RequestBody BookDTO bookDTO) {
+	public void update(@PathVariable("id") Integer id, @RequestBody BookDTO bookDTO) throws BookWrongUpdateException {
 		log.debug(String.format("Modificando el libro: %s", bookDTO));
-		bookservice.update(bookDTO);
+		bookservice.update(id, bookDTO);
 	}
 
 	@RequestMapping(value = "/{id}", method = { RequestMethod.DELETE })
-	public void delete(@PathVariable("id") Integer id) {
+	public void delete(@PathVariable("id") Integer id) throws BookNotFoundException {
 		log.debug(String.format("Borrando el libro con el id: %s", id));
 		bookservice.delete(id);
 	}

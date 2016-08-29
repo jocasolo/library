@@ -5,6 +5,7 @@ import java.util.List;
 import com.at.library.dto.BookDTO;
 import com.at.library.enums.StatusEnum;
 import com.at.library.exceptions.BookNotFoundException;
+import com.at.library.exceptions.BookWrongUpdateException;
 import com.at.library.model.Book;
 
 public interface BookService {
@@ -44,15 +45,17 @@ public interface BookService {
 	 * 
 	 * @param id
 	 * @param book
+	 * @throws BookWrongUpdateException 
 	 */
-	void update(BookDTO bookDto);
+	void update(Integer id, BookDTO bookDto) throws BookWrongUpdateException;
 
 	/**
 	 * Elimina el libro correspondiente al id dado.
 	 * 
 	 * @param id
+	 * @throws BookNotFoundException 
 	 */
-	void delete(Integer id);
+	void delete(Integer id) throws BookNotFoundException;
 	
 	/**
 	 * Transfrma un libro en un libroDTO.
@@ -91,8 +94,9 @@ public interface BookService {
 	 * 
 	 * @param id
 	 * @return
+	 * @throws BookNotFoundException 
 	 */
-	Boolean isAvailable(Integer id);
+	Boolean isAvailable(Integer id) throws BookNotFoundException;
 	
 	/**
 	 * Cambia el estado de un libro.

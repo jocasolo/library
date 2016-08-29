@@ -14,6 +14,7 @@ import com.at.library.dao.BookDAO;
 import com.at.library.dto.BookDTO;
 import com.at.library.enums.StatusEnum;
 import com.at.library.exceptions.BookNotFoundException;
+import com.at.library.exceptions.BookWrongUpdateException;
 import com.at.library.model.Book;
 
 @Service
@@ -41,10 +42,10 @@ public class BookServiceImpl implements BookService {
 	@Transactional(readOnly = true)
 	public Book findOne(Integer id) throws BookNotFoundException {
 		final Book book = bookDao.findOne(id);
-		if(book != null)
-			return book;
-		else
+		if (book == null)
 			throw new BookNotFoundException();
+		
+		return book;
 	}
 
 	@Override
@@ -60,14 +61,21 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public void update(BookDTO bookDto) {
+	public void update(Integer id, BookDTO bookDto) throws BookWrongUpdateException {
+		if(id != bookDto.getId())
+			throw new BookWrongUpdateException();
+			
 		final Book book = transform(bookDto);
 		bookDao.save(book);
 	}
 
 	@Override
-	public void delete(Integer id) {
-		bookDao.delete(id);
+	public void delete(Integer id) throws BookNotFoundException {
+		Book book = bookDao.findOne(id);
+		if(book == null)
+			throw new BookNotFoundException();
+		book.setStatus(StatusEnum.DELETED);
+		bookDao.save(book);
 	}
 
 	@Override
@@ -76,8 +84,10 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public Boolean isAvailable(Integer id) {
+	public Boolean isAvailable(Integer id) throws BookNotFoundException {
 		final Book b = bookDao.findOne(id);
+		if(b == null)
+			throw new BookNotFoundException();
 		return b.getStatus().equals(StatusEnum.ACTIVE);
 	}
 
@@ -88,7 +98,7 @@ public class BookServiceImpl implements BookService {
 			bookDao.save(book);
 		}
 	}
-	
+
 	@Override
 	public BookDTO transform(Book book) {
 		return dozer.map(book, BookDTO.class);
@@ -98,10 +108,10 @@ public class BookServiceImpl implements BookService {
 	public <T> Book transform(T book) {
 		return dozer.map(book, Book.class);
 	}
-	
-	public List<BookDTO> transform(List<Book> books){
+
+	public List<BookDTO> transform(List<Book> books) {
 		List<BookDTO> res = new ArrayList<>();
-		for(Book b : books)
+		for (Book b : books)
 			res.add(transform(b));
 		return res;
 	}
