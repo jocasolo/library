@@ -49,8 +49,8 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public List<BookDTO> search(String isbn, String title, String author, StatusEnum status) {
-		List<BookDTO> res = bookDao.search(isbn, title, author, status);
+	public List<BookDTO> search(String isbn, String title, String author) {
+		List<BookDTO> res = bookDao.search(isbn, title, author);
 		if(res != null)
 			return res;
 		else

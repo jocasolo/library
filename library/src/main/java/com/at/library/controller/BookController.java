@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.at.library.dto.BookDTO;
-import com.at.library.enums.StatusEnum;
 import com.at.library.exceptions.BookNotFoundException;
 import com.at.library.exceptions.BookWrongUpdateException;
 import com.at.library.service.book.BookService;
@@ -37,10 +36,9 @@ public class BookController {
 	public List<BookDTO> search(
 			@RequestParam(value = "isbn", required = false) String isbn,
 			@RequestParam(value = "title", required = false) String title,
-			@RequestParam(value = "author", required = false) String author,
-			@RequestParam(value = "status", required = false) StatusEnum status) {
-		log.debug(String.format("Buscando según los campos: %s, %s, %s, %s", isbn, title, author, status));
-		return bookservice.search(isbn, title, author, status);
+			@RequestParam(value = "author", required = false) String author) {
+		log.debug(String.format("Buscando según los campos: %s, %s, %s", isbn, title, author));
+		return bookservice.search(isbn, title, author);
 	}
 
 	@RequestMapping(method = { RequestMethod.POST })

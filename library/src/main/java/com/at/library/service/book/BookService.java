@@ -30,7 +30,7 @@ public interface BookService {
 	 * 
 	 * @return
 	 */
-	List<BookDTO> search(String isbn, String title, String author, StatusEnum status);
+	List<BookDTO> search(String isbn, String title, String author);
 
 	/**
 	 * Crea un nuevo libro.
