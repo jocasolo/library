@@ -5,9 +5,13 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.dozer.DozerBeanMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import com.at.library.controller.BookController;
 import com.at.library.dao.UserDAO;
 import com.at.library.dto.UserDTO;
 import com.at.library.dto.UserPutDTO;
@@ -16,11 +20,25 @@ import com.at.library.model.User;
 @Service
 public class UserServiceImpl implements UserService {
 
+	private static final Logger log = LoggerFactory.getLogger(BookController.class);;
+	
 	@Autowired
 	private UserDAO userDao;
 
 	@Autowired
 	private DozerBeanMapper dozer;
+	
+	@Override
+	@Scheduled(cron = "15 0/1 * * * ?")
+	public void penalize(){
+		log.debug("Comienza el proceso de penalización de usuarios.");
+	}
+	
+	@Override
+	@Scheduled(cron = "45 0/1 * * * ?")
+	public void forgive(){
+		log.debug("Comienza el proceso de comprobación de sanciones a usuarios.");
+	}
 
 	@Override
 	public List<UserDTO> findAll() {

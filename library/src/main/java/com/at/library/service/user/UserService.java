@@ -16,7 +16,7 @@ public interface UserService {
 	List<UserDTO> findAll();
 
 	/**
-	 * Realiza la búsqueda de un usuario por id.
+	 * Realiza la bï¿½squeda de un usuario por id.
 	 * 
 	 * @param id
 	 * @return Usuario correspondiente al id buscado.
@@ -59,4 +59,14 @@ public interface UserService {
 	 * @return
 	 */
 	<T> User transform(T userDto);
+
+	/**
+	 * Comprueba los usuarios a sancionar y los sanciona.
+	 */
+	void penalize();
+
+	/**
+	 * Perdona a los usuarios
+	 */
+	void forgive();
 }
