@@ -26,48 +26,49 @@ import com.at.library.service.rent.RentService;
 public class UserServiceImpl implements UserService {
 
 	private static final Logger log = LoggerFactory.getLogger(BookController.class);
-	
+
 	@Autowired
 	private UserDAO userDao;
-	
+
 	@Autowired
 	private RentService rentService;
 
 	@Autowired
 	private DozerBeanMapper dozer;
-	
+
 	@Override
 	@Scheduled(cron = "15 0/1 * * * ?")
-	public void penalize(){
+	public void penalize() {
 		log.debug("Comienza el proceso de penalización de usuarios.");
 		Iterator<Rent> iterator = rentService.findSanctionable().iterator();
 		while (iterator.hasNext()) {
 			final Rent rent = iterator.next();
 			final User user = rent.getUser();
 			final Long diference = (new Date().getTime() - rent.getEndDate().getTime()) / (1000 * 60 * 60 * 24);
-			final Integer days = diference.intValue() * 3; // Dias de sancion = dias de diferencia * 3
-			
+			final Integer days = diference.intValue() * 3;
+
 			Date initDate = user.getPenalizeDate();
-			if(initDate == null)
+			if (initDate == null)
 				initDate = new Date();
-			
+
 			Calendar forgiveDate = Calendar.getInstance();
 			forgiveDate.setTime(initDate);
 			forgiveDate.add(Calendar.DATE, days); // Calcula la fecha de perdón
-			
+
 			user.setStatus(UserStatus.BANNED);
 			user.setPenalizeDate(initDate);
 			user.setForgiveDate(forgiveDate.getTime());
-			
+
 			userDao.save(user);
 			log.debug("Usuario %s sancionado %s dias.", user, days);
 		}
 	}
-	
+
 	@Override
 	@Scheduled(cron = "45 0/1 * * * ?")
-	public void forgive(){
+	public void forgive() {
 		log.debug("Comienza el proceso de comprobación de sanciones a usuarios.");
+		
 	}
 
 	@Override
@@ -114,7 +115,7 @@ public class UserServiceImpl implements UserService {
 	public <T> User transform(T userDto) {
 		return dozer.map(userDto, User.class);
 	}
-	
+
 	@Override
 	public List<UserDTO> transform(List<User> users) {
 		List<UserDTO> res = new ArrayList<>();
