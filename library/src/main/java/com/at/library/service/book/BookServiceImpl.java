@@ -50,7 +50,11 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public List<BookDTO> search(String isbn, String title, String author, StatusEnum status) {
-		return bookDao.findByIsbnOrTitleOrAuthorOrStatusAllIgnoreCase(isbn, title, author, status);
+		List<BookDTO> res = bookDao.search(isbn, title, author, status);
+		if(res != null)
+			return res;
+		else
+			return new ArrayList<>();
 	}
 
 	@Override

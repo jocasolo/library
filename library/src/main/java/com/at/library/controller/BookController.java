@@ -27,19 +27,13 @@ public class BookController {
 
 	private static final Logger log = LoggerFactory.getLogger(BookController.class);
 
-	@RequestMapping(method = { RequestMethod.GET })
-	public List<BookDTO> getAll() {
-		log.debug("Buscando todos los libros en el sistema.");
-		return bookservice.findAll();
-	}
-
 	@RequestMapping(value = "/{id}", method = { RequestMethod.GET })
 	public BookDTO findOne(@PathVariable("id") Integer id) throws BookNotFoundException {
 		log.debug(String.format("Buscando el libro con id: %s", id));
 		return bookservice.transform(bookservice.findOne(id));
 	}
 
-	@RequestMapping(value = "/search", method = { RequestMethod.GET })
+	@RequestMapping(method = { RequestMethod.GET })
 	public List<BookDTO> search(
 			@RequestParam(value = "isbn", required = false) String isbn,
 			@RequestParam(value = "title", required = false) String title,

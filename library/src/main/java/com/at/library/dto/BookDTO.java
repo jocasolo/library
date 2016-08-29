@@ -18,12 +18,13 @@ public class BookDTO extends DTO implements Serializable {
 
 	private StatusEnum status;
 
-	public BookDTO(Integer id, String isbn, String title, String author) {
+	public BookDTO(Integer id, String isbn, String title, String author, StatusEnum status) {
 		super();
 		this.id = id;
 		this.isbn = isbn;
 		this.title = title;
 		this.author = author;
+		this.status = status;
 	}
 
 	public BookDTO() {
