@@ -7,5 +7,5 @@ import com.at.library.model.User;
 
 @Repository
 public interface UserDAO extends CrudRepository<User, Integer> {
-
+	
 }

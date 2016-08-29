@@ -112,4 +112,9 @@ public class RentServiceImpl implements RentService {
 		return c.getTime();
 	}
 
+	@Override
+	public List<Rent> findSanctionable() {
+		return rentDao.findSanctionalbe();
+	}
+
 }

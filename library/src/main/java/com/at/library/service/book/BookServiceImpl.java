@@ -50,17 +50,14 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public List<BookDTO> search(String isbn, String title, String author) {
-		List<BookDTO> res = bookDao.search(isbn, title, author);
-		if(res != null)
-			return res;
-		else
-			return new ArrayList<>();
+		return bookDao.search(isbn, title, author);
 	}
 
 	@Override
 	public BookDTO create(BookDTO bookDto) {
 		Book book = transform(bookDto);
 		book.setStartDate(new Date());
+		book.setStatus(StatusEnum.ACTIVE);
 		return transform(bookDao.save(book));
 	}
 
@@ -84,7 +81,7 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public Boolean isAvailable(Book book) {
-		return book.getStatus().equals(StatusEnum.ACTIVE);
+		return book.getStatus() != null && book.getStatus().equals(StatusEnum.ACTIVE);
 	}
 
 	@Override
@@ -113,6 +110,7 @@ public class BookServiceImpl implements BookService {
 		return dozer.map(book, Book.class);
 	}
 
+	@Override
 	public List<BookDTO> transform(List<Book> books) {
 		List<BookDTO> res = new ArrayList<>();
 		for (Book b : books)

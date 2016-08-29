@@ -61,5 +61,13 @@ public interface RentService {
 	 * @return
 	 */
 	Date calcEndDate(Date initDate);
+	
+	/**
+	 * Busca todos los alquileres que aún no se han devuelto y que la fecha en que debería haberse
+	 * hecho ya ha pasado.
+	 * 
+	 * @return
+	 */
+	List<Rent> findSanctionable();
 
 }

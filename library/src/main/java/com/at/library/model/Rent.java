@@ -10,11 +10,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+
 @Entity
 public class Rent implements Serializable {
 
-	private static final long serialVersionUID = -4158742374158942716L;
-	
+	private static final long serialVersionUID = 1538901993209704439L;
+
 	@EmbeddedId
 	private RentPK pk = new RentPK();
 
