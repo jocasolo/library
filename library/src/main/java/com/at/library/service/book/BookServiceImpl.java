@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.at.library.dao.BookDAO;
 import com.at.library.dto.BookDTO;
 import com.at.library.enums.StatusEnum;
+import com.at.library.exceptions.BookNotFoundException;
 import com.at.library.model.Book;
 
 @Service
@@ -38,9 +39,12 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Book findOne(Integer id) {
+	public Book findOne(Integer id) throws BookNotFoundException {
 		final Book book = bookDao.findOne(id);
-		return book;
+		if(book != null)
+			return book;
+		else
+			throw new BookNotFoundException();
 	}
 
 	@Override

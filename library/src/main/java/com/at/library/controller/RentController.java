@@ -13,38 +13,34 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.at.library.dto.RentDTO;
 import com.at.library.dto.RentPostDTO;
+import com.at.library.exceptions.BookNotFoundException;
 import com.at.library.exceptions.BookRentedException;
 import com.at.library.service.rent.RentService;
 
 @RestController
 @RequestMapping(value = "/book/{id}/rent")
 public class RentController {
-	
+
 	@Autowired
 	private RentService rentService;
-	
+
 	private static final Logger log = LoggerFactory.getLogger(BookController.class);
-	
-	@RequestMapping(value = "/a", method = { RequestMethod.GET })
-	public void ejemplo() throws BookRentedException {
-		throw new BookRentedException();
-	}
-	
+
 	@RequestMapping(method = { RequestMethod.GET })
-	public List<RentDTO> getAll(){
+	public List<RentDTO> getAll() {
 		return rentService.findAll();
 	}
-	
+
 	@RequestMapping(method = { RequestMethod.POST })
-	public RentDTO create(@RequestBody RentPostDTO rent) {
+	public RentDTO create(@RequestBody RentPostDTO rent) throws BookRentedException, BookNotFoundException {
 		log.debug(String.format("Creando el alquiler: %s", rent));
 		return rentService.create(rent);
 	}
-	
-	@RequestMapping(value = "/restore/{idBook}", method = { RequestMethod.PUT })
-	public RentDTO restore(@PathVariable("idBook") Integer idBook){
+
+	@RequestMapping(method = { RequestMethod.DELETE })
+	public RentDTO restore(@PathVariable("id") Integer idBook) throws BookNotFoundException {
 		log.debug(String.format("Devolviendo alquiler con el libro con id: %s", idBook));
 		return rentService.restore(idBook);
 	}
-	
+
 }

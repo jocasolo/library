@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.at.library.dto.RentDTO;
 import com.at.library.dto.RentPostDTO;
+import com.at.library.exceptions.BookNotFoundException;
 import com.at.library.model.Rent;
 
 public interface RentService {
@@ -40,16 +41,18 @@ public interface RentService {
 	 * @param idUser
 	 * @param idEmployee
 	 * @return
+	 * @throws BookNotFoundException 
 	 */
-	RentDTO create(RentPostDTO rentDto);
+	RentDTO create(RentPostDTO rentDto) throws BookNotFoundException;
 	
 	/**
 	 * Realiza la devolución de un libro que pertenece a un determinado alquiler.
 	 * 
 	 * @param idBook
 	 * @return
+	 * @throws BookNotFoundException 
 	 */
-	RentDTO restore(Integer idBook);
+	RentDTO restore(Integer idBook) throws BookNotFoundException;
 	
 	/**
 	 * Calcula la fecha en que se debe devolver un libro dada la inicial.

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.at.library.dto.BookDTO;
 import com.at.library.enums.StatusEnum;
+import com.at.library.exceptions.BookNotFoundException;
 import com.at.library.model.Book;
 
 public interface BookService {
@@ -19,8 +20,9 @@ public interface BookService {
 	 * 
 	 * @param id
 	 * @return Libro correspondiente al id buscado.
+	 * @throws BookNotFoundException 
 	 */
-	Book findOne(Integer id);
+	Book findOne(Integer id) throws BookNotFoundException;
 	
 	/**
 	 * Realiza una búsqueda de libros según los parámetros incluidos.

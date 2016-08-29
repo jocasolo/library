@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.at.library.dto.BookDTO;
 import com.at.library.enums.StatusEnum;
+import com.at.library.exceptions.BookNotFoundException;
 import com.at.library.service.book.BookService;
 
 @RestController
@@ -32,7 +33,7 @@ public class BookController {
 	}
 
 	@RequestMapping(value = "/{id}", method = { RequestMethod.GET })
-	public BookDTO findOne(@PathVariable("id") Integer id) {
+	public BookDTO findOne(@PathVariable("id") Integer id) throws BookNotFoundException {
 		log.debug(String.format("Buscando el libro con id: %s", id));
 		return bookservice.transform(bookservice.findOne(id));
 	}

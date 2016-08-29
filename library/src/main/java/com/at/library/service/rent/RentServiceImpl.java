@@ -14,6 +14,7 @@ import com.at.library.dao.RentDAO;
 import com.at.library.dto.RentDTO;
 import com.at.library.dto.RentPostDTO;
 import com.at.library.enums.StatusEnum;
+import com.at.library.exceptions.BookNotFoundException;
 import com.at.library.model.Book;
 import com.at.library.model.Employee;
 import com.at.library.model.Rent;
@@ -64,7 +65,7 @@ public class RentServiceImpl implements RentService {
 	}
 
 	@Override
-	public RentDTO create(RentPostDTO rentDto) {
+	public RentDTO create(RentPostDTO rentDto) throws BookNotFoundException {
 		final Book book = bookService.findOne(rentDto.getIdBook());
 
 		if (bookService.isAvailable(book)) {
@@ -86,7 +87,7 @@ public class RentServiceImpl implements RentService {
 	}
 
 	@Override
-	public RentDTO restore(Integer idBook) {
+	public RentDTO restore(Integer idBook) throws BookNotFoundException {
 		Book book = bookService.findOne(idBook);
 		Rent rent = rentDao.findOneByPkBookAndReturnDateIsNull(book);
 
