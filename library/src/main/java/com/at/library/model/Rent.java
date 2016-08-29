@@ -9,7 +9,6 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 
 @Entity
 public class Rent implements Serializable {
@@ -71,22 +70,18 @@ public class Rent implements Serializable {
 		this.returnDate = returnDate;
 	}
 	
-	@Transient
 	public Book getBook(){
 		return pk.getBook();
 	}
 	
-	@Transient
 	public void setBook(Book book){
 		pk.setBook(book);
 	}
 	
-	@Transient
 	public Date getInitDate(){
 		return pk.getInitDate();
 	}
 	
-	@Transient
 	public void setInitDate(Date initDate){
 		pk.setInitDate(initDate);
 	}
