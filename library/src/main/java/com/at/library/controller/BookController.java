@@ -40,12 +40,6 @@ public class BookController {
 		log.debug(String.format("Buscando según los campos: %s, %s, %s", isbn, title, author));
 		return bookservice.search(isbn, title, author);
 	}
-	
-	@RequestMapping(value = "/{id}/history", method = { RequestMethod.GET })
-	public List<BookDTO> history(@PathVariable("id") Integer id) throws BookNotFoundException {
-		log.debug(String.format("Buscando el historial del libro con id: %s", id));
-		return bookservice.history(id);
-	}
 
 	@RequestMapping(method = { RequestMethod.POST })
 	public BookDTO create(@RequestBody BookDTO book) {
