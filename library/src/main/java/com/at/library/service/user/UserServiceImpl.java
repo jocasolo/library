@@ -137,4 +137,9 @@ public class UserServiceImpl implements UserService {
 		return res;
 	}
 
+	@Override
+	public List<UserDTO> search(String dni, String name, String surname) {
+		return userDao.search(dni, name, surname);
+	}
+
 }

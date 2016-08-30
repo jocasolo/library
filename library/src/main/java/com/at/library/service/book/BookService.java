@@ -106,6 +106,9 @@ public interface BookService {
 	 */
 	void changeStatus(Book book, BookEnum newStatus);
 	
+	/**
+	 * Realiza una migración de libros a partir de un servicio externo.
+	 */
 	void migration();
 
 }

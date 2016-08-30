@@ -14,6 +14,16 @@ public interface UserService {
 	 * @return Listado de usuarios.
 	 */
 	List<UserDTO> findAll();
+	
+	/**
+	 * Busca todos los usuarios que concuerden con los campos de búsqueda.
+	 * 
+	 * @param dni
+	 * @param name
+	 * @param surname
+	 * @return
+	 */
+	List<UserDTO> search(String dni, String name, String surname);
 
 	/**
 	 * Realiza la bï¿½squeda de un usuario por id.

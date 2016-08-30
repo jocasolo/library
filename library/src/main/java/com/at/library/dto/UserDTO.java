@@ -14,6 +14,18 @@ public class UserDTO extends DTO implements Serializable {
 
 	private String surname;
 	
+	public UserDTO(Integer id, String dni, String name, String surname) {
+		super();
+		this.id = id;
+		this.dni = dni;
+		this.name = name;
+		this.surname = surname;
+	}
+
+	public UserDTO() {
+		super();
+	}
+
 	public Integer getId() {
 		return id;
 	}

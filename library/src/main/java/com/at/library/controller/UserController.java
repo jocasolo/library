@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.at.library.dto.UserDTO;
@@ -25,9 +26,12 @@ public class UserController {
 	private static final Logger log = LoggerFactory.getLogger(UserController.class);
 
 	@RequestMapping(method = { RequestMethod.GET })
-	public List<UserDTO> getAll() {
-		log.debug("Buscando todos los usuarios en el sistema.");
-		return userService.findAll();
+	public List<UserDTO> search(
+			@RequestParam(value = "dni", required = false) String dni,
+			@RequestParam(value = "name", required = false) String name,
+			@RequestParam(value = "surname", required = false) String surname) {
+		log.debug(String.format("Buscando usuarios según los campos: %s, %s, %s", dni, name, surname));
+		return userService.search(dni, name, surname);
 	}
 
 	@RequestMapping(method = { RequestMethod.POST })
