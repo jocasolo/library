@@ -1,6 +1,6 @@
 package com.at.library.enums;
 
-public enum StatusEnum {
+public enum BookEnum {
 
 	ACTIVE, DISABLE, DELETED;
 

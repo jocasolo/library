@@ -2,7 +2,7 @@ package com.at.library.dto;
 
 import java.io.Serializable;
 
-import com.at.library.enums.StatusEnum;
+import com.at.library.enums.BookEnum;
 
 public class BookDTO extends DTO implements Serializable {
 
@@ -16,7 +16,7 @@ public class BookDTO extends DTO implements Serializable {
 
 	private String author;
 
-	private StatusEnum status;
+	private BookEnum status;
 
 	public BookDTO(Integer id, String isbn, String title, String author) {
 		super();
@@ -62,11 +62,11 @@ public class BookDTO extends DTO implements Serializable {
 		this.author = author;
 	}
 
-	public StatusEnum getStatus() {
+	public BookEnum getStatus() {
 		return status;
 	}
 
-	public void setStatus(StatusEnum status) {
+	public void setStatus(BookEnum status) {
 		this.status = status;
 	}
 

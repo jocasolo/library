@@ -3,7 +3,7 @@ package com.at.library.service.book;
 import java.util.List;
 
 import com.at.library.dto.BookDTO;
-import com.at.library.enums.StatusEnum;
+import com.at.library.enums.BookEnum;
 import com.at.library.exceptions.BookNotFoundException;
 import com.at.library.exceptions.BookWrongUpdateException;
 import com.at.library.model.Book;
@@ -104,7 +104,7 @@ public interface BookService {
 	 * @param book
 	 * @param newStatus
 	 */
-	void changeStatus(Book book, StatusEnum newStatus);
+	void changeStatus(Book book, BookEnum newStatus);
 	
 	void migration();
 

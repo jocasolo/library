@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import com.at.library.dao.RentDAO;
 import com.at.library.dto.RentDTO;
 import com.at.library.dto.RentPostDTO;
-import com.at.library.enums.StatusEnum;
+import com.at.library.enums.BookEnum;
 import com.at.library.exceptions.BookNotFoundException;
 import com.at.library.model.Book;
 import com.at.library.model.Employee;
@@ -72,7 +72,7 @@ public class RentServiceImpl implements RentService {
 			final User user = userService.findOne(rentDto.getIdUser());
 			final Employee employee = employeeService.findOne(rentDto.getIdEmployee());
 
-			bookService.changeStatus(book, StatusEnum.DISABLE);
+			bookService.changeStatus(book, BookEnum.DISABLE);
 			Rent rent = new Rent();
 			rent.setBook(book);
 			rent.setUser(user);
@@ -91,7 +91,7 @@ public class RentServiceImpl implements RentService {
 		Book book = bookService.findOne(idBook);
 		Rent rent = rentDao.findOneByPkBookAndReturnDateIsNull(book);
 
-		bookService.changeStatus(book, StatusEnum.ACTIVE);
+		bookService.changeStatus(book, BookEnum.ACTIVE);
 		rent.setReturnDate(new Date());
 
 		rentDao.save(rent);

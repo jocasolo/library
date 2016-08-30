@@ -15,7 +15,7 @@ import org.springframework.web.client.RestTemplate;
 import com.at.library.dao.BookDAO;
 import com.at.library.dto.BookDTO;
 import com.at.library.dto.RentDTO;
-import com.at.library.enums.StatusEnum;
+import com.at.library.enums.BookEnum;
 import com.at.library.exceptions.BookNotFoundException;
 import com.at.library.exceptions.BookWrongUpdateException;
 import com.at.library.model.Book;
@@ -63,7 +63,7 @@ public class BookServiceImpl implements BookService {
 	public BookDTO create(BookDTO bookDto) {
 		Book book = transform(bookDto);
 		book.setStartDate(new Date());
-		book.setStatus(StatusEnum.ACTIVE);
+		book.setStatus(BookEnum.ACTIVE);
 		return transform(bookDao.save(book));
 	}
 
@@ -81,13 +81,13 @@ public class BookServiceImpl implements BookService {
 		Book book = bookDao.findOne(id);
 		if(book == null)
 			throw new BookNotFoundException();
-		book.setStatus(StatusEnum.DELETED);
+		book.setStatus(BookEnum.DELETED);
 		bookDao.save(book);
 	}
 
 	@Override
 	public Boolean isAvailable(Book book) {
-		return book.getStatus() != null && book.getStatus().equals(StatusEnum.ACTIVE);
+		return book.getStatus() != null && book.getStatus().equals(BookEnum.ACTIVE);
 	}
 
 	@Override
@@ -95,11 +95,11 @@ public class BookServiceImpl implements BookService {
 		final Book b = bookDao.findOne(id);
 		if(b == null)
 			throw new BookNotFoundException();
-		return b.getStatus().equals(StatusEnum.ACTIVE);
+		return b.getStatus().equals(BookEnum.ACTIVE);
 	}
 
 	@Override
-	public void changeStatus(Book book, StatusEnum newStatus) {
+	public void changeStatus(Book book, BookEnum newStatus) {
 		if (!book.getStatus().equals(newStatus)) {
 			book.setStatus(newStatus);
 			bookDao.save(book);

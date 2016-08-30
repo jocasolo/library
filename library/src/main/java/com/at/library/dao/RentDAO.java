@@ -14,7 +14,7 @@ public interface RentDAO extends CrudRepository<Rent, Integer>{
 	
 	public Rent findOneByPkBookAndReturnDateIsNull(Book book);
 	
-	@Query(value="SELECT r FROM Rent AS r WHERE r.returnDate IS NULL AND r.endDate < CURRENT_DATE")
+	@Query(value="SELECT r FROM Rent AS r WHERE r.returnDate IS NULL")
 	public List<Rent> findSanctionalbe();
 	
 }

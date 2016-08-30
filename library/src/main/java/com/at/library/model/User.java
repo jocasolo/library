@@ -11,7 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.at.library.enums.UserStatus;
+import com.at.library.enums.UserEnum;
 
 @Entity
 public class User implements Serializable {
@@ -29,7 +29,7 @@ public class User implements Serializable {
 	private String surname;
 
 	@Enumerated(EnumType.STRING)
-	private UserStatus status;
+	private UserEnum status;
 
 	@Temporal(TemporalType.DATE)
 	private Date penalizeDate;
@@ -69,11 +69,11 @@ public class User implements Serializable {
 		this.surname = surname;
 	}
 
-	public UserStatus getStatus() {
+	public UserEnum getStatus() {
 		return status;
 	}
 
-	public void setStatus(UserStatus status) {
+	public void setStatus(UserEnum status) {
 		this.status = status;
 	}
 
