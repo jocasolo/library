@@ -35,8 +35,6 @@ dependencies {
 	compile 		('net.sf.dozer:dozer:5.5.1')
 	compile 		('joda-time:joda-time:2.9.4')
 	
-	
-	
 	testRuntime		('org.hsqldb:hsqldb:2.3.1')
 	
 	testCompile		('org.springframework.boot:spring-boot-starter-test')

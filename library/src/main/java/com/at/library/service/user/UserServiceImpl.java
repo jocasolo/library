@@ -1,7 +1,6 @@
 package com.at.library.service.user;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -9,6 +8,8 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.dozer.DozerBeanMapper;
+import org.joda.time.DateTime;
+import org.joda.time.Days;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,21 +47,20 @@ public class UserServiceImpl implements UserService {
 		while (iterator.hasNext()) {
 			final Rent rent = iterator.next();
 			final User user = rent.getUser();
-			final Long diference = (new Date().getTime() - rent.getEndDate().getTime()) / (1000 * 60 * 60 * 24);
-			final Integer days = diference.intValue() * 3;
+			
+			// Dias que se ha retrasado multiplicado por 3 = dias de sanción
+			final Days days = Days.daysBetween(new DateTime(rent.getEndDate()), new DateTime());
+			days.multipliedBy(3);
 
-			Date initDate = user.getPenalizeDate();
-			if (initDate == null)
-				initDate = new Date();
-
-			Calendar forgiveDate = Calendar.getInstance();
-			forgiveDate.setTime(initDate);
-			forgiveDate.add(Calendar.DATE, days); // Calcula la fecha de perdón
-			System.out.println(user.getName());
+			DateTime initDate = (user.getPenalizeDate() != null) ? new DateTime(user.getPenalizeDate()) : new DateTime();
+						
+			// Añadimos los dias de castigo
+			final DateTime forgiveDate = initDate;
+			forgiveDate.plus(days);
 
 			user.setStatus(UserEnum.BANNED);
-			user.setPenalizeDate(initDate);
-			user.setForgiveDate(forgiveDate.getTime());
+			user.setPenalizeDate(initDate.toDate());
+			user.setForgiveDate(forgiveDate.toDate());
 
 			userDao.save(user);
 			log.debug("Usuario %s sancionado %s dias.", user, days);
@@ -76,6 +76,8 @@ public class UserServiceImpl implements UserService {
 			User user = iterator.next();
 			if(user.getForgiveDate().before(new Date())){
 				user.setStatus(UserEnum.NORMAL);
+				user.setPenalizeDate(null);
+				user.setForgiveDate(null);
 				userDao.save(user);
 				log.debug("Usuario %s perdonado", user);
 			}
