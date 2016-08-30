@@ -15,6 +15,7 @@ import com.at.library.dto.RentDTO;
 import com.at.library.dto.RentPostDTO;
 import com.at.library.enums.BookEnum;
 import com.at.library.exceptions.BookNotFoundException;
+import com.at.library.exceptions.BookRentedException;
 import com.at.library.model.Book;
 import com.at.library.model.Employee;
 import com.at.library.model.Rent;
@@ -63,10 +64,18 @@ public class RentServiceImpl implements RentService {
 	public Rent transform(RentDTO rent) {
 		return dozer.map(rent, Rent.class);
 	}
+	
+	@Override
+	public List<RentDTO> transform(List<Rent> rents) {
+		List<RentDTO> res = new ArrayList<>();
+		for (Rent u : rents)
+			res.add(transform(u));
+		return res;
+	}
 
 	@Override
-	public RentDTO create(RentPostDTO rentDto) throws BookNotFoundException {
-		final Book book = bookService.findOne(rentDto.getIdBook());
+	public RentDTO create(Integer idBook, RentPostDTO rentDto) throws BookNotFoundException, BookRentedException {
+		final Book book = bookService.findOne(idBook);
 
 		if (bookService.isAvailable(book)) {
 			final User user = userService.findOne(rentDto.getIdUser());
@@ -83,13 +92,14 @@ public class RentServiceImpl implements RentService {
 			rentDao.save(rent);
 			return transform(rent);
 		}
-		return new RentDTO();
+
+		throw new BookRentedException();
 	}
 
 	@Override
 	public RentDTO restore(Integer idBook) throws BookNotFoundException {
 		Book book = bookService.findOne(idBook);
-		Rent rent = rentDao.findOneByPkBookAndReturnDateIsNull(book);
+		Rent rent = rentDao.findOneByBookAndReturnDateIsNull(book);
 
 		bookService.changeStatus(book, BookEnum.ACTIVE);
 		rent.setReturnDate(new Date());
@@ -115,6 +125,11 @@ public class RentServiceImpl implements RentService {
 	@Override
 	public List<Rent> findSanctionable() {
 		return rentDao.findSanctionalbe();
+	}
+
+	@Override
+	public List<RentDTO> getHistory(Integer idBook) {
+		return transform(rentDao.findAllByBookId(idBook));
 	}
 	
 }

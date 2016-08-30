@@ -6,6 +6,7 @@ import java.util.List;
 import com.at.library.dto.RentDTO;
 import com.at.library.dto.RentPostDTO;
 import com.at.library.exceptions.BookNotFoundException;
+import com.at.library.exceptions.BookRentedException;
 import com.at.library.model.Rent;
 
 public interface RentService {
@@ -34,16 +35,24 @@ public interface RentService {
 	Rent transform(RentDTO rent);
 	
 	/**
+	 * Transforma una lista de alquileres en una lista de alquileres DTO.
+	 * 
+	 * @param rents
+	 * @return
+	 */
+	List<RentDTO> transform(List<Rent> rents);
+	
+	/**
 	 * Realiza el alquiler de un libro a un determinado usario y realizado
 	 * por un determinado empleado.
-	 * 
+	 *
 	 * @param idBook
-	 * @param idUser
-	 * @param idEmployee
+	 * @param rentDto
 	 * @return
-	 * @throws BookNotFoundException 
+	 * @throws BookNotFoundException
+	 * @throws BookRentedException
 	 */
-	RentDTO create(RentPostDTO rentDto) throws BookNotFoundException;
+	RentDTO create(Integer idBook, RentPostDTO rentDto) throws BookNotFoundException, BookRentedException;
 	
 	/**
 	 * Realiza la devolución de un libro que pertenece a un determinado alquiler.
@@ -69,5 +78,13 @@ public interface RentService {
 	 * @return
 	 */
 	List<Rent> findSanctionable();
+
+	/**
+	 * Obtiene el historial de alquileres de un libro.
+	 * 
+	 * @param idBook
+	 * @return
+	 */
+	List<RentDTO> getHistory(Integer idBook);
 
 }
