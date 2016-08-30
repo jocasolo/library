@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.dozer.DozerBeanMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import com.at.library.controller.BookController;
+import com.at.library.controller.UserController;
 import com.at.library.dao.UserDAO;
 import com.at.library.dto.UserDTO;
 import com.at.library.dto.UserPutDTO;
@@ -25,7 +27,7 @@ import com.at.library.service.rent.RentService;
 @Service
 public class UserServiceImpl implements UserService {
 
-	private static final Logger log = LoggerFactory.getLogger(BookController.class);
+	private static final Logger log = LoggerFactory.getLogger(UserController.class);
 
 	@Autowired
 	private UserDAO userDao;
@@ -38,6 +40,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Scheduled(cron = "15 0/1 * * * ?")
+	@Transactional
 	public void penalize() {
 		log.debug("Comienza el proceso de penalización de usuarios.");
 		Iterator<Rent> iterator = rentService.findSanctionable().iterator();
