@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
 	private DozerBeanMapper dozer;
 
 	@Override
-	@Scheduled(cron = "15 0/1 * * * ?")
+	@Scheduled(cron = "0 0 2 1/1 * ?")
 	@Transactional
 	public void penalize() {
 		log.debug("Comienza el proceso de penalización de usuarios.");
@@ -68,7 +68,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	@Scheduled(cron = "45 0/1 * * * ?")
+	@Scheduled(cron = "0 0 3 1/1 * ?")
 	public void forgive() {
 		log.debug("Comienza el proceso de comprobación de sanciones a usuarios.");
 		Iterator<User> iterator = userDao.findByStatus(UserEnum.BANNED).iterator();
