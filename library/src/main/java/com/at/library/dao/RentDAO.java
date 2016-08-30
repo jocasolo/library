@@ -12,9 +12,12 @@ import com.at.library.model.Rent;
 @Repository
 public interface RentDAO extends CrudRepository<Rent, Integer>{
 	
-	public Rent findOneByPkBookAndReturnDateIsNull(Book book);
+	public Rent findOneByBookAndReturnDateIsNull(Book book);
 	
-	@Query(value="SELECT r FROM Rent AS r WHERE r.returnDate IS NULL")
+	@Query(value="SELECT r FROM Rent AS r WHERE r.returnDate IS NULL AND r.endDate < CURRENT_DATE")
 	public List<Rent> findSanctionalbe();
+	
+	@Query(value="SELECT r FROM Rent AS r WHERE ?1 = ?1")
+	public List<Rent> findAllByBookId(Integer id);
 	
 }
