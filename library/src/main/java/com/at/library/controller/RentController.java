@@ -17,9 +17,7 @@ import com.at.library.exceptions.BookNotFoundException;
 import com.at.library.exceptions.BookRentedException;
 import com.at.library.service.rent.RentService;
 
-
 @RestController
-@RequestMapping(value = "/book/{id}/rent")
 public class RentController {
 
 	@Autowired
@@ -27,21 +25,28 @@ public class RentController {
 
 	private static final Logger log = LoggerFactory.getLogger(BookController.class);
 
-	@RequestMapping(method = { RequestMethod.GET })
-	public List<RentDTO> getAll() {
-		return rentService.findAll();
+	@RequestMapping(value = "/book/{id}/rent", method = { RequestMethod.GET })
+	public List<RentDTO> getHistory(@PathVariable("id") Integer idBook) throws BookNotFoundException {
+		log.debug(String.format("Buscando alquileres del libro con id: %s", idBook));
+		return rentService.getHistory(idBook);
 	}
 
-	@RequestMapping(method = { RequestMethod.POST })
-	public RentDTO create(@RequestBody RentPostDTO rent) throws BookRentedException, BookNotFoundException {
-		log.debug(String.format("Creando el alquiler: %s", rent));
-		return rentService.create(rent);
-	}
-
-	@RequestMapping(method = { RequestMethod.DELETE })
+	@RequestMapping(value = "book/{id}/rent", method = { RequestMethod.DELETE })
 	public RentDTO restore(@PathVariable("id") Integer idBook) throws BookNotFoundException {
 		log.debug(String.format("Devolviendo alquiler con el libro con id: %s", idBook));
 		return rentService.restore(idBook);
+	}
+
+	@RequestMapping(value = "/rent", method = { RequestMethod.GET })
+	public List<RentDTO> getAll() {
+		log.debug(String.format("Obteniedno todos los alquileres"));
+		return rentService.findAll();
+	}
+
+	@RequestMapping(value = "/book/{id}/rent", method = { RequestMethod.POST })
+	public RentDTO create(@PathVariable("id") Integer idBook, @RequestBody RentPostDTO rent) throws BookRentedException, BookNotFoundException {
+		log.debug(String.format("Creando el alquiler: %s", rent));
+		return rentService.create(idBook, rent);
 	}
 
 }
