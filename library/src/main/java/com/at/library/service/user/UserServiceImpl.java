@@ -15,11 +15,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import com.at.library.controller.UserController;
 import com.at.library.dao.UserDAO;
 import com.at.library.dto.UserDTO;
 import com.at.library.dto.UserPutDTO;
-import com.at.library.enums.UserStatus;
+import com.at.library.enums.UserEnum;
 import com.at.library.model.Rent;
 import com.at.library.model.User;
 import com.at.library.service.rent.RentService;
@@ -27,7 +26,7 @@ import com.at.library.service.rent.RentService;
 @Service
 public class UserServiceImpl implements UserService {
 
-	private static final Logger log = LoggerFactory.getLogger(UserController.class);
+	private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
 
 	@Autowired
 	private UserDAO userDao;
@@ -57,8 +56,9 @@ public class UserServiceImpl implements UserService {
 			Calendar forgiveDate = Calendar.getInstance();
 			forgiveDate.setTime(initDate);
 			forgiveDate.add(Calendar.DATE, days); // Calcula la fecha de perdón
+			System.out.println(user.getName());
 
-			user.setStatus(UserStatus.BANNED);
+			user.setStatus(UserEnum.BANNED);
 			user.setPenalizeDate(initDate);
 			user.setForgiveDate(forgiveDate.getTime());
 
@@ -71,7 +71,15 @@ public class UserServiceImpl implements UserService {
 	@Scheduled(cron = "45 0/1 * * * ?")
 	public void forgive() {
 		log.debug("Comienza el proceso de comprobación de sanciones a usuarios.");
-		
+		Iterator<User> iterator = userDao.findByStatus(UserEnum.BANNED).iterator();
+		while (iterator.hasNext()) {
+			User user = iterator.next();
+			if(user.getForgiveDate().before(new Date())){
+				user.setStatus(UserEnum.NORMAL);
+				userDao.save(user);
+				log.debug("Usuario %s perdonado", user);
+			}
+		}
 	}
 
 	@Override
@@ -94,7 +102,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserDTO create(UserDTO userDto) {
 		User user = transform(userDto);
-		user.setStatus(UserStatus.NORMAL);
+		user.setStatus(UserEnum.NORMAL);
 		return transform(userDao.save(user));
 	}
 
