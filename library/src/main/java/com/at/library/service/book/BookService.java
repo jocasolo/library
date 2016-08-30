@@ -1,8 +1,13 @@
 package com.at.library.service.book;
 
+import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
+
 import com.at.library.dto.BookDTO;
+import com.at.library.dto.RentDTO;
 import com.at.library.enums.StatusEnum;
 import com.at.library.exceptions.BookNotFoundException;
 import com.at.library.exceptions.BookWrongUpdateException;
@@ -105,5 +110,7 @@ public interface BookService {
 	 * @param newStatus
 	 */
 	void changeStatus(Book book, StatusEnum newStatus);
+	
+	void migration();
 
 }

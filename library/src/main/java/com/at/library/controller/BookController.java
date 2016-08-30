@@ -58,5 +58,11 @@ public class BookController {
 		log.debug(String.format("Borrando el libro con el id: %s", id));
 		bookservice.delete(id);
 	}
+	
+	@RequestMapping(value = "/migration", method = { RequestMethod.POST })
+	public void migration(){
+		log.debug(String.format("Migrando libros."));
+		bookservice.migration();
+	}
 
 }

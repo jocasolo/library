@@ -1,17 +1,21 @@
 package com.at.library.service.book;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 
 import com.at.library.dao.BookDAO;
 import com.at.library.dto.BookDTO;
+import com.at.library.dto.RentDTO;
 import com.at.library.enums.StatusEnum;
 import com.at.library.exceptions.BookNotFoundException;
 import com.at.library.exceptions.BookWrongUpdateException;
@@ -25,6 +29,9 @@ public class BookServiceImpl implements BookService {
 
 	@Autowired
 	private DozerBeanMapper dozer;
+	
+	@Autowired
+	private RestTemplate restTemplate;
 
 	@Override
 	@Transactional(readOnly = true)
@@ -116,6 +123,35 @@ public class BookServiceImpl implements BookService {
 		for (Book b : books)
 			res.add(transform(b));
 		return res;
+	}
+	
+	//googleapis.com/books/v1/volumes?q=Lord+of+rings
+	
+	// RestTemplate -> debería ser global
+	// Guardar id de los libros para no repetir
+	@Override
+	public void migration() {
+		final String url = "http://192.168.11.57:8080/rent";
+		final Integer size = 20;
+		Integer page = 0;
+		final List<Integer> books = new ArrayList<>();
+		
+		RentDTO[] rents = restTemplate.getForObject(url + "?page=" + page + "&size=" + size, RentDTO[].class);
+		while(rents != null){
+			final Iterator<RentDTO> iterator = Arrays.asList(rents).iterator();
+			while(iterator.hasNext()){
+				Book book = transform(iterator.next().getBook());
+				if(!books.contains(book.getId())){
+					books.add(book.getId());
+					book.setId(iterator.next().getBook().getId());
+					bookDao.save(book);
+				}
+			}
+			page++;
+			rents = restTemplate.getForObject(url + "?page=" + page + "&size=" + size, RentDTO[].class);
+		}
+		
+		
 	}
 
 }
