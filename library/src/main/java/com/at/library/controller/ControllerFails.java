@@ -17,21 +17,21 @@ public class ControllerFails {
 	@ResponseBody
 	@ExceptionHandler(BookRentedException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	public ApiErrorDTO errorBookRented(Exception e){
+	public ApiErrorDTO error(BookRentedException e){
 		return new ApiErrorDTO(400, e.getMessage());
 	}
 	
 	@ResponseBody
 	@ExceptionHandler(BookNotFoundException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)
-	public ApiErrorDTO errorBookNotFound(Exception e){
+	public ApiErrorDTO error(BookNotFoundException e){
 		return new ApiErrorDTO(404, e.getMessage());
 	}
 	
 	@ResponseBody
 	@ExceptionHandler(UserNotFoundException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)
-	public ApiErrorDTO errorUserNotFound(Exception e){
+	public ApiErrorDTO error(UserNotFoundException e){
 		return new ApiErrorDTO(404, e.getMessage());
 	}
 	
