@@ -18,6 +18,20 @@ public class RentDTO extends DTO implements Serializable {
 	private EmployeeDTO employee;
 
 	private BookDTO book;
+	
+	public RentDTO() {
+		super();
+	}
+
+	public RentDTO(Date initDate, Date endDate, Date returnDate, UserDTO user, EmployeeDTO employee, BookDTO book) {
+		super();
+		this.initDate = initDate;
+		this.endDate = endDate;
+		this.returnDate = returnDate;
+		this.user = user;
+		this.employee = employee;
+		this.book = book;
+	}
 
 	public Date getReturnDate() {
 		return returnDate;

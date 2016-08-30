@@ -3,9 +3,10 @@ package com.at.library.model;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
@@ -17,8 +18,15 @@ public class Rent implements Serializable {
 
 	private static final long serialVersionUID = 1538901993209704439L;
 
-	@EmbeddedId
-	private RentPK pk = new RentPK();
+	@Id
+	@GeneratedValue
+	private Integer id;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date initDate;
+	
+	@OneToOne(fetch = FetchType.LAZY)
+	private Book book;
 
 	@OneToOne(fetch = FetchType.LAZY)
 	private User user;
@@ -31,14 +39,6 @@ public class Rent implements Serializable {
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date returnDate;
-
-	public RentPK getPk() {
-		return pk;
-	}
-
-	public void setPk(RentPK pk) {
-		this.pk = pk;
-	}
 
 	public User getUser() {
 		return user;
@@ -71,21 +71,29 @@ public class Rent implements Serializable {
 	public void setReturnDate(Date returnDate) {
 		this.returnDate = returnDate;
 	}
-	
-	public Book getBook(){
-		return pk.getBook();
-	}
-	
-	public void setBook(Book book){
-		pk.setBook(book);
-	}
-	
-	public Date getInitDate(){
-		return pk.getInitDate();
-	}
-	
-	public void setInitDate(Date initDate){
-		pk.setInitDate(initDate);
+
+	public Integer getId() {
+		return id;
 	}
 
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public Date getInitDate() {
+		return initDate;
+	}
+
+	public void setInitDate(Date initDate) {
+		this.initDate = initDate;
+	}
+
+	public Book getBook() {
+		return book;
+	}
+
+	public void setBook(Book book) {
+		this.book = book;
+	}
+	
 }
