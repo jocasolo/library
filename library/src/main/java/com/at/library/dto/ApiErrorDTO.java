@@ -7,10 +7,14 @@ public class ApiErrorDTO extends DTO {
 	private Integer code;
 
 	private String msg;
-	
-	public ApiErrorDTO(Integer code, String msg){
+
+	public ApiErrorDTO(Integer code, String msg) {
 		this.code = code;
 		this.msg = msg;
+	}
+
+	public ApiErrorDTO() {
+		super();
 	}
 
 	public Integer getCode() {
