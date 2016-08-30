@@ -17,6 +17,7 @@ import com.at.library.exceptions.BookNotFoundException;
 import com.at.library.exceptions.BookRentedException;
 import com.at.library.service.rent.RentService;
 
+
 @RestController
 @RequestMapping(value = "/book/{id}/rent")
 public class RentController {

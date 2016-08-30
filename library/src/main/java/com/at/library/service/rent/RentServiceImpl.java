@@ -1,14 +1,19 @@
 package com.at.library.service.rent;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.log4j.spi.LoggerFactory;
 import org.dozer.DozerBeanMapper;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import com.at.library.dao.RentDAO;
 import com.at.library.dto.RentDTO;
@@ -116,5 +121,5 @@ public class RentServiceImpl implements RentService {
 	public List<Rent> findSanctionable() {
 		return rentDao.findSanctionalbe();
 	}
-
+	
 }
