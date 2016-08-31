@@ -81,14 +81,6 @@ public interface RentService {
 	 * @return
 	 */
 	<T> T transform(Rent rent);
-
-	/**
-	 * Transforma un RentDTO en un Rent
-	 * 
-	 * @param rent
-	 * @return
-	 */
-	Rent transform(RentDTO rent);
 	
 	public <T> List<T> transform(List<Rent> rents, Class<T> destinationClass);
 

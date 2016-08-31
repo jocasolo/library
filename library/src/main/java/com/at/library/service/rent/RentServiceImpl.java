@@ -131,13 +131,9 @@ public class RentServiceImpl implements RentService {
 	}
 	
 	@Override
+	@SuppressWarnings("unchecked")
 	public RentDTO transform(Rent rent) {
 		return dozer.map(rent, RentDTO.class);
-	}
-
-	@Override
-	public Rent transform(RentDTO rent) {
-		return dozer.map(rent, Rent.class);
 	}
 	
 	@Override
