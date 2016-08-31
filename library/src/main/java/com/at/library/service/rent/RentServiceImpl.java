@@ -79,20 +79,25 @@ public class RentServiceImpl implements RentService {
 
 		if (bookService.isAvailable(book)) {
 			final User user = userService.findOne(rentDto.getIdUser());
-			final Employee employee = employeeService.findOne(rentDto.getIdEmployee());
-
-			bookService.changeStatus(book, BookEnum.DISABLE);
-			Rent rent = new Rent();
-			rent.setBook(book);
-			rent.setUser(user);
-			rent.setEmployee(employee);
-			rent.setInitDate(new Date());
-			rent.setEndDate(calcEndDate(new Date()));
-
-			rentDao.save(rent);
-			return transform(rent);
+			
+			if(!userService.isBanned(user)){
+				final Employee employee = employeeService.findOne(rentDto.getIdEmployee());
+	
+				bookService.changeStatus(book, BookEnum.DISABLE);
+				Rent rent = new Rent();
+				rent.setBook(book);
+				rent.setUser(user);
+				rent.setEmployee(employee);
+				rent.setInitDate(new Date());
+				rent.setEndDate(calcEndDate(new Date()));
+	
+				rentDao.save(rent);
+				return transform(rent);
+			}
+			else
+				;// Throw UserBannedException
 		}
-
+		
 		throw new BookRentedException();
 	}
 

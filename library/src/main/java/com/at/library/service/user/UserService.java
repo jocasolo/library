@@ -87,4 +87,12 @@ public interface UserService {
 	 * Perdona a los usuarios
 	 */
 	void forgive();
+	
+	/**
+	 * Comprueba si un usuario puede alquilar libros.
+	 * 
+	 * @param user
+	 * @return
+	 */
+	Boolean isBanned(User user);
 }
