@@ -85,6 +85,14 @@ public interface RentService {
 	 * @param idBook
 	 * @return
 	 */
-	List<RentDTO> getHistory(Integer idBook);
+	List<RentDTO> getBookHistory(Integer idBook);
+	
+	/**
+	 * Obtiene el historial de alquileres de un usuario.
+	 * 
+	 * @param idUser
+	 * @return
+	 */
+	List<RentDTO> getUserHistory(Integer idUser);
 
 }
