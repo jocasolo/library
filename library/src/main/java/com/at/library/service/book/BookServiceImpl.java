@@ -1,5 +1,6 @@
 package com.at.library.service.book;
 
+import java.time.temporal.ChronoField;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -7,6 +8,10 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.dozer.DozerBeanMapper;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.DateTimeFormatterBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +20,8 @@ import org.springframework.web.client.RestTemplate;
 import com.at.library.dao.BookDAO;
 import com.at.library.dto.BookDTO;
 import com.at.library.dto.RentDTO;
+import com.at.library.dto.external.BookApiDTO;
+import com.at.library.dto.external.VolumeInfoDTO;
 import com.at.library.enums.BookEnum;
 import com.at.library.exceptions.BookNotFoundException;
 import com.at.library.exceptions.BookWrongUpdateException;
@@ -28,7 +35,7 @@ public class BookServiceImpl implements BookService {
 
 	@Autowired
 	private DozerBeanMapper dozer;
-	
+
 	@Autowired
 	private RestTemplate restTemplate;
 
@@ -50,13 +57,17 @@ public class BookServiceImpl implements BookService {
 		final Book book = bookDao.findOne(id);
 		if (book == null)
 			throw new BookNotFoundException();
-		
+
 		return book;
 	}
 
 	@Override
 	public List<BookDTO> search(String isbn, String title, String author) {
-		return bookDao.search(isbn, title, author);
+		final List<Book> books = bookDao.search(isbn, title, author);
+		List<BookDTO> res = new ArrayList<>();
+		for(Book b : books)
+			res.add(getVolumeInfo(b));
+		return res;
 	}
 
 	@Override
@@ -69,9 +80,9 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public void update(Integer id, BookDTO bookDto) throws BookWrongUpdateException {
-		if(id != bookDto.getId())
+		if (id != bookDto.getId())
 			throw new BookWrongUpdateException();
-			
+
 		final Book book = transform(bookDto);
 		bookDao.save(book);
 	}
@@ -79,7 +90,7 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public void delete(Integer id) throws BookNotFoundException {
 		Book book = bookDao.findOne(id);
-		if(book == null)
+		if (book == null)
 			throw new BookNotFoundException();
 		book.setStatus(BookEnum.DELETED);
 		bookDao.save(book);
@@ -93,7 +104,7 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public Boolean isAvailable(Integer id) throws BookNotFoundException {
 		final Book b = bookDao.findOne(id);
-		if(b == null)
+		if (b == null)
 			throw new BookNotFoundException();
 		return b.getStatus().equals(BookEnum.OK);
 	}
@@ -123,24 +134,20 @@ public class BookServiceImpl implements BookService {
 			res.add(transform(b));
 		return res;
 	}
-	
-	//googleapis.com/books/v1/volumes?q=Lord+of+rings
-	
-	// RestTemplate -> debería ser global
-	// Guardar id de los libros para no repetir
+
 	@Override
 	public void migration() {
 		final String url = "http://192.168.11.57:8080/rent";
 		final Integer size = 20;
 		Integer page = 0;
 		final List<Integer> books = new ArrayList<>();
-		
+
 		RentDTO[] rents = restTemplate.getForObject(url + "?page=" + page + "&size=" + size, RentDTO[].class);
-		while(rents != null){
+		while (rents != null) {
 			final Iterator<RentDTO> iterator = Arrays.asList(rents).iterator();
-			while(iterator.hasNext()){
+			while (iterator.hasNext()) {
 				Book book = transform(iterator.next().getBook());
-				if(!books.contains(book.getId())){
+				if (!books.contains(book.getId())) {
 					books.add(book.getId());
 					book.setId(iterator.next().getBook().getId());
 					bookDao.save(book);
@@ -149,8 +156,22 @@ public class BookServiceImpl implements BookService {
 			page++;
 			rents = restTemplate.getForObject(url + "?page=" + page + "&size=" + size, RentDTO[].class);
 		}
+
+	}
+
+	@Override
+	public BookDTO getVolumeInfo(Book book) {
+		final String url = "https://www.googleapis.com/books/v1/volumes?startIndex=0&maxResults=1&q=" + book.getTitle();
+		final BookApiDTO info = restTemplate.getForObject(url, BookApiDTO.class);
 		
-		
+		BookDTO res = transform(book);
+		if(info != null){
+			final VolumeInfoDTO volInfo = info.getItems()[0].getVolumeInfo();
+			res.setDescription(volInfo.getDescription());
+			res.setYear(Integer.parseInt(volInfo.getPublishedDate().substring(0, 4)));
+			res.setImage(volInfo.getImageLinks().get("thumbnail"));
+		}
+		return res;
 	}
 
 }

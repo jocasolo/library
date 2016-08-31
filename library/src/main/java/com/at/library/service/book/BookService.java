@@ -111,4 +111,11 @@ public interface BookService {
 	 */
 	void migration();
 
+	/**
+	 * Obtiene información sobre el libro consultando una api externa.
+	 * 
+	 * @param book
+	 */
+	BookDTO getVolumeInfo(Book book);
+
 }
