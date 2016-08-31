@@ -15,6 +15,7 @@ import com.at.library.dto.RentDTO;
 import com.at.library.dto.RentPostDTO;
 import com.at.library.exceptions.BookNotFoundException;
 import com.at.library.exceptions.BookRentedException;
+import com.at.library.exceptions.UserNotFoundException;
 import com.at.library.service.rent.RentService;
 
 @RestController
@@ -26,9 +27,9 @@ public class RentController {
 	private static final Logger log = LoggerFactory.getLogger(BookController.class);
 
 	@RequestMapping(value = "/book/{id}/rent", method = { RequestMethod.GET })
-	public List<RentDTO> getHistory(@PathVariable("id") Integer idBook) throws BookNotFoundException {
-		log.debug(String.format("Buscando alquileres del libro con id: %s", idBook));
-		return rentService.getHistory(idBook);
+	public List<RentDTO> getBookHistory(@PathVariable("id") Integer idBook) throws BookNotFoundException {
+		log.debug(String.format("Historial del libro con id: %s", idBook));
+		return rentService.getBookHistory(idBook);
 	}
 
 	@RequestMapping(value = "book/{id}/rent", method = { RequestMethod.DELETE })
@@ -36,17 +37,24 @@ public class RentController {
 		log.debug(String.format("Devolviendo alquiler con el libro con id: %s", idBook));
 		return rentService.restore(idBook);
 	}
-
-	@RequestMapping(value = "/rent", method = { RequestMethod.GET })
-	public List<RentDTO> getAll() {
-		log.debug(String.format("Obteniedno todos los alquileres"));
-		return rentService.findAll();
-	}
-
+	
 	@RequestMapping(value = "/book/{id}/rent", method = { RequestMethod.POST })
 	public RentDTO create(@PathVariable("id") Integer idBook, @RequestBody RentPostDTO rent) throws BookRentedException, BookNotFoundException {
 		log.debug(String.format("Creando el alquiler: %s", rent));
 		return rentService.create(idBook, rent);
 	}
+	
+	@RequestMapping(value = "/user/{id}/rent", method = { RequestMethod.GET })
+	public List<RentDTO> getUserHistoy(@PathVariable("id") Integer idUser) throws UserNotFoundException {
+		log.debug(String.format("Historial del usuario con id: %s", idUser));
+		return rentService.getUserHistory(idUser);
+	}
+	
+	@RequestMapping(value = "/rent", method = { RequestMethod.GET })
+	public List<RentDTO> getAll() {
+		log.debug(String.format("Obteniedno todos los alquileres"));
+		return rentService.findAll();
+	}
+	
 
 }
