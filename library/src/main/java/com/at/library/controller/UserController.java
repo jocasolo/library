@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.at.library.dto.UserDTO;
 import com.at.library.dto.UserPutDTO;
+import com.at.library.exceptions.UserNotFoundException;
 import com.at.library.service.user.UserService;
 
 @RestController
@@ -53,7 +54,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/{id}", method = { RequestMethod.DELETE })
-	public void delete(@PathVariable("id") Integer id) {
+	public void delete(@PathVariable("id") Integer id) throws UserNotFoundException {
 		log.debug(String.format("Borrando el usuario con el id: %s", id));
 		userService.delete(id);
 	}

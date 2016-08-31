@@ -15,4 +15,10 @@ public interface BookDAO extends CrudRepository<Book, Integer> {
 	@Query(value = "SELECT new com.at.library.dto.BookDTO(b.id, b.isbn, b.title, b.author, b.status) from Book as b WHERE (b.isbn LIKE %?1% OR ?1 IS NULL) AND (b.title LIKE %?2% OR ?2 IS NULL) AND (b.author LIKE %?3% OR ?3 IS NULL) AND status <> 'DELETED'")
 	public List<BookDTO> search(String isbn, String title, String author);
 	
+	@Query(value = "SELECT b FROM Book AS b WHERE id = ?1 AND status <> 'DELETED'")
+	public Book findOne(Integer id);
+	
+	@Query(value = "SELECT b FROM Book AS b WHERE status <> 'DELETED'")
+	public List<Book> findAll();
+	
 }

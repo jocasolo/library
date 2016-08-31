@@ -18,4 +18,10 @@ public interface UserDAO extends CrudRepository<User, Integer> {
 	@Query(value = "SELECT new com.at.library.dto.UserDTO(u.id, u.dni, u.name, u.surname) from User as u WHERE (u.dni LIKE %?1% OR ?1 IS NULL) AND (u.name LIKE %?2% OR ?2 IS NULL) AND (u.surname LIKE %?3% OR ?3 IS NULL) AND status <> 'DELETED'")
 	public List<UserDTO> search(String dni, String name, String surname);
 	
+	@Query(value = "SELECT b FROM Book AS b WHERE id = ?1 AND status <> 'DELETED'")
+	public User findOne(Integer id);
+	
+	@Query(value = "SELECT b FROM Book AS b WHERE status <> 'DELETED'")
+	public List<User> findAll();
+	
 }
