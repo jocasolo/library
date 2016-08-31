@@ -38,5 +38,6 @@ dependencies {
 	testRuntime		('org.hsqldb:hsqldb:2.3.1')
 	
 	testCompile		('org.springframework.boot:spring-boot-starter-test')
+	testCompile		('org.mockito:mockito-all:2.0.2-beta')
 	
 }
