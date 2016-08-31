@@ -7,6 +7,7 @@ import com.at.library.dto.RentDTO;
 import com.at.library.dto.RentPostDTO;
 import com.at.library.exceptions.BookNotFoundException;
 import com.at.library.exceptions.BookRentedException;
+import com.at.library.exceptions.UserBannedException;
 import com.at.library.model.Rent;
 
 public interface RentService {
@@ -51,8 +52,9 @@ public interface RentService {
 	 * @return
 	 * @throws BookNotFoundException
 	 * @throws BookRentedException
+	 * @throws UserBannedException 
 	 */
-	RentDTO create(Integer idBook, RentPostDTO rentDto) throws BookNotFoundException, BookRentedException;
+	RentDTO create(Integer idBook, RentPostDTO rentDto) throws BookNotFoundException, BookRentedException, UserBannedException;
 	
 	/**
 	 * Realiza la devolución de un libro que pertenece a un determinado alquiler.

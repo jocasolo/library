@@ -16,6 +16,7 @@ import com.at.library.dto.RentPostDTO;
 import com.at.library.enums.BookEnum;
 import com.at.library.exceptions.BookNotFoundException;
 import com.at.library.exceptions.BookRentedException;
+import com.at.library.exceptions.UserBannedException;
 import com.at.library.model.Book;
 import com.at.library.model.Employee;
 import com.at.library.model.Rent;
@@ -74,14 +75,14 @@ public class RentServiceImpl implements RentService {
 	}
 
 	@Override
-	public RentDTO create(Integer idBook, RentPostDTO rentDto) throws BookNotFoundException, BookRentedException {
+	public RentDTO create(Integer idBook, RentPostDTO rentDto) throws BookNotFoundException, BookRentedException, UserBannedException {
 		final Book book = bookService.findOne(idBook);
 
 		if (bookService.isAvailable(book)) {
-			final User user = userService.findOne(rentDto.getIdUser());
+			final User user = userService.findOne(rentDto.getUser());
 			
 			if(!userService.isBanned(user)){
-				final Employee employee = employeeService.findOne(rentDto.getIdEmployee());
+				final Employee employee = employeeService.findOne(rentDto.getEmployee());
 	
 				bookService.changeStatus(book, BookEnum.DISABLE);
 				Rent rent = new Rent();
@@ -95,7 +96,7 @@ public class RentServiceImpl implements RentService {
 				return transform(rent);
 			}
 			else
-				;// Throw UserBannedException
+				throw new UserBannedException();
 		}
 		
 		throw new BookRentedException();

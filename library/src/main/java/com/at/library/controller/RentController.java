@@ -15,6 +15,7 @@ import com.at.library.dto.RentDTO;
 import com.at.library.dto.RentPostDTO;
 import com.at.library.exceptions.BookNotFoundException;
 import com.at.library.exceptions.BookRentedException;
+import com.at.library.exceptions.UserBannedException;
 import com.at.library.exceptions.UserNotFoundException;
 import com.at.library.service.rent.RentService;
 
@@ -39,7 +40,7 @@ public class RentController {
 	}
 	
 	@RequestMapping(value = "/book/{id}/rent", method = { RequestMethod.POST })
-	public RentDTO create(@PathVariable("id") Integer idBook, @RequestBody RentPostDTO rent) throws BookRentedException, BookNotFoundException {
+	public RentDTO create(@PathVariable("id") Integer idBook, @RequestBody RentPostDTO rent) throws BookRentedException, BookNotFoundException, UserBannedException {
 		log.debug(String.format("Creando el alquiler: %s", rent));
 		return rentService.create(idBook, rent);
 	}
