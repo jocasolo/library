@@ -3,6 +3,7 @@ package com.at.library.service.rent;
 import java.util.Date;
 import java.util.List;
 
+import com.at.library.dto.HistoryRentedDTO;
 import com.at.library.dto.RentDTO;
 import com.at.library.dto.RentPostDTO;
 import com.at.library.exceptions.BookNotFoundException;
@@ -18,30 +19,6 @@ public interface RentService {
 	 * @return listado de alquileres
 	 */
 	List<RentDTO> findAll();
-
-	/**
-	 * Transforma un Rent en un RentDTO
-	 * 
-	 * @param rent
-	 * @return
-	 */
-	RentDTO transform(Rent rent);
-
-	/**
-	 * Transforma un RentDTO en un Rent
-	 * 
-	 * @param rent
-	 * @return
-	 */
-	Rent transform(RentDTO rent);
-	
-	/**
-	 * Transforma una lista de alquileres en una lista de alquileres DTO.
-	 * 
-	 * @param rents
-	 * @return
-	 */
-	List<RentDTO> transform(List<Rent> rents);
 	
 	/**
 	 * Realiza el alquiler de un libro a un determinado usario y realizado
@@ -87,7 +64,7 @@ public interface RentService {
 	 * @param idBook
 	 * @return
 	 */
-	List<RentDTO> getBookHistory(Integer idBook);
+	List<HistoryRentedDTO> getBookHistory(Integer idBook);
 	
 	/**
 	 * Obtiene el historial de alquileres de un usuario.
@@ -95,6 +72,25 @@ public interface RentService {
 	 * @param idUser
 	 * @return
 	 */
-	List<RentDTO> getUserHistory(Integer idUser);
+	List<HistoryRentedDTO> getUserHistory(Integer idUser);
+	
+	/**
+	 * Transforma un Rent en un RentDTO
+	 * 
+	 * @param rent
+	 * @return
+	 */
+	<T> T transform(Rent rent);
+
+	/**
+	 * Transforma un RentDTO en un Rent
+	 * 
+	 * @param rent
+	 * @return
+	 */
+	Rent transform(RentDTO rent);
+	
+	public <T> List<T> transform(List<Rent> rents, Class<T> destinationClass);
+
 
 }

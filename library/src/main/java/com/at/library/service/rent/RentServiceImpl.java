@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.at.library.dao.RentDAO;
+import com.at.library.dto.HistoryRentedDTO;
 import com.at.library.dto.RentDTO;
 import com.at.library.dto.RentPostDTO;
 import com.at.library.enums.BookEnum;
@@ -53,24 +54,6 @@ public class RentServiceImpl implements RentService {
 			final Rent r = iterator.next();
 			res.add(transform(r));
 		}
-		return res;
-	}
-
-	@Override
-	public RentDTO transform(Rent rent) {
-		return dozer.map(rent, RentDTO.class);
-	}
-
-	@Override
-	public Rent transform(RentDTO rent) {
-		return dozer.map(rent, Rent.class);
-	}
-	
-	@Override
-	public List<RentDTO> transform(List<Rent> rents) {
-		List<RentDTO> res = new ArrayList<>();
-		for (Rent u : rents)
-			res.add(transform(u));
 		return res;
 	}
 
@@ -134,13 +117,35 @@ public class RentServiceImpl implements RentService {
 	}
 
 	@Override
-	public List<RentDTO> getBookHistory(Integer idBook) {
-		return transform(rentDao.findAllByBookId(idBook));
+	public List<HistoryRentedDTO> getBookHistory(Integer idBook) {
+		List<Rent> rents = rentDao.findAllByBookId(idBook);
+		System.out.println(rents.get(0).getBook());
+		HistoryRentedDTO dto = dozer.map(rents.get(0), HistoryRentedDTO.class);
+		System.out.println(dto.getTitle());
+		return transform(rentDao.findAllByBookId(idBook), HistoryRentedDTO.class);
 	}
 
 	@Override
-	public List<RentDTO> getUserHistory(Integer idUser) {
-		return transform(rentDao.findAllByUserId(idUser));
+	public List<HistoryRentedDTO> getUserHistory(Integer idUser) {
+		return transform(rentDao.findAllByUserId(idUser), HistoryRentedDTO.class);
+	}
+	
+	@Override
+	public RentDTO transform(Rent rent) {
+		return dozer.map(rent, RentDTO.class);
+	}
+
+	@Override
+	public Rent transform(RentDTO rent) {
+		return dozer.map(rent, Rent.class);
+	}
+	
+	@Override
+	public <T> List<T> transform(List<Rent> rents, Class<T> destinationClass) {
+		List<T> res = new ArrayList<>();
+		for(Rent rent : rents)
+			res.add(dozer.map(rent, destinationClass));
+		return res;
 	}
 	
 }
