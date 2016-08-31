@@ -82,6 +82,13 @@ public interface RentService {
 	 */
 	<T> T transform(Rent rent);
 	
+	/**
+	 * Transformador genérico de una lista de alquileres a una lista de DTO.
+	 * 
+	 * @param rents
+	 * @param destinationClass
+	 * @return
+	 */
 	public <T> List<T> transform(List<Rent> rents, Class<T> destinationClass);
 
 
