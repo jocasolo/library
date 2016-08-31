@@ -84,7 +84,7 @@ public class RentServiceImpl implements RentService {
 			if(!userService.isBanned(user)){
 				final Employee employee = employeeService.findOne(rentDto.getEmployee());
 	
-				bookService.changeStatus(book, BookEnum.DISABLE);
+				bookService.changeStatus(book, BookEnum.RENTED);
 				Rent rent = new Rent();
 				rent.setBook(book);
 				rent.setUser(user);
@@ -107,7 +107,7 @@ public class RentServiceImpl implements RentService {
 		Book book = bookService.findOne(idBook);
 		Rent rent = rentDao.findOneByBookAndReturnDateIsNull(book);
 
-		bookService.changeStatus(book, BookEnum.ACTIVE);
+		bookService.changeStatus(book, BookEnum.OK);
 		rent.setReturnDate(new Date());
 
 		rentDao.save(rent);

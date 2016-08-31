@@ -63,7 +63,7 @@ public class BookServiceImpl implements BookService {
 	public BookDTO create(BookDTO bookDto) {
 		Book book = transform(bookDto);
 		book.setStartDate(new Date());
-		book.setStatus(BookEnum.ACTIVE);
+		book.setStatus(BookEnum.OK);
 		return transform(bookDao.save(book));
 	}
 
@@ -87,7 +87,7 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public Boolean isAvailable(Book book) {
-		return book.getStatus() != null && book.getStatus().equals(BookEnum.ACTIVE);
+		return book.getStatus() != null && book.getStatus().equals(BookEnum.OK);
 	}
 
 	@Override
@@ -95,7 +95,7 @@ public class BookServiceImpl implements BookService {
 		final Book b = bookDao.findOne(id);
 		if(b == null)
 			throw new BookNotFoundException();
-		return b.getStatus().equals(BookEnum.ACTIVE);
+		return b.getStatus().equals(BookEnum.OK);
 	}
 
 	@Override
