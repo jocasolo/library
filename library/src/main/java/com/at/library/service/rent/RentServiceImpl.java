@@ -134,8 +134,7 @@ public class RentServiceImpl implements RentService {
 
 	@Override
 	public List<RentDTO> getUserHistory(Integer idUser) {
-		// TODO Auto-generated method stub
-		return null;
+		return transform(rentDao.findAllByUserId(idUser));
 	}
 	
 }
