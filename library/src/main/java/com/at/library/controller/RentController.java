@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.at.library.dto.HistoryRentedDTO;
 import com.at.library.dto.RentDTO;
 import com.at.library.dto.RentPostDTO;
 import com.at.library.exceptions.BookNotFoundException;
@@ -28,7 +29,7 @@ public class RentController {
 	private static final Logger log = LoggerFactory.getLogger(BookController.class);
 
 	@RequestMapping(value = "/book/{id}/rent", method = { RequestMethod.GET })
-	public List<RentDTO> getBookHistory(@PathVariable("id") Integer idBook) throws BookNotFoundException {
+	public List<HistoryRentedDTO> getBookHistory(@PathVariable("id") Integer idBook) throws BookNotFoundException {
 		log.debug(String.format("Historial del libro con id: %s", idBook));
 		return rentService.getBookHistory(idBook);
 	}
@@ -46,7 +47,7 @@ public class RentController {
 	}
 	
 	@RequestMapping(value = "/user/{id}/rent", method = { RequestMethod.GET })
-	public List<RentDTO> getUserHistoy(@PathVariable("id") Integer idUser) throws UserNotFoundException {
+	public List<HistoryRentedDTO> getUserHistoy(@PathVariable("id") Integer idUser) throws UserNotFoundException {
 		log.debug(String.format("Historial del usuario con id: %s", idUser));
 		return rentService.getUserHistory(idUser);
 	}
