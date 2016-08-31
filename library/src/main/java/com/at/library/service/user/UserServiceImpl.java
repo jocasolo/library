@@ -142,4 +142,9 @@ public class UserServiceImpl implements UserService {
 		return userDao.search(dni, name, surname);
 	}
 
+	@Override
+	public Boolean isBanned(User user) {
+		return !user.getStatus().equals(UserEnum.NORMAL);
+	}
+
 }
