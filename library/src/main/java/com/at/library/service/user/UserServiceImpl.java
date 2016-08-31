@@ -20,6 +20,7 @@ import com.at.library.dao.UserDAO;
 import com.at.library.dto.UserDTO;
 import com.at.library.dto.UserPutDTO;
 import com.at.library.enums.UserEnum;
+import com.at.library.exceptions.UserNotFoundException;
 import com.at.library.model.Rent;
 import com.at.library.model.User;
 import com.at.library.service.rent.RentService;
@@ -115,8 +116,12 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void delete(Integer id) {
-		userDao.delete(id);
+	public void delete(Integer id) throws UserNotFoundException {
+		final User user = userDao.findOne(id);
+		if(user == null)
+			throw new UserNotFoundException();
+		user.setStatus(UserEnum.DELETED);
+		userDao.save(user);
 	}
 
 	@Override

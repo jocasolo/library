@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.at.library.dto.UserDTO;
 import com.at.library.dto.UserPutDTO;
+import com.at.library.exceptions.UserNotFoundException;
 import com.at.library.model.User;
 
 public interface UserService {
@@ -52,8 +53,9 @@ public interface UserService {
 	 * Elimina el usuario correspondiente al id dado.
 	 * 
 	 * @param id
+	 * @throws UserNotFoundException 
 	 */
-	void delete(Integer id);
+	void delete(Integer id) throws UserNotFoundException;
 
 	/**
 	 * Transforma un User en un UserDTO
