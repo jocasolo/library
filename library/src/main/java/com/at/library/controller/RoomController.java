@@ -5,10 +5,12 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.at.library.dto.RoomDTO;
@@ -24,9 +26,11 @@ public class RoomController {
 	private static final Logger log = LoggerFactory.getLogger(RoomController.class);
 
 	@RequestMapping(method = { RequestMethod.GET })
-	public List<RoomDTO> getAll() {
+	public List<RoomDTO> getAll(
+			@RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
+			@RequestParam(value = "size", required = false, defaultValue = "10") Integer size) {
 		log.debug("Buscando todas las salas en el sistema.");
-		return roomService.findAll();
+		return roomService.findAll(new PageRequest(page, size));
 	}
 
 	@RequestMapping(method = { RequestMethod.POST })

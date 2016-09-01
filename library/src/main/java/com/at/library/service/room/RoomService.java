@@ -2,6 +2,8 @@ package com.at.library.service.room;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
+
 import com.at.library.dto.RoomDTO;
 import com.at.library.model.Room;
 
@@ -12,7 +14,7 @@ public interface RoomService {
 	 * 
 	 * @return listado de salas
 	 */
-	List<RoomDTO> findAll();
+	List<RoomDTO> findAll(Pageable pageable);
 
 	/**
 	 * Realiza la búsqueda de una sala por id.

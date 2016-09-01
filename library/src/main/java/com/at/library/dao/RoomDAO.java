@@ -12,5 +12,7 @@ import com.at.library.model.Room;
 @Repository
 public interface RoomDAO extends CrudRepository<Room, Integer> {
 	
+	@Query(value = "SELECT r FROM Room AS r")
+	public List<Room> findAll(Pageable pageable);
 	
 }
