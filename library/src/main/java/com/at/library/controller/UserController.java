@@ -5,6 +5,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,9 +31,11 @@ public class UserController {
 	public List<UserDTO> search(
 			@RequestParam(value = "dni", required = false) String dni,
 			@RequestParam(value = "name", required = false) String name,
-			@RequestParam(value = "surname", required = false) String surname) {
+			@RequestParam(value = "surname", required = false) String surname,
+			@RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
+			@RequestParam(value = "size", required = false, defaultValue = "10") Integer size) {
 		log.debug(String.format("Buscando usuarios según los campos: %s, %s, %s", dni, name, surname));
-		return userService.search(dni, name, surname);
+		return userService.search(dni, name, surname, new PageRequest(page, size));
 	}
 
 	@RequestMapping(method = { RequestMethod.POST })

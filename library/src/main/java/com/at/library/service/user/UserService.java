@@ -2,6 +2,8 @@ package com.at.library.service.user;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
+
 import com.at.library.dto.UserDTO;
 import com.at.library.dto.UserPutDTO;
 import com.at.library.exceptions.UserNotFoundException;
@@ -24,7 +26,7 @@ public interface UserService {
 	 * @param surname
 	 * @return
 	 */
-	List<UserDTO> search(String dni, String name, String surname);
+	List<UserDTO> search(String dni, String name, String surname, Pageable pageable);
 
 	/**
 	 * Realiza la b�squeda de un usuario por id.

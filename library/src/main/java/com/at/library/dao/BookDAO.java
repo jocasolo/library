@@ -19,6 +19,6 @@ public interface BookDAO extends CrudRepository<Book, Integer> {
 	public Book findOne(Integer id);
 	
 	@Query(value = "SELECT b FROM Book AS b WHERE status <> 'DELETED'")
-	public List<Book> findAll();
+	public List<Book> findAll(Pageable pageable);
 	
 }

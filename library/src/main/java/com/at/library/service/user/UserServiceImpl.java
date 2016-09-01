@@ -13,6 +13,7 @@ import org.joda.time.Days;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -143,8 +144,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<UserDTO> search(String dni, String name, String surname) {
-		return userDao.search(dni, name, surname);
+	public List<UserDTO> search(String dni, String name, String surname, Pageable pageable) {
+		return userDao.search(dni, name, surname, pageable);
 	}
 
 	@Override
