@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.at.library.dao.RentDAO;
@@ -45,9 +46,9 @@ public class RentServiceImpl implements RentService {
 	private DozerBeanMapper dozer;
 
 	@Override
-	public List<RentDTO> findAll() {
+	public List<RentDTO> findAll(Pageable pageable) {
 
-		final Iterator<Rent> iterator = rentDao.findAll().iterator();
+		final Iterator<Rent> iterator = rentDao.findAll(pageable).iterator();
 		final List<RentDTO> res = new ArrayList<>();
 
 		while (iterator.hasNext()) {
@@ -117,17 +118,13 @@ public class RentServiceImpl implements RentService {
 	}
 
 	@Override
-	public List<HistoryRentedDTO> getBookHistory(Integer idBook) {
-		List<Rent> rents = rentDao.findAllByBookId(idBook);
-		System.out.println(rents.get(0).getBook());
-		HistoryRentedDTO dto = dozer.map(rents.get(0), HistoryRentedDTO.class);
-		System.out.println(dto.getTitle());
-		return transform(rentDao.findAllByBookId(idBook), HistoryRentedDTO.class);
+	public List<HistoryRentedDTO> getBookHistory(Integer idBook, Pageable pageable) {
+		return transform(rentDao.findAllByBookId(idBook, pageable), HistoryRentedDTO.class);
 	}
 
 	@Override
-	public List<HistoryRentedDTO> getUserHistory(Integer idUser) {
-		return transform(rentDao.findAllByUserId(idUser), HistoryRentedDTO.class);
+	public List<HistoryRentedDTO> getUserHistory(Integer idUser, Pageable pageable) {
+		return transform(rentDao.findAllByUserId(idUser, pageable), HistoryRentedDTO.class);
 	}
 	
 	@Override

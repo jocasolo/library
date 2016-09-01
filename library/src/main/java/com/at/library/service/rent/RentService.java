@@ -3,6 +3,8 @@ package com.at.library.service.rent;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
+
 import com.at.library.dto.HistoryRentedDTO;
 import com.at.library.dto.RentDTO;
 import com.at.library.dto.RentPostDTO;
@@ -16,9 +18,10 @@ public interface RentService {
 	/**
 	 * Realiza la busqueda de todos los alquileres existentes
 	 * 
-	 * @return listado de alquileres
+	 * @param pageable
+	 * @return
 	 */
-	List<RentDTO> findAll();
+	List<RentDTO> findAll(Pageable pageable);
 	
 	/**
 	 * Realiza el alquiler de un libro a un determinado usario y realizado
@@ -64,7 +67,7 @@ public interface RentService {
 	 * @param idBook
 	 * @return
 	 */
-	List<HistoryRentedDTO> getBookHistory(Integer idBook);
+	List<HistoryRentedDTO> getBookHistory(Integer idBook, Pageable pageable);
 	
 	/**
 	 * Obtiene el historial de alquileres de un usuario.
@@ -72,7 +75,7 @@ public interface RentService {
 	 * @param idUser
 	 * @return
 	 */
-	List<HistoryRentedDTO> getUserHistory(Integer idUser);
+	List<HistoryRentedDTO> getUserHistory(Integer idUser, Pageable pageable);
 	
 	/**
 	 * Transforma un Rent en un RentDTO
