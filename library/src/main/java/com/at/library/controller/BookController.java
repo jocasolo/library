@@ -5,6 +5,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,9 +37,11 @@ public class BookController {
 	public List<BookDTO> search(
 			@RequestParam(value = "isbn", required = false) String isbn,
 			@RequestParam(value = "title", required = false) String title,
-			@RequestParam(value = "author", required = false) String author) {
+			@RequestParam(value = "author", required = false) String author,
+			@RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
+			@RequestParam(value = "size", required = false, defaultValue = "10") Integer size) {
 		log.debug(String.format("Buscando según los campos: %s, %s, %s", isbn, title, author));
-		return bookservice.search(isbn, title, author);
+		return bookservice.search(isbn, title, author, new PageRequest(page, size));
 	}
 
 	@RequestMapping(method = { RequestMethod.POST })

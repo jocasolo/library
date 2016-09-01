@@ -2,6 +2,8 @@ package com.at.library.service.book;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
+
 import com.at.library.dto.BookDTO;
 import com.at.library.enums.BookEnum;
 import com.at.library.exceptions.BookNotFoundException;
@@ -30,7 +32,7 @@ public interface BookService {
 	 * 
 	 * @return
 	 */
-	List<BookDTO> search(String isbn, String title, String author);
+	List<BookDTO> search(String isbn, String title, String author, Pageable pageable);
 
 	/**
 	 * Crea un nuevo libro.

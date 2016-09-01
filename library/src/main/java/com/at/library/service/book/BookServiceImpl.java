@@ -1,6 +1,5 @@
 package com.at.library.service.book;
 
-import java.time.temporal.ChronoField;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -8,11 +7,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.dozer.DozerBeanMapper;
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
-import org.joda.time.format.DateTimeFormatterBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
@@ -62,8 +58,8 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public List<BookDTO> search(String isbn, String title, String author) {
-		final List<Book> books = bookDao.search(isbn, title, author);
+	public List<BookDTO> search(String isbn, String title, String author, Pageable pageable) {
+		final List<Book> books = bookDao.search(isbn, title, author, pageable);
 		List<BookDTO> res = new ArrayList<>();
 		for(Book b : books)
 			res.add(getVolumeInfo(b));
