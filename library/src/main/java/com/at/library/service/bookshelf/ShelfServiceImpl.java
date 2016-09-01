@@ -6,9 +6,10 @@ import java.util.List;
 
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.at.library.dao.ShelfDAO;
+import com.at.library.dao.BookshelfDAO;
 import com.at.library.dto.BookshelfDTO;
 import com.at.library.model.Bookshelf;
 
@@ -16,14 +17,14 @@ import com.at.library.model.Bookshelf;
 public class ShelfServiceImpl implements ShelfService {
 
 	@Autowired
-	private ShelfDAO shelfDao;
+	private BookshelfDAO shelfDao;
 
 	@Autowired
 	private DozerBeanMapper dozer;
 
 	@Override
-	public List<BookshelfDTO> findAll() {
-		final Iterator<Bookshelf> iterator = shelfDao.findAll().iterator();
+	public List<BookshelfDTO> findAll(Pageable pageable) {
+		final Iterator<Bookshelf> iterator = shelfDao.findAll(pageable).iterator();
 		final List<BookshelfDTO> res = new ArrayList<>();
 		while (iterator.hasNext()) {
 			final Bookshelf r = iterator.next();

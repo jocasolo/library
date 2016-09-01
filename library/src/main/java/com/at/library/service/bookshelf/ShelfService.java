@@ -2,6 +2,8 @@ package com.at.library.service.bookshelf;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
+
 import com.at.library.dto.BookshelfDTO;
 import com.at.library.model.Bookshelf;
 
@@ -12,7 +14,7 @@ public interface ShelfService {
 	 * 
 	 * @return listado de estanterías
 	 */
-	List<BookshelfDTO> findAll();
+	List<BookshelfDTO> findAll(Pageable pageable);
 
 	/**
 	 * Realiza la búsqueda de una estantería por id.
