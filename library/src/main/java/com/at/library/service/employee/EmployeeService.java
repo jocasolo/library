@@ -2,6 +2,8 @@ package com.at.library.service.employee;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
+
 import com.at.library.dto.EmployeeDTO;
 import com.at.library.model.Employee;
 
@@ -12,7 +14,7 @@ public interface EmployeeService {
 	 * 
 	 * @return Listado de empleados.
 	 */
-	List<EmployeeDTO> findAll();
+	List<EmployeeDTO> findAll(Pageable pageable);
 
 	/**
 	 * Realiza la búsqueda de un empleado por id.

@@ -17,7 +17,6 @@ Realizado para formación.
 - Spring Core
 - Spring Data
 - Spring MVC
-- Spring Security
 - Hibernate
 - JPA
 - MySQL

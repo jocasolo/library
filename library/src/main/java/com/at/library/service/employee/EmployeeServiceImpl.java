@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.at.library.dao.EmployeeDAO;
@@ -23,8 +24,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 	private DozerBeanMapper dozer;
 
 	@Override
-	public List<EmployeeDTO> findAll() {
-		final Iterator<Employee> iterator = employeeDao.findAll().iterator();
+	public List<EmployeeDTO> findAll(Pageable pageable) {
+		final Iterator<Employee> iterator = employeeDao.findAll(pageable).iterator();
 		final List<EmployeeDTO> res = new ArrayList<>();
 		while (iterator.hasNext()) {
 			final Employee r = iterator.next();
