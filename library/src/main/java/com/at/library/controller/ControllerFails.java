@@ -83,4 +83,11 @@ public class ControllerFails {
 		return new ApiErrorDTO(404, e.getMessage());
 	}
 	
+	@ResponseBody
+	@ExceptionHandler(UnsupportedOperationException.class)
+	@ResponseStatus(HttpStatus.NOT_IMPLEMENTED)
+	public ApiErrorDTO error(UnsupportedOperationException e){
+		return new ApiErrorDTO(501, e.getMessage());
+	}
+	
 }

@@ -51,11 +51,11 @@ public class EmployeeController {
 	public void update(
 			@PathVariable("id") Integer id, 
 			@RequestBody EmployeeDTO employeeDTO) {
-		throw new UnsupportedOperationException();
+		throw new UnsupportedOperationException("Aún no implementado.");
 	}
 
 	@RequestMapping(value = "/{id}", method = { RequestMethod.DELETE })
 	public void delete(@PathVariable("id") Integer id) {
-		throw new UnsupportedOperationException();
+		throw new UnsupportedOperationException("Aún no implementado.");
 	}
 }

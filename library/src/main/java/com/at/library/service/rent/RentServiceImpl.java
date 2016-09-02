@@ -77,10 +77,6 @@ public class RentServiceImpl implements RentService {
 		rent.setEmployee(employee);
 		rent.setInitDate(new Date());
 		rent.setReturnDate(calcReturnDate(new Date()));
-		
-		System.out.println("Inicio: " + rent.getInitDate());
-		System.out.println("Devolucion: " + rent.getReturnDate());
-		System.out.println("Fin: " + rent.getEndDate());
 
 		rentDao.save(rent);
 		return transform(rent, RentDTO.class);
@@ -95,10 +91,6 @@ public class RentServiceImpl implements RentService {
 
 		bookService.changeStatus(book, BookEnum.OK);
 		rent.setEndDate(new Date());
-		
-		System.out.println("Inicio: " + rent.getInitDate());
-		System.out.println("Devolucion: " + rent.getReturnDate());
-		System.out.println("Fin: " + rent.getEndDate());
 
 		rentDao.save(rent);
 		return transform(rent, RentDTO.class);

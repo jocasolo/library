@@ -47,11 +47,11 @@ public class RoomController {
 
 	@RequestMapping(value = "/{id}", method = { RequestMethod.PUT })
 	public void update(@PathVariable("id") Integer id, @RequestBody RoomDTO roomDTO) {
-		throw new UnsupportedOperationException();
+		throw new UnsupportedOperationException("Aún no implementado.");
 	}
 
 	@RequestMapping(value = "/{id}", method = { RequestMethod.DELETE })
 	public void delete(@PathVariable("id") Integer id) {
-		throw new UnsupportedOperationException();
+		throw new UnsupportedOperationException("Aún no implementado.");
 	}
 }
