@@ -1,11 +1,12 @@
 package com.at.library.service.rent;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import org.dozer.DozerBeanMapper;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -58,6 +59,7 @@ public class RentServiceImpl implements RentService {
 	@Override
 	public RentDTO create(RentPostDTO rentDto) throws BookRentedException, UserBannedException,
 			EmployeeNotFoundException, BookNotFoundException, UserNotFoundException {
+		
 		final Book book = bookService.findOne(rentDto.getBook());
 		if (!bookService.isAvailable(book))
 			throw new BookRentedException();
@@ -104,16 +106,16 @@ public class RentServiceImpl implements RentService {
 
 	@Override
 	public Date calcReturnDate(Date initDate) {
-		Calendar c = Calendar.getInstance();
-		c.setTime(initDate);
-		c.add(Calendar.DATE, 3); // Suponemos que siempre es 3 días después.
+		
+		DateTime returnDate = new DateTime(initDate);
+		returnDate = returnDate.plusDays(3);
 
-		if (c.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY)
-			c.add(Calendar.DATE, 2);
-		if (c.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY)
-			c.add(Calendar.DATE, 1);
+		if(returnDate.getDayOfWeek() == DateTimeConstants.SATURDAY)
+			returnDate = returnDate.plusDays(2);
+		if (returnDate.getDayOfWeek() == DateTimeConstants.SUNDAY)
+			returnDate = returnDate.plusDays(1);
 
-		return c.getTime();
+		return returnDate.toDate();
 	}
 
 	@Override
