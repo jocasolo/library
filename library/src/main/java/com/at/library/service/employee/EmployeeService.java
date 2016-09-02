@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.springframework.data.domain.Pageable;
 
+import com.at.library.dto.DTO;
 import com.at.library.dto.EmployeeDTO;
+import com.at.library.exceptions.EmployeeNotFoundException;
 import com.at.library.model.Employee;
 
 public interface EmployeeService {
@@ -21,8 +23,9 @@ public interface EmployeeService {
 	 * 
 	 * @param id
 	 * @return Empleado correspondiente al id buscado.
+	 * @throws EmployeeNotFoundException 
 	 */
-	Employee findOne(Integer id);
+	Employee findOne(Integer id) throws EmployeeNotFoundException;
 
 	/**
 	 * Crea un nuevo empleado.
@@ -45,19 +48,10 @@ public interface EmployeeService {
 	 * @param id
 	 */
 	void delete(Integer id);
+	
+	Employee transform(DTO employeeDto);
 
-	/**
-	 * Transforma un Employee en un EmployeeDTO
-	 * 
-	 * @param employee
-	 * @return
-	 */
-	EmployeeDTO transform(Employee employee);
+	<T> T transform(Employee employee, Class<T> destinationClass);
 
-	/**
-	 * Transforma un DTO en un objeto Employee. 
-	 * @param employee
-	 * @return
-	 */
-	<T> Employee transform(T employeeDto);
+	<T> List<T> transform(List<Employee> employees, Class<T> destinationClass);
 }

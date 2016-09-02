@@ -3,7 +3,6 @@ package com.at.library.service.rent;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 import org.dozer.DozerBeanMapper;
@@ -18,7 +17,9 @@ import com.at.library.dto.RentPostDTO;
 import com.at.library.enums.BookEnum;
 import com.at.library.exceptions.BookNotFoundException;
 import com.at.library.exceptions.BookRentedException;
+import com.at.library.exceptions.EmployeeNotFoundException;
 import com.at.library.exceptions.UserBannedException;
+import com.at.library.exceptions.UserNotFoundException;
 import com.at.library.model.Book;
 import com.at.library.model.Employee;
 import com.at.library.model.Rent;
@@ -47,43 +48,32 @@ public class RentServiceImpl implements RentService {
 
 	@Override
 	public List<RentDTO> findAll(Pageable pageable) {
-
-		final Iterator<Rent> iterator = rentDao.findAll(pageable).iterator();
-		final List<RentDTO> res = new ArrayList<>();
-
-		while (iterator.hasNext()) {
-			final Rent r = iterator.next();
-			res.add(transform(r));
-		}
-		return res;
+		final List<Rent> rents = rentDao.findAll(pageable);
+		return transform(rents, RentDTO.class);
 	}
 
 	@Override
-	public RentDTO create(Integer idBook, RentPostDTO rentDto) throws BookNotFoundException, BookRentedException, UserBannedException {
-		final Book book = bookService.findOne(idBook);
-
-		if (bookService.isAvailable(book)) {
-			final User user = userService.findOne(rentDto.getUser());
-			
-			if(!userService.isBanned(user)){
-				final Employee employee = employeeService.findOne(rentDto.getEmployee());
-	
-				bookService.changeStatus(book, BookEnum.RENTED);
-				Rent rent = new Rent();
-				rent.setBook(book);
-				rent.setUser(user);
-				rent.setEmployee(employee);
-				rent.setInitDate(new Date());
-				rent.setEndDate(calcEndDate(new Date()));
-	
-				rentDao.save(rent);
-				return transform(rent);
-			}
-			else
-				throw new UserBannedException();
-		}
+	public RentDTO create(RentPostDTO rentDto) throws BookRentedException, UserBannedException, EmployeeNotFoundException, BookNotFoundException, UserNotFoundException {
+		final Book book = bookService.findOne(rentDto.getBook());
+		if (!bookService.isAvailable(book))
+			throw new BookRentedException();
 		
-		throw new BookRentedException();
+		final User user = userService.findOne(rentDto.getUser());
+		if(userService.isBanned(user))
+			throw new UserBannedException();
+				
+		final Employee employee = employeeService.findOne(rentDto.getEmployee());
+	
+		bookService.changeStatus(book, BookEnum.RENTED);
+		Rent rent = new Rent();
+		rent.setBook(book);
+		rent.setUser(user);
+		rent.setEmployee(employee);
+		rent.setInitDate(new Date());
+		rent.setEndDate(calcEndDate(new Date()));
+
+		rentDao.save(rent);
+		return transform(rent, RentDTO.class);
 	}
 
 	@Override
@@ -95,7 +85,7 @@ public class RentServiceImpl implements RentService {
 		rent.setReturnDate(new Date());
 
 		rentDao.save(rent);
-		return transform(rent);
+		return transform(rent, RentDTO.class);
 	}
 
 	@Override
@@ -128,9 +118,8 @@ public class RentServiceImpl implements RentService {
 	}
 	
 	@Override
-	@SuppressWarnings("unchecked")
-	public RentDTO transform(Rent rent) {
-		return dozer.map(rent, RentDTO.class);
+	public <T> T transform(Rent rent,  Class<T> destinationClass){
+		return dozer.map(rent, destinationClass);
 	}
 	
 	@Override

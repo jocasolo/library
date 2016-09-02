@@ -51,7 +51,7 @@ public class TestRentService {
 	
 	@Test
 	public void transformRent(){
-		final RentDTO rentDTO = rentService.transform(rent);
+		final RentDTO rentDTO = rentService.transform(rent, RentDTO.class);
 		Assert.assertEquals("Fecha", rentDTO.getInitDate(), INIT);
 	}
 	

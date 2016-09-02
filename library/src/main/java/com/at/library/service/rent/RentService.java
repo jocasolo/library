@@ -10,7 +10,9 @@ import com.at.library.dto.RentDTO;
 import com.at.library.dto.RentPostDTO;
 import com.at.library.exceptions.BookNotFoundException;
 import com.at.library.exceptions.BookRentedException;
+import com.at.library.exceptions.EmployeeNotFoundException;
 import com.at.library.exceptions.UserBannedException;
+import com.at.library.exceptions.UserNotFoundException;
 import com.at.library.model.Rent;
 
 public interface RentService {
@@ -27,14 +29,15 @@ public interface RentService {
 	 * Realiza el alquiler de un libro a un determinado usario y realizado
 	 * por un determinado empleado.
 	 *
-	 * @param idBook
 	 * @param rentDto
 	 * @return
 	 * @throws BookNotFoundException
 	 * @throws BookRentedException
 	 * @throws UserBannedException 
+	 * @throws UserNotFoundException 
+	 * @throws EmployeeNotFoundException 
 	 */
-	RentDTO create(Integer idBook, RentPostDTO rentDto) throws BookNotFoundException, BookRentedException, UserBannedException;
+	RentDTO create(RentPostDTO rentDto) throws BookNotFoundException, BookRentedException, UserBannedException, UserNotFoundException, EmployeeNotFoundException;
 	
 	/**
 	 * Realiza la devolución de un libro que pertenece a un determinado alquiler.
@@ -83,7 +86,7 @@ public interface RentService {
 	 * @param rent
 	 * @return
 	 */
-	<T> T transform(Rent rent);
+	<T> T transform(Rent rent, Class<T> destinationClass);
 	
 	/**
 	 * Transformador genérico de una lista de alquileres a una lista de DTO.

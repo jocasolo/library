@@ -1,7 +1,6 @@
 package com.at.library.service.employee;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.dozer.DozerBeanMapper;
@@ -10,7 +9,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.at.library.dao.EmployeeDAO;
+import com.at.library.dto.DTO;
 import com.at.library.dto.EmployeeDTO;
+import com.at.library.exceptions.EmployeeNotFoundException;
 import com.at.library.model.Employee;
 
 
@@ -25,25 +26,16 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public List<EmployeeDTO> findAll(Pageable pageable) {
-		final Iterator<Employee> iterator = employeeDao.findAll(pageable).iterator();
-		final List<EmployeeDTO> res = new ArrayList<>();
-		while (iterator.hasNext()) {
-			final Employee r = iterator.next();
-			res.add(transform(r));
-		}
-		return res;
+		final List<Employee> employees = employeeDao.findAll(pageable);
+		return transform(employees, EmployeeDTO.class);
 	}
 
 	@Override
-	public Employee findOne(Integer id) {
+	public Employee findOne(Integer id) throws EmployeeNotFoundException {
 		final Employee employee = employeeDao.findOne(id);
+		if(employee == null)
+			throw new EmployeeNotFoundException();
 		return employee;
-	}
-
-	@Override
-	public EmployeeDTO create(EmployeeDTO employeeDto) {
-		final Employee employee = transform(employeeDto);
-		return transform(employeeDao.save(employee));
 	}
 
 	@Override
@@ -51,20 +43,35 @@ public class EmployeeServiceImpl implements EmployeeService {
 		Employee employee = transform(employeeDto);
 		employeeDao.save(employee);
 	}
+	
+	@Override
+	public EmployeeDTO create(EmployeeDTO employeeDto) {
+		final Employee employee = transform(employeeDto);
+		employeeDao.save(employee);
+		return transform(employee, EmployeeDTO.class);
+	}
 
 	@Override
 	public void delete(Integer id) {
 		employeeDao.delete(id);
 	}
-
+	
 	@Override
-	public EmployeeDTO transform(Employee employee) {
-		return dozer.map(employee, EmployeeDTO.class);
+	public Employee transform(DTO employeeDto) {
+		return dozer.map(employeeDto, Employee.class);
+	}
+	
+	@Override
+	public <T> T transform(Employee employee,  Class<T> destinationClass){
+		return dozer.map(employee, destinationClass);
 	}
 
 	@Override
-	public <T> Employee transform(T employeeDto) {
-		return dozer.map(employeeDto, Employee.class);
+	public <T> List<T> transform(List<Employee> employees, Class<T> destinationClass) {
+		List<T> res = new ArrayList<>();
+		for (Employee employee : employees)
+			res.add(dozer.map(employee, destinationClass));
+		return res;
 	}
 
 }

@@ -18,6 +18,7 @@ import com.at.library.dto.RentDTO;
 import com.at.library.dto.RentPostDTO;
 import com.at.library.exceptions.BookNotFoundException;
 import com.at.library.exceptions.BookRentedException;
+import com.at.library.exceptions.EmployeeNotFoundException;
 import com.at.library.exceptions.UserBannedException;
 import com.at.library.exceptions.UserNotFoundException;
 import com.at.library.service.rent.RentService;
@@ -39,18 +40,17 @@ public class RentController {
 		return rentService.getBookHistory(idBook, new PageRequest(page, size));
 	}
 
-	@RequestMapping(value = "book/{id}/rent", method = { RequestMethod.DELETE })
-	public RentDTO restore(@PathVariable("id") Integer idBook) throws BookNotFoundException {
+	@RequestMapping(value = "/rent/{idBook}", method = { RequestMethod.DELETE }) // "/book/{id}/rent"
+	public RentDTO restore(@PathVariable("idBook") Integer idBook) throws BookNotFoundException {
 		log.debug(String.format("Devolviendo alquiler con el libro con id: %s", idBook));
 		return rentService.restore(idBook);
 	}
 	
-	@RequestMapping(value = "/book/{id}/rent", method = { RequestMethod.POST })
+	@RequestMapping(value = "/rent" , method = { RequestMethod.POST })  // "/book/{id}/rent"
 	public RentDTO create(
-			@PathVariable("id") Integer idBook,
-			@RequestBody RentPostDTO rent) throws BookRentedException, BookNotFoundException, UserBannedException {
+			@RequestBody RentPostDTO rent) throws BookRentedException, BookNotFoundException, UserBannedException, UserNotFoundException, EmployeeNotFoundException {
 		log.debug(String.format("Creando el alquiler: %s", rent));
-		return rentService.create(idBook, rent);
+		return rentService.create(rent);
 	}
 	
 	@RequestMapping(value = "/user/{id}/rent", method = { RequestMethod.GET })
