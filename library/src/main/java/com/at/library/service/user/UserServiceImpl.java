@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 import org.dozer.DozerBeanMapper;
 import org.joda.time.DateTime;
@@ -39,6 +39,60 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private DozerBeanMapper dozer;
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<UserDTO> findAll() {
+		final Iterator<User> iterator = userDao.findAll().iterator();
+		final List<UserDTO> res = new ArrayList<>();
+		while (iterator.hasNext()) {
+			final User r = iterator.next();
+			res.add(transform(r));
+		}
+		return res;
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public User findOne(Integer id) throws UserNotFoundException {
+		final User user = userDao.findOne(id);
+		if (user == null)
+			throw new UserNotFoundException();
+		return user;
+	}
+
+	@Override
+	public UserDTO create(UserDTO userDto) {
+		User user = transform(userDto);
+		user.setStatus(UserEnum.NORMAL);
+		return transform(userDao.save(user));
+	}
+
+	@Override
+	public void update(UserPutDTO userDto) {
+		User user = transform(userDto);
+		userDao.save(user);
+	}
+
+	@Override
+	public void delete(Integer id) throws UserNotFoundException {
+		final User user = userDao.findOne(id);
+		if (user == null)
+			throw new UserNotFoundException();
+		user.setStatus(UserEnum.DELETED);
+		userDao.save(user);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<UserDTO> search(String dni, String name, String surname, Pageable pageable) {
+		return userDao.search(dni, name, surname, pageable);
+	}
+
+	@Override
+	public Boolean isBanned(User user) {
+		return !user.getStatus().equals(UserEnum.NORMAL);
+	}
 
 	@Override
 	@Scheduled(cron = "0 0 2 1/1 * ?")
@@ -88,47 +142,6 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<UserDTO> findAll() {
-		final Iterator<User> iterator = userDao.findAll().iterator();
-		final List<UserDTO> res = new ArrayList<>();
-		while (iterator.hasNext()) {
-			final User r = iterator.next();
-			res.add(transform(r));
-		}
-		return res;
-	}
-
-	@Override
-	public User findOne(Integer id) throws UserNotFoundException {
-		final User user = userDao.findOne(id);
-		if(user == null)
-			throw new UserNotFoundException();
-		return user;
-	}
-
-	@Override
-	public UserDTO create(UserDTO userDto) {
-		User user = transform(userDto);
-		user.setStatus(UserEnum.NORMAL);
-		return transform(userDao.save(user));
-	}
-
-	@Override
-	public void update(UserPutDTO userDto) {
-		User user = transform(userDto);
-		userDao.save(user);
-	}
-
-	@Override
-	public void delete(Integer id) throws UserNotFoundException {
-		final User user = userDao.findOne(id);
-		if (user == null)
-			throw new UserNotFoundException();
-		user.setStatus(UserEnum.DELETED);
-		userDao.save(user);
-	}
-
-	@Override
 	public UserDTO transform(User user) {
 		return dozer.map(user, UserDTO.class);
 	}
@@ -144,16 +157,6 @@ public class UserServiceImpl implements UserService {
 		for (User u : users)
 			res.add(transform(u));
 		return res;
-	}
-
-	@Override
-	public List<UserDTO> search(String dni, String name, String surname, Pageable pageable) {
-		return userDao.search(dni, name, surname, pageable);
-	}
-
-	@Override
-	public Boolean isBanned(User user) {
-		return !user.getStatus().equals(UserEnum.NORMAL);
 	}
 
 }

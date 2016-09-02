@@ -8,6 +8,7 @@ import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.at.library.dao.RoomDAO;
 import com.at.library.dto.RoomDTO;
@@ -23,6 +24,7 @@ public class RoomServiceImpl implements RoomService {
 	private DozerBeanMapper dozer;
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<RoomDTO> findAll(Pageable pageable) {
 		final Iterator<Room> iterator = roomDao.findAll(pageable).iterator();
 		final List<RoomDTO> res = new ArrayList<>();
@@ -34,6 +36,7 @@ public class RoomServiceImpl implements RoomService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public RoomDTO findOne(Integer id) {
 		final Room room = roomDao.findOne(id);
 		return transform(room);

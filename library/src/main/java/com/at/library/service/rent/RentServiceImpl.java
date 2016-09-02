@@ -9,6 +9,7 @@ import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.at.library.dao.RentDAO;
 import com.at.library.dto.HistoryRentedDTO;
@@ -48,23 +49,25 @@ public class RentServiceImpl implements RentService {
 	private DozerBeanMapper dozer;
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<RentDTO> findAll(Pageable pageable) {
 		final List<Rent> rents = rentDao.findAll(pageable);
 		return transform(rents, RentDTO.class);
 	}
 
 	@Override
-	public RentDTO create(RentPostDTO rentDto) throws BookRentedException, UserBannedException, EmployeeNotFoundException, BookNotFoundException, UserNotFoundException {
+	public RentDTO create(RentPostDTO rentDto) throws BookRentedException, UserBannedException,
+			EmployeeNotFoundException, BookNotFoundException, UserNotFoundException {
 		final Book book = bookService.findOne(rentDto.getBook());
 		if (!bookService.isAvailable(book))
 			throw new BookRentedException();
-		
+
 		final User user = userService.findOne(rentDto.getUser());
-		if(userService.isBanned(user))
+		if (userService.isBanned(user))
 			throw new UserBannedException();
-				
+
 		final Employee employee = employeeService.findOne(rentDto.getEmployee());
-	
+
 		bookService.changeStatus(book, BookEnum.RENTED);
 		Rent rent = new Rent();
 		rent.setBook(book);
@@ -81,7 +84,7 @@ public class RentServiceImpl implements RentService {
 	public RentDTO restore(Integer idBook) throws BookNotFoundException, BookNotRentedException {
 		Book book = bookService.findOne(idBook);
 		Rent rent = rentDao.findOneByBookAndReturnDateIsNull(book);
-		if(rent == null)
+		if (rent == null)
 			throw new BookNotRentedException();
 
 		bookService.changeStatus(book, BookEnum.OK);
@@ -119,18 +122,18 @@ public class RentServiceImpl implements RentService {
 	public List<HistoryRentedDTO> getUserHistory(Integer idUser, Pageable pageable) {
 		return transform(rentDao.findAllByUserId(idUser, pageable), HistoryRentedDTO.class);
 	}
-	
+
 	@Override
-	public <T> T transform(Rent rent,  Class<T> destinationClass){
+	public <T> T transform(Rent rent, Class<T> destinationClass) {
 		return dozer.map(rent, destinationClass);
 	}
-	
+
 	@Override
 	public <T> List<T> transform(List<Rent> rents, Class<T> destinationClass) {
 		List<T> res = new ArrayList<>();
-		for(Rent rent : rents)
+		for (Rent rent : rents)
 			res.add(dozer.map(rent, destinationClass));
 		return res;
 	}
-	
+
 }

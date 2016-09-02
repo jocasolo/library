@@ -53,6 +53,7 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<BookDTO> search(String isbn, String title, String author, Pageable pageable) {
 		return transform(bookDao.search(isbn, title, author, pageable), BookDTO.class);
 	}
@@ -134,7 +135,8 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public void setVolumeInfo(Book book) {
-		final String url = "https://www.googleapis.com/books/v1/volumes?startIndex=0&maxResults=1&fields=items(volumeInfo/description,volumeInfo/publishedDate,volumeInfo/imageLinks/thumbnail)&q=" 
+		final String url = "https://www.googleapis.com/books/v1/volumes?startIndex=0&maxResults=1"
+				+ "&fields=items(volumeInfo/description,volumeInfo/publishedDate,volumeInfo/imageLinks/thumbnail)&q="
 				+ book.getTitle();
 		final BookApiDTO info = restTemplate.getForObject(url, BookApiDTO.class);
 

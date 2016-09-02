@@ -8,6 +8,7 @@ import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.at.library.dao.BookshelfDAO;
 import com.at.library.dto.BookshelfDTO;
@@ -23,6 +24,7 @@ public class ShelfServiceImpl implements ShelfService {
 	private DozerBeanMapper dozer;
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<BookshelfDTO> findAll(Pageable pageable) {
 		final Iterator<Bookshelf> iterator = shelfDao.findAll(pageable).iterator();
 		final List<BookshelfDTO> res = new ArrayList<>();
@@ -34,6 +36,7 @@ public class ShelfServiceImpl implements ShelfService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public BookshelfDTO findOne(Integer id) {
 		final Bookshelf shelf = shelfDao.findOne(id);
 		return transform(shelf);

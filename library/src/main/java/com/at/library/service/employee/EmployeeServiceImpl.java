@@ -7,13 +7,13 @@ import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.at.library.dao.EmployeeDAO;
 import com.at.library.dto.DTO;
 import com.at.library.dto.EmployeeDTO;
 import com.at.library.exceptions.EmployeeNotFoundException;
 import com.at.library.model.Employee;
-
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -25,15 +25,17 @@ public class EmployeeServiceImpl implements EmployeeService {
 	private DozerBeanMapper dozer;
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<EmployeeDTO> findAll(Pageable pageable) {
 		final List<Employee> employees = employeeDao.findAll(pageable);
 		return transform(employees, EmployeeDTO.class);
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Employee findOne(Integer id) throws EmployeeNotFoundException {
 		final Employee employee = employeeDao.findOne(id);
-		if(employee == null)
+		if (employee == null)
 			throw new EmployeeNotFoundException();
 		return employee;
 	}
@@ -43,7 +45,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		Employee employee = transform(employeeDto);
 		employeeDao.save(employee);
 	}
-	
+
 	@Override
 	public EmployeeDTO create(EmployeeDTO employeeDto) {
 		final Employee employee = transform(employeeDto);
@@ -55,14 +57,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public void delete(Integer id) {
 		employeeDao.delete(id);
 	}
-	
+
 	@Override
 	public Employee transform(DTO employeeDto) {
 		return dozer.map(employeeDto, Employee.class);
 	}
-	
+
 	@Override
-	public <T> T transform(Employee employee,  Class<T> destinationClass){
+	public <T> T transform(Employee employee, Class<T> destinationClass) {
 		return dozer.map(employee, destinationClass);
 	}
 
