@@ -105,7 +105,7 @@ public class UserServiceImpl implements UserService {
 			final User user = rent.getUser();
 
 			// Dias que se ha retrasado multiplicado por 3 = dias de sanción
-			final Days days = Days.daysBetween(new DateTime(rent.getEndDate()), new DateTime());
+			final Days days = Days.daysBetween(new DateTime(rent.getReturnDate()), new DateTime());
 			days.multipliedBy(3);
 
 			DateTime initDate = (user.getPenalizeDate() != null) ? new DateTime(user.getPenalizeDate())

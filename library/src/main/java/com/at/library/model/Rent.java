@@ -34,10 +34,10 @@ public class Rent implements Serializable {
 	private Employee employee;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date endDate;
+	private Date endDate; //Fecha en la que se devuelve el libro
 
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date returnDate;
+	private Date returnDate; // Fecha en la que debería devolverse el libro
 
 	public User getUser() {
 		return user;

@@ -14,9 +14,9 @@ import com.at.library.model.Rent;
 @Repository
 public interface RentDAO extends CrudRepository<Rent, Integer> {
 
-	public Rent findOneByBookAndReturnDateIsNull(Book book);
+	public Rent findOneByBookAndEndDateIsNull(Book book);
 
-	@Query(value = "SELECT r FROM Rent AS r WHERE r.returnDate IS NULL AND r.endDate < CURRENT_DATE")
+	@Query(value = "SELECT r FROM Rent AS r WHERE r.endDate IS NULL AND r.returnDate < CURRENT_DATE")
 	public List<Rent> findSanctionalbe();
 
 	@Query(value = "SELECT r FROM Rent AS r WHERE r.book.id = :id")

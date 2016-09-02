@@ -58,7 +58,7 @@ public interface RentService {
 	 * @param initDate
 	 * @return
 	 */
-	Date calcEndDate(Date initDate);
+	Date calcReturnDate(Date initDate);
 
 	/**
 	 * Busca todos los alquileres que aún no se han devuelto y que la fecha en

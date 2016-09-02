@@ -74,7 +74,11 @@ public class RentServiceImpl implements RentService {
 		rent.setUser(user);
 		rent.setEmployee(employee);
 		rent.setInitDate(new Date());
-		rent.setEndDate(calcEndDate(new Date()));
+		rent.setReturnDate(calcReturnDate(new Date()));
+		
+		System.out.println("Inicio: " + rent.getInitDate());
+		System.out.println("Devolucion: " + rent.getReturnDate());
+		System.out.println("Fin: " + rent.getEndDate());
 
 		rentDao.save(rent);
 		return transform(rent, RentDTO.class);
@@ -83,19 +87,23 @@ public class RentServiceImpl implements RentService {
 	@Override
 	public RentDTO restore(Integer idBook) throws BookNotFoundException, BookNotRentedException {
 		Book book = bookService.findOne(idBook);
-		Rent rent = rentDao.findOneByBookAndReturnDateIsNull(book);
+		Rent rent = rentDao.findOneByBookAndEndDateIsNull(book);
 		if (rent == null)
 			throw new BookNotRentedException();
 
 		bookService.changeStatus(book, BookEnum.OK);
-		rent.setReturnDate(new Date());
+		rent.setEndDate(new Date());
+		
+		System.out.println("Inicio: " + rent.getInitDate());
+		System.out.println("Devolucion: " + rent.getReturnDate());
+		System.out.println("Fin: " + rent.getEndDate());
 
 		rentDao.save(rent);
 		return transform(rent, RentDTO.class);
 	}
 
 	@Override
-	public Date calcEndDate(Date initDate) {
+	public Date calcReturnDate(Date initDate) {
 		Calendar c = Calendar.getInstance();
 		c.setTime(initDate);
 		c.add(Calendar.DATE, 3); // Suponemos que siempre es 3 días después.
