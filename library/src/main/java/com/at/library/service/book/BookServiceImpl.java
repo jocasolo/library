@@ -54,11 +54,7 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public List<BookDTO> search(String isbn, String title, String author, Pageable pageable) {
-		final List<Book> books = bookDao.search(isbn, title, author, pageable);
-		List<BookDTO> res = new ArrayList<>();
-		for (Book b : books)
-			res.add(getVolumeInfo(b));
-		return res;
+		return transform(bookDao.search(isbn, title, author, pageable), BookDTO.class);
 	}
 
 	@Override
@@ -66,6 +62,7 @@ public class BookServiceImpl implements BookService {
 		Book book = transform(bookDto);
 		book.setStartDate(new Date());
 		book.setStatus(BookEnum.OK);
+		setVolumeInfo(book);
 		return transform(bookDao.save(book));
 	}
 
@@ -75,6 +72,7 @@ public class BookServiceImpl implements BookService {
 			throw new BookWrongUpdateException();
 
 		final Book book = transform(bookDto);
+		setVolumeInfo(book);
 		bookDao.save(book);
 	}
 
@@ -135,18 +133,17 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public BookDTO getVolumeInfo(Book book) {
-		final String url = "https://www.googleapis.com/books/v1/volumes?startIndex=0&maxResults=1&q=" + book.getTitle();
+	public void setVolumeInfo(Book book) {
+		final String url = "https://www.googleapis.com/books/v1/volumes?startIndex=0&maxResults=1&fields=items(volumeInfo/description,volumeInfo/publishedDate,volumeInfo/imageLinks/thumbnail)&q=" 
+				+ book.getTitle();
 		final BookApiDTO info = restTemplate.getForObject(url, BookApiDTO.class);
 
-		BookDTO res = transform(book);
 		if (info != null) {
 			final VolumeInfoDTO volInfo = info.getItems()[0].getVolumeInfo();
-			res.setDescription(volInfo.getDescription());
-			res.setYear(Integer.parseInt(volInfo.getPublishedDate().substring(0, 4)));
-			res.setImage(volInfo.getImageLinks().get("thumbnail"));
+			book.setDescription(volInfo.getDescription());
+			book.setYear(Integer.parseInt(volInfo.getPublishedDate().substring(0, 4)));
+			book.setImage(volInfo.getImageLinks().get("thumbnail"));
 		}
-		return res;
 	}
 
 	@Override

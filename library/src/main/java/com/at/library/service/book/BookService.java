@@ -120,6 +120,6 @@ public interface BookService {
 	 * 
 	 * @param book
 	 */
-	BookDTO getVolumeInfo(Book book);
+	void setVolumeInfo(Book book);
 
 }
