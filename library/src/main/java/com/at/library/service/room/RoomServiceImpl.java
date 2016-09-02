@@ -49,17 +49,6 @@ public class RoomServiceImpl implements RoomService {
 	}
 
 	@Override
-	public void update(RoomDTO roomDto) {
-		Room room = transform(roomDto);
-		roomDao.save(room);
-	}
-
-	@Override
-	public void delete(Integer id) {
-		roomDao.delete(id);
-	}
-
-	@Override
 	public RoomDTO transform(Room room) {
 		return dozer.map(room, RoomDTO.class);
 	}

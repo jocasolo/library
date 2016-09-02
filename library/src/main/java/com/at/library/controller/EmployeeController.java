@@ -48,14 +48,14 @@ public class EmployeeController {
 	}
 
 	@RequestMapping(value = "/{id}", method = { RequestMethod.PUT })
-	public void update(@PathVariable("id") Integer id, @RequestBody EmployeeDTO employeeDTO) {
-		log.debug(String.format("Modificando el empleado: %s", employeeDTO));
-		employeeService.update(employeeDTO);
+	public void update(
+			@PathVariable("id") Integer id, 
+			@RequestBody EmployeeDTO employeeDTO) {
+		throw new UnsupportedOperationException();
 	}
 
 	@RequestMapping(value = "/{id}", method = { RequestMethod.DELETE })
 	public void delete(@PathVariable("id") Integer id) {
-		log.debug(String.format("Borrando el empleado con el id: %s", id));
-		employeeService.delete(id);
+		throw new UnsupportedOperationException();
 	}
 }

@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import com.at.library.dto.UserDTO;
 import com.at.library.dto.UserPutDTO;
 import com.at.library.exceptions.UserNotFoundException;
+import com.at.library.exceptions.UserWrongUpdateException;
 import com.at.library.model.User;
 
 public interface UserService {
@@ -49,8 +50,9 @@ public interface UserService {
 	 * Actualiza un usuario.
 	 * 
 	 * @param user
+	 * @throws UserWrongUpdateException 
 	 */
-	void update(UserPutDTO userDto);
+	void update(Integer id, UserPutDTO userDto) throws UserWrongUpdateException;
 
 	/**
 	 * Elimina el usuario correspondiente al id dado.

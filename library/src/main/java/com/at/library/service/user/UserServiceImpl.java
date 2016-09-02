@@ -5,8 +5,6 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import org.springframework.transaction.annotation.Transactional;
-
 import org.dozer.DozerBeanMapper;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
@@ -16,12 +14,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.at.library.dao.UserDAO;
 import com.at.library.dto.UserDTO;
 import com.at.library.dto.UserPutDTO;
 import com.at.library.enums.UserEnum;
 import com.at.library.exceptions.UserNotFoundException;
+import com.at.library.exceptions.UserWrongUpdateException;
 import com.at.library.model.Rent;
 import com.at.library.model.User;
 import com.at.library.service.rent.RentService;
@@ -69,16 +69,16 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void update(UserPutDTO userDto) {
+	public void update(Integer id, UserPutDTO userDto) throws UserWrongUpdateException {
+		if(userDto.getId() != null && id != userDto.getId())
+			throw new UserWrongUpdateException();
 		User user = transform(userDto);
 		userDao.save(user);
 	}
 
 	@Override
 	public void delete(Integer id) throws UserNotFoundException {
-		final User user = userDao.findOne(id);
-		if (user == null)
-			throw new UserNotFoundException();
+		final User user = findOne(id);
 		user.setStatus(UserEnum.DELETED);
 		userDao.save(user);
 	}

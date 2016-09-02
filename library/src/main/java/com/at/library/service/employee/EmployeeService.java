@@ -34,24 +34,30 @@ public interface EmployeeService {
 	 * @return El empleado creado.
 	 */
 	EmployeeDTO create(EmployeeDTO employeeDto);
-
-	/**
-	 * Actualiza un empleado.
-	 * 
-	 * @param employee
-	 */
-	void update(EmployeeDTO employeeDto);
-
-	/**
-	 * Elimina el empleado correspondiente al id dado.
-	 * 
-	 * @param id
-	 */
-	void delete(Integer id);
 	
+	/**
+	 * Transforma un DTO de empleado en un empleado.
+	 * 
+	 * @param employeeDto
+	 * @return
+	 */
 	Employee transform(DTO employeeDto);
 
+	/**
+	 * Transforma un empleado en un empleado del tipo que se pase por parámetro.
+	 * 
+	 * @param employee
+	 * @param destinationClass
+	 * @return
+	 */
 	<T> T transform(Employee employee, Class<T> destinationClass);
 
+	/**
+	 * Transforma una lista de empleados en una lista de empleados del tipo que se pase por parámetro.
+	 * 
+	 * @param employees
+	 * @param destinationClass
+	 * @return
+	 */
 	<T> List<T> transform(List<Employee> employees, Class<T> destinationClass);
 }

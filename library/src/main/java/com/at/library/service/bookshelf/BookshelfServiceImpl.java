@@ -12,10 +12,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.at.library.dao.BookshelfDAO;
 import com.at.library.dto.BookshelfDTO;
+import com.at.library.exceptions.BookshelfNotFoundException;
 import com.at.library.model.Bookshelf;
 
 @Service
-public class ShelfServiceImpl implements ShelfService {
+public class BookshelfServiceImpl implements BookshelfService {
 
 	@Autowired
 	private BookshelfDAO shelfDao;
@@ -37,8 +38,10 @@ public class ShelfServiceImpl implements ShelfService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public BookshelfDTO findOne(Integer id) {
+	public BookshelfDTO findOne(Integer id) throws BookshelfNotFoundException {
 		final Bookshelf shelf = shelfDao.findOne(id);
+		if(shelf == null)
+			throw new BookshelfNotFoundException();
 		return transform(shelf);
 	}
 
@@ -46,17 +49,6 @@ public class ShelfServiceImpl implements ShelfService {
 	public BookshelfDTO create(BookshelfDTO shelfDto) {
 		final Bookshelf shelf = transform(shelfDto);
 		return transform(shelfDao.save(shelf));
-	}
-
-	@Override
-	public void update(BookshelfDTO shelfDto) {
-		Bookshelf shelf = transform(shelfDto);
-		shelfDao.save(shelf);
-	}
-
-	@Override
-	public void delete(Integer id) {
-		shelfDao.delete(id);
 	}
 
 	@Override

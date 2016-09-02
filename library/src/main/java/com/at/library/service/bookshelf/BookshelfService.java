@@ -5,9 +5,10 @@ import java.util.List;
 import org.springframework.data.domain.Pageable;
 
 import com.at.library.dto.BookshelfDTO;
+import com.at.library.exceptions.BookshelfNotFoundException;
 import com.at.library.model.Bookshelf;
 
-public interface ShelfService {
+public interface BookshelfService {
 
 	/**
 	 * Realiza la busqueda de todas las estanterías existentes
@@ -21,8 +22,9 @@ public interface ShelfService {
 	 * 
 	 * @param id
 	 * @return Sala correspondiente al id buscado.
+	 * @throws BookshelfNotFoundException 
 	 */
-	BookshelfDTO findOne(Integer id);
+	BookshelfDTO findOne(Integer id) throws BookshelfNotFoundException;
 
 	/**
 	 * Crea una nueva estantería.
@@ -31,20 +33,6 @@ public interface ShelfService {
 	 * @return La estantería creada.
 	 */
 	BookshelfDTO create(BookshelfDTO bookshelfDto);
-
-	/**
-	 * Actualiza una estantería.
-	 * 
-	 * @param bookshelf
-	 */
-	void update(BookshelfDTO bookshelfDto);
-
-	/**
-	 * Elimina la estantería correspondiente al id dado.
-	 * 
-	 * @param id
-	 */
-	void delete(Integer id);
 
 	/**
 	 * Transforma un Shelf en un ShelfDTO

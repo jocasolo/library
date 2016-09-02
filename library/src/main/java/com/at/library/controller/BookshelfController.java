@@ -14,14 +14,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.at.library.dto.BookshelfDTO;
-import com.at.library.service.bookshelf.ShelfService;
+import com.at.library.exceptions.BookshelfNotFoundException;
+import com.at.library.service.bookshelf.BookshelfService;
 
 @RestController
 @RequestMapping(value = "/bookshelf")
 public class BookshelfController {
 
 	@Autowired
-	private ShelfService shelfService;
+	private BookshelfService shelfService;
 	
 	private static final Logger log = LoggerFactory.getLogger(BookshelfController.class);
 
@@ -40,20 +41,20 @@ public class BookshelfController {
 	}
 
 	@RequestMapping(value = "/{id}", method = { RequestMethod.GET })
-	public BookshelfDTO findOne(@PathVariable("id") Integer id) {
+	public BookshelfDTO findOne(@PathVariable("id") Integer id) throws BookshelfNotFoundException {
 		log.debug(String.format("Buscando la estantería con id: %s", id));
 		return shelfService.findOne(id);
 	}
 
 	@RequestMapping(value = "/{id}", method = { RequestMethod.PUT })
-	public void update(@PathVariable("id") Integer id, @RequestBody BookshelfDTO shelfDTO) {
-		log.debug(String.format("Modificando la estantería: %s", shelfDTO));
-		shelfService.update(shelfDTO);
+	public void update(
+			@PathVariable("id") Integer id, 
+			@RequestBody BookshelfDTO shelfDTO) {
+		throw new UnsupportedOperationException();
 	}
 
 	@RequestMapping(value = "/{id}", method = { RequestMethod.DELETE })
 	public void delete(@PathVariable("id") Integer id) {
-		log.debug(String.format("Borrando la estantería con el id: %s", id));
-		shelfService.delete(id);
+		throw new UnsupportedOperationException();
 	}
 }

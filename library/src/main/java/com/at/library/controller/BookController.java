@@ -51,7 +51,9 @@ public class BookController {
 	}
 
 	@RequestMapping(value = "/{id}", method = { RequestMethod.PUT })
-	public void update(@PathVariable("id") Integer id, @RequestBody BookDTO bookDTO) throws BookWrongUpdateException {
+	public void update(
+			@PathVariable("id") Integer id, 
+			@RequestBody BookDTO bookDTO) throws BookWrongUpdateException {
 		log.debug(String.format("Modificando el libro: %s", bookDTO));
 		bookservice.update(id, bookDTO);
 	}
@@ -60,12 +62,6 @@ public class BookController {
 	public void delete(@PathVariable("id") Integer id) throws BookNotFoundException {
 		log.debug(String.format("Borrando el libro con el id: %s", id));
 		bookservice.delete(id);
-	}
-	
-	@RequestMapping(value = "/migration", method = { RequestMethod.POST })
-	public void migration(){
-		log.debug(String.format("Migrando libros."));
-		bookservice.migration();
 	}
 
 }

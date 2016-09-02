@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.at.library.dto.UserDTO;
 import com.at.library.dto.UserPutDTO;
 import com.at.library.exceptions.UserNotFoundException;
+import com.at.library.exceptions.UserWrongUpdateException;
 import com.at.library.service.user.UserService;
 
 @RestController
@@ -51,9 +52,11 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/{id}", method = { RequestMethod.PUT })
-	public void update(@PathVariable("id") Integer id, @RequestBody UserPutDTO userDTO) {
+	public void update(
+			@PathVariable("id") Integer id, 
+			@RequestBody UserPutDTO userDTO) throws UserWrongUpdateException {
 		log.debug(String.format("Modificando el usuario: %s", userDTO));
-		userService.update(userDTO);
+		userService.update(id, userDTO);
 	}
 
 	@RequestMapping(value = "/{id}", method = { RequestMethod.DELETE })

@@ -41,21 +41,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
-	public void update(EmployeeDTO employeeDto) {
-		Employee employee = transform(employeeDto);
-		employeeDao.save(employee);
-	}
-
-	@Override
 	public EmployeeDTO create(EmployeeDTO employeeDto) {
 		final Employee employee = transform(employeeDto);
 		employeeDao.save(employee);
 		return transform(employee, EmployeeDTO.class);
-	}
-
-	@Override
-	public void delete(Integer id) {
-		employeeDao.delete(id);
 	}
 
 	@Override

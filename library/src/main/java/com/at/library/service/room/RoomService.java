@@ -33,20 +33,6 @@ public interface RoomService {
 	RoomDTO create(RoomDTO roomDto);
 
 	/**
-	 * Actualiza una sala.
-	 * 
-	 * @param room
-	 */
-	void update(RoomDTO roomDto);
-
-	/**
-	 * Elimina la sala correspondiente al id dado.
-	 * 
-	 * @param id
-	 */
-	void delete(Integer id);
-
-	/**
 	 * Transforma un Room en un RoomDTO
 	 * 
 	 * @param room

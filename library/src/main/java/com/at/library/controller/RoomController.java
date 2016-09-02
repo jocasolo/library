@@ -47,13 +47,11 @@ public class RoomController {
 
 	@RequestMapping(value = "/{id}", method = { RequestMethod.PUT })
 	public void update(@PathVariable("id") Integer id, @RequestBody RoomDTO roomDTO) {
-		log.debug(String.format("Modificando la sala: %s", roomDTO));
-		roomService.update(roomDTO);
+		throw new UnsupportedOperationException();
 	}
 
 	@RequestMapping(value = "/{id}", method = { RequestMethod.DELETE })
 	public void delete(@PathVariable("id") Integer id) {
-		log.debug(String.format("Borrando la sala con el id: %s", id));
-		roomService.delete(id);
+		throw new UnsupportedOperationException();
 	}
 }
