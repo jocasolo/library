@@ -9,6 +9,7 @@ import com.at.library.dto.HistoryRentedDTO;
 import com.at.library.dto.RentDTO;
 import com.at.library.dto.RentPostDTO;
 import com.at.library.exceptions.BookNotFoundException;
+import com.at.library.exceptions.BookNotRentedException;
 import com.at.library.exceptions.BookRentedException;
 import com.at.library.exceptions.EmployeeNotFoundException;
 import com.at.library.exceptions.UserBannedException;
@@ -45,8 +46,9 @@ public interface RentService {
 	 * @param idBook
 	 * @return
 	 * @throws BookNotFoundException 
+	 * @throws BookNotRentedException 
 	 */
-	RentDTO restore(Integer idBook) throws BookNotFoundException;
+	RentDTO restore(Integer idBook) throws BookNotFoundException, BookNotRentedException;
 	
 	/**
 	 * Calcula la fecha en que se debe devolver un libro dada la inicial.

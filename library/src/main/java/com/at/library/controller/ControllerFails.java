@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.at.library.dto.ApiErrorDTO;
 import com.at.library.exceptions.BookNotFoundException;
+import com.at.library.exceptions.BookNotRentedException;
 import com.at.library.exceptions.BookRentedException;
 import com.at.library.exceptions.BookWrongUpdateException;
 import com.at.library.exceptions.EmployeeNotFoundException;
@@ -43,6 +44,13 @@ public class ControllerFails {
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	public ApiErrorDTO error(EmployeeNotFoundException e){
 		return new ApiErrorDTO(404, e.getMessage());
+	}
+	
+	@ResponseBody
+	@ExceptionHandler(BookNotRentedException.class)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	public ApiErrorDTO error(BookNotRentedException e){
+		return new ApiErrorDTO(400, e.getMessage());
 	}
 	
 	@ResponseBody

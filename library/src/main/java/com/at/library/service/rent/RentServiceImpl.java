@@ -16,6 +16,7 @@ import com.at.library.dto.RentDTO;
 import com.at.library.dto.RentPostDTO;
 import com.at.library.enums.BookEnum;
 import com.at.library.exceptions.BookNotFoundException;
+import com.at.library.exceptions.BookNotRentedException;
 import com.at.library.exceptions.BookRentedException;
 import com.at.library.exceptions.EmployeeNotFoundException;
 import com.at.library.exceptions.UserBannedException;
@@ -77,9 +78,11 @@ public class RentServiceImpl implements RentService {
 	}
 
 	@Override
-	public RentDTO restore(Integer idBook) throws BookNotFoundException {
+	public RentDTO restore(Integer idBook) throws BookNotFoundException, BookNotRentedException {
 		Book book = bookService.findOne(idBook);
 		Rent rent = rentDao.findOneByBookAndReturnDateIsNull(book);
+		if(rent == null)
+			throw new BookNotRentedException();
 
 		bookService.changeStatus(book, BookEnum.OK);
 		rent.setReturnDate(new Date());

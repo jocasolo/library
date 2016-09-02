@@ -17,6 +17,7 @@ import com.at.library.dto.HistoryRentedDTO;
 import com.at.library.dto.RentDTO;
 import com.at.library.dto.RentPostDTO;
 import com.at.library.exceptions.BookNotFoundException;
+import com.at.library.exceptions.BookNotRentedException;
 import com.at.library.exceptions.BookRentedException;
 import com.at.library.exceptions.EmployeeNotFoundException;
 import com.at.library.exceptions.UserBannedException;
@@ -41,7 +42,7 @@ public class RentController {
 	}
 
 	@RequestMapping(value = "/rent/{idBook}", method = { RequestMethod.DELETE }) // "/book/{id}/rent"
-	public RentDTO restore(@PathVariable("idBook") Integer idBook) throws BookNotFoundException {
+	public RentDTO restore(@PathVariable("idBook") Integer idBook) throws BookNotFoundException, BookNotRentedException {
 		log.debug(String.format("Devolviendo alquiler con el libro con id: %s", idBook));
 		return rentService.restore(idBook);
 	}
