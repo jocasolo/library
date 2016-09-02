@@ -30,3 +30,10 @@ Realizado para formación.
 - [Mockito](http://mockito.org/)
 - [Joda-Time](http://www.joda.org/joda-time/)
 - [EclEmma](http://www.eclemma.org/)
+
+##Compilar y ejecutar
+Desde la carpeta library del proyecto:
+```
+gradlew build
+java -jar build/libs/java/library-0.0.1-SNAPSHOT.jar
+```
