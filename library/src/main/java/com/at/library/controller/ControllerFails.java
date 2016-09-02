@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import com.at.library.dto.ApiErrorDTO;
 import com.at.library.exceptions.BookNotFoundException;
 import com.at.library.exceptions.BookRentedException;
+import com.at.library.exceptions.BookWrongUpdateException;
+import com.at.library.exceptions.EmployeeNotFoundException;
 import com.at.library.exceptions.UserBannedException;
 import com.at.library.exceptions.UserNotFoundException;
 
@@ -37,10 +39,24 @@ public class ControllerFails {
 	}
 	
 	@ResponseBody
+	@ExceptionHandler(EmployeeNotFoundException.class)
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	public ApiErrorDTO error(EmployeeNotFoundException e){
+		return new ApiErrorDTO(404, e.getMessage());
+	}
+	
+	@ResponseBody
 	@ExceptionHandler(UserBannedException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	public ApiErrorDTO error(UserBannedException e){
-		return new ApiErrorDTO(404, e.getMessage());
+		return new ApiErrorDTO(400, e.getMessage());
+	}
+	
+	@ResponseBody
+	@ExceptionHandler(BookWrongUpdateException.class)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	public ApiErrorDTO error(BookWrongUpdateException e){
+		return new ApiErrorDTO(400, e.getMessage());
 	}
 	
 }
