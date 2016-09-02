@@ -37,14 +37,9 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<BookDTO> findAll() {
-		final Iterator<Book> iterator = bookDao.findAll().iterator();
-		final List<BookDTO> res = new ArrayList<>();
-		while (iterator.hasNext()) {
-			final Book b = iterator.next();
-			res.add(transform(b));
-		}
-		return res;
+	public List<BookDTO> findAll(Pageable pageable) {
+		final List<Book> books = bookDao.findAll(pageable);
+		return transform(books, BookDTO.class);
 	}
 
 	@Override
@@ -61,7 +56,7 @@ public class BookServiceImpl implements BookService {
 	public List<BookDTO> search(String isbn, String title, String author, Pageable pageable) {
 		final List<Book> books = bookDao.search(isbn, title, author, pageable);
 		List<BookDTO> res = new ArrayList<>();
-		for(Book b : books)
+		for (Book b : books)
 			res.add(getVolumeInfo(b));
 		return res;
 	}
@@ -76,7 +71,7 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public void update(Integer id, BookDTO bookDto) throws BookWrongUpdateException {
-		if (id != bookDto.getId())
+		if (bookDto.getId() != null && id != bookDto.getId())
 			throw new BookWrongUpdateException();
 
 		final Book book = transform(bookDto);
@@ -85,9 +80,7 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public void delete(Integer id) throws BookNotFoundException {
-		Book book = bookDao.findOne(id);
-		if (book == null)
-			throw new BookNotFoundException();
+		Book book = findOne(id);
 		book.setStatus(BookEnum.DELETED);
 		bookDao.save(book);
 	}
@@ -119,19 +112,6 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public <T> Book transform(T book) {
-		return dozer.map(book, Book.class);
-	}
-
-	@Override
-	public List<BookDTO> transform(List<Book> books) {
-		List<BookDTO> res = new ArrayList<>();
-		for (Book b : books)
-			res.add(transform(b));
-		return res;
-	}
-
-	@Override
 	public void migration() {
 		final String url = "http://192.168.11.57:8080/rent";
 		final Integer size = 20;
@@ -152,21 +132,33 @@ public class BookServiceImpl implements BookService {
 			page++;
 			rents = restTemplate.getForObject(url + "?page=" + page + "&size=" + size, RentDTO[].class);
 		}
-
 	}
 
 	@Override
 	public BookDTO getVolumeInfo(Book book) {
 		final String url = "https://www.googleapis.com/books/v1/volumes?startIndex=0&maxResults=1&q=" + book.getTitle();
 		final BookApiDTO info = restTemplate.getForObject(url, BookApiDTO.class);
-		
+
 		BookDTO res = transform(book);
-		if(info != null){
+		if (info != null) {
 			final VolumeInfoDTO volInfo = info.getItems()[0].getVolumeInfo();
 			res.setDescription(volInfo.getDescription());
 			res.setYear(Integer.parseInt(volInfo.getPublishedDate().substring(0, 4)));
 			res.setImage(volInfo.getImageLinks().get("thumbnail"));
 		}
+		return res;
+	}
+
+	@Override
+	public <T> Book transform(T book) {
+		return dozer.map(book, Book.class);
+	}
+
+	@Override
+	public <T> List<T> transform(List<Book> books, Class<T> destinationClass) {
+		List<T> res = new ArrayList<>();
+		for (Book book : books)
+			res.add(dozer.map(book, destinationClass));
 		return res;
 	}
 

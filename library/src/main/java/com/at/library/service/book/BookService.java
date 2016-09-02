@@ -16,7 +16,7 @@ public interface BookService {
 	 * Realiza la búsqueda de todos los libros existentes.
 	 * @return Listado de todos los libros.
 	 */
-	List<BookDTO> findAll();
+	List<BookDTO> findAll(Pageable pageable);
 	
 	/**
 	 * Realiza la búsqueda de un libro por id.
@@ -75,13 +75,15 @@ public interface BookService {
 	 */
 	<T> Book transform(T book);
 	
+	
 	/**
 	 * Transforma una lista de libros en una lista de libros DTO.
 	 * 
 	 * @param books
+	 * @param destinationClass
 	 * @return
 	 */
-	List<BookDTO> transform(List<Book> books);
+	<T> List<T> transform(List<Book> books, Class<T> destinationClass);
 	
 	/**
 	 * Comprueba la disponibilidad de un libro.
