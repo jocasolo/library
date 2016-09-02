@@ -49,13 +49,14 @@ public class UserServiceImpl implements UserService {
 		while (iterator.hasNext()) {
 			final Rent rent = iterator.next();
 			final User user = rent.getUser();
-			
+
 			// Dias que se ha retrasado multiplicado por 3 = dias de sanción
 			final Days days = Days.daysBetween(new DateTime(rent.getEndDate()), new DateTime());
 			days.multipliedBy(3);
 
-			DateTime initDate = (user.getPenalizeDate() != null) ? new DateTime(user.getPenalizeDate()) : new DateTime();
-						
+			DateTime initDate = (user.getPenalizeDate() != null) ? new DateTime(user.getPenalizeDate())
+					: new DateTime();
+
 			// Añadimos los dias de castigo
 			final DateTime forgiveDate = initDate;
 			forgiveDate.plus(days);
@@ -76,7 +77,7 @@ public class UserServiceImpl implements UserService {
 		Iterator<User> iterator = userDao.findByStatus(UserEnum.BANNED).iterator();
 		while (iterator.hasNext()) {
 			User user = iterator.next();
-			if(user.getForgiveDate().before(new Date())){
+			if (user.getForgiveDate().before(new Date())) {
 				user.setStatus(UserEnum.NORMAL);
 				user.setPenalizeDate(null);
 				user.setForgiveDate(null);
@@ -98,8 +99,10 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User findOne(Integer id) {
+	public User findOne(Integer id) throws UserNotFoundException {
 		final User user = userDao.findOne(id);
+		if(user == null)
+			throw new UserNotFoundException();
 		return user;
 	}
 
@@ -119,7 +122,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void delete(Integer id) throws UserNotFoundException {
 		final User user = userDao.findOne(id);
-		if(user == null)
+		if (user == null)
 			throw new UserNotFoundException();
 		user.setStatus(UserEnum.DELETED);
 		userDao.save(user);

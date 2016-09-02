@@ -33,8 +33,9 @@ public interface UserService {
 	 * 
 	 * @param id
 	 * @return Usuario correspondiente al id buscado.
+	 * @throws UserNotFoundException 
 	 */
-	User findOne(Integer id);
+	User findOne(Integer id) throws UserNotFoundException;
 
 	/**
 	 * Crea un nuevo usuario.
