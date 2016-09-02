@@ -18,7 +18,7 @@ public class RentDTO extends DTO implements Serializable {
 	private EmployeeDTO employee;
 
 	private BookDTO book;
-	
+
 	public RentDTO() {
 		super();
 	}
@@ -72,7 +72,7 @@ public class RentDTO extends DTO implements Serializable {
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
-	
+
 	public EmployeeDTO getEmployee() {
 		return employee;
 	}

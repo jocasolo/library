@@ -28,11 +28,11 @@ public class Book implements Serializable {
 	private String title;
 
 	private String author;
-	
+
 	private Integer year;
-	
+
 	private String image;
-	
+
 	@Lob
 	private String description;
 

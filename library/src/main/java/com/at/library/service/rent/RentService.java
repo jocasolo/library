@@ -25,31 +25,33 @@ public interface RentService {
 	 * @return
 	 */
 	List<RentDTO> findAll(Pageable pageable);
-	
+
 	/**
-	 * Realiza el alquiler de un libro a un determinado usario y realizado
-	 * por un determinado empleado.
+	 * Realiza el alquiler de un libro a un determinado usario y realizado por
+	 * un determinado empleado.
 	 *
 	 * @param rentDto
 	 * @return
 	 * @throws BookNotFoundException
 	 * @throws BookRentedException
-	 * @throws UserBannedException 
-	 * @throws UserNotFoundException 
-	 * @throws EmployeeNotFoundException 
+	 * @throws UserBannedException
+	 * @throws UserNotFoundException
+	 * @throws EmployeeNotFoundException
 	 */
-	RentDTO create(RentPostDTO rentDto) throws BookNotFoundException, BookRentedException, UserBannedException, UserNotFoundException, EmployeeNotFoundException;
-	
+	RentDTO create(RentPostDTO rentDto) throws BookNotFoundException, BookRentedException, UserBannedException,
+			UserNotFoundException, EmployeeNotFoundException;
+
 	/**
-	 * Realiza la devolución de un libro que pertenece a un determinado alquiler.
+	 * Realiza la devolución de un libro que pertenece a un determinado
+	 * alquiler.
 	 * 
 	 * @param idBook
 	 * @return
-	 * @throws BookNotFoundException 
-	 * @throws BookNotRentedException 
+	 * @throws BookNotFoundException
+	 * @throws BookNotRentedException
 	 */
 	RentDTO restore(Integer idBook) throws BookNotFoundException, BookNotRentedException;
-	
+
 	/**
 	 * Calcula la fecha en que se debe devolver un libro dada la inicial.
 	 * 
@@ -57,10 +59,10 @@ public interface RentService {
 	 * @return
 	 */
 	Date calcEndDate(Date initDate);
-	
+
 	/**
-	 * Busca todos los alquileres que aún no se han devuelto y que la fecha en que debería haberse
-	 * hecho ya ha pasado.
+	 * Busca todos los alquileres que aún no se han devuelto y que la fecha en
+	 * que debería haberse hecho ya ha pasado.
 	 * 
 	 * @return
 	 */
@@ -73,7 +75,7 @@ public interface RentService {
 	 * @return
 	 */
 	List<HistoryRentedDTO> getBookHistory(Integer idBook, Pageable pageable);
-	
+
 	/**
 	 * Obtiene el historial de alquileres de un usuario.
 	 * 
@@ -81,7 +83,7 @@ public interface RentService {
 	 * @return
 	 */
 	List<HistoryRentedDTO> getUserHistory(Integer idUser, Pageable pageable);
-	
+
 	/**
 	 * Transforma un Rent en un RentDTO
 	 * 
@@ -89,7 +91,7 @@ public interface RentService {
 	 * @return
 	 */
 	<T> T transform(Rent rent, Class<T> destinationClass);
-	
+
 	/**
 	 * Transformador genérico de una lista de alquileres a una lista de DTO.
 	 * 
@@ -98,6 +100,5 @@ public interface RentService {
 	 * @return
 	 */
 	public <T> List<T> transform(List<Rent> rents, Class<T> destinationClass);
-
 
 }

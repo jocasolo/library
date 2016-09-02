@@ -23,7 +23,7 @@ public interface EmployeeService {
 	 * 
 	 * @param id
 	 * @return Empleado correspondiente al id buscado.
-	 * @throws EmployeeNotFoundException 
+	 * @throws EmployeeNotFoundException
 	 */
 	Employee findOne(Integer id) throws EmployeeNotFoundException;
 
@@ -34,7 +34,7 @@ public interface EmployeeService {
 	 * @return El empleado creado.
 	 */
 	EmployeeDTO create(EmployeeDTO employeeDto);
-	
+
 	/**
 	 * Transforma un DTO de empleado en un empleado.
 	 * 
@@ -53,7 +53,8 @@ public interface EmployeeService {
 	<T> T transform(Employee employee, Class<T> destinationClass);
 
 	/**
-	 * Transforma una lista de empleados en una lista de empleados del tipo que se pase por parámetro.
+	 * Transforma una lista de empleados en una lista de empleados del tipo que
+	 * se pase por parámetro.
 	 * 
 	 * @param employees
 	 * @param destinationClass

@@ -12,7 +12,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-
 @Entity
 public class Rent implements Serializable {
 
@@ -21,16 +20,16 @@ public class Rent implements Serializable {
 	@Id
 	@GeneratedValue
 	private Integer id;
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date initDate;
-	
+
 	@OneToOne(fetch = FetchType.LAZY)
 	private Book book;
 
 	@OneToOne(fetch = FetchType.LAZY)
 	private User user;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Employee employee;
 
@@ -95,5 +94,5 @@ public class Rent implements Serializable {
 	public void setBook(Book book) {
 		this.book = book;
 	}
-	
+
 }

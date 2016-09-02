@@ -9,7 +9,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 @EnableAutoConfiguration
 public class LibraryApplication {
-	
+
 	public static void main(String[] args) {
 		SpringApplication.run(LibraryApplication.class, args);
 	}

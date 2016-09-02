@@ -70,7 +70,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void update(Integer id, UserPutDTO userDto) throws UserWrongUpdateException {
-		if(userDto.getId() != null && id != userDto.getId())
+		if (userDto.getId() != null && id != userDto.getId())
 			throw new UserWrongUpdateException();
 		User user = transform(userDto);
 		userDao.save(user);

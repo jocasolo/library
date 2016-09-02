@@ -59,7 +59,7 @@ public class Employee implements Serializable {
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
-	
+
 	public List<User> getUser() {
 		return user;
 	}

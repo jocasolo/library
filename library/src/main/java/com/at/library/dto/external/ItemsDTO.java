@@ -5,7 +5,7 @@ import com.at.library.dto.DTO;
 public class ItemsDTO extends DTO {
 
 	private static final long serialVersionUID = -8028640061410682596L;
-	
+
 	private VolumeInfoDTO volumeInfo;
 
 	@Override

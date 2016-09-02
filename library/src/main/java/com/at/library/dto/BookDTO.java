@@ -17,11 +17,11 @@ public class BookDTO extends DTO implements Serializable {
 	private String author;
 
 	private BookEnum status;
-	
+
 	private Integer year;
-	
+
 	private String image;
-	
+
 	private String description;
 
 	public BookDTO(Integer id, String isbn, String title, String author, BookEnum status) {

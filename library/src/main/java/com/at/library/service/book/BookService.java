@@ -14,19 +14,20 @@ public interface BookService {
 
 	/**
 	 * Realiza la búsqueda de todos los libros existentes.
+	 * 
 	 * @return Listado de todos los libros.
 	 */
 	List<BookDTO> findAll(Pageable pageable);
-	
+
 	/**
 	 * Realiza la búsqueda de un libro por id.
 	 * 
 	 * @param id
 	 * @return Libro correspondiente al id buscado.
-	 * @throws BookNotFoundException 
+	 * @throws BookNotFoundException
 	 */
 	Book findOne(Integer id) throws BookNotFoundException;
-	
+
 	/**
 	 * Realiza una búsqueda de libros según los parámetros incluidos.
 	 * 
@@ -47,7 +48,7 @@ public interface BookService {
 	 * 
 	 * @param id
 	 * @param book
-	 * @throws BookWrongUpdateException 
+	 * @throws BookWrongUpdateException
 	 */
 	void update(Integer id, BookDTO bookDto) throws BookWrongUpdateException;
 
@@ -55,10 +56,10 @@ public interface BookService {
 	 * Elimina el libro correspondiente al id dado.
 	 * 
 	 * @param id
-	 * @throws BookNotFoundException 
+	 * @throws BookNotFoundException
 	 */
 	void delete(Integer id) throws BookNotFoundException;
-	
+
 	/**
 	 * Transfrma un libro en un libroDTO.
 	 * 
@@ -74,8 +75,7 @@ public interface BookService {
 	 * @return
 	 */
 	<T> Book transform(T book);
-	
-	
+
 	/**
 	 * Transforma una lista de libros en una lista de libros DTO.
 	 * 
@@ -84,24 +84,24 @@ public interface BookService {
 	 * @return
 	 */
 	<T> List<T> transform(List<Book> books, Class<T> destinationClass);
-	
+
 	/**
 	 * Comprueba la disponibilidad de un libro.
 	 * 
 	 * @param book
-	 * @return 
+	 * @return
 	 */
 	Boolean isAvailable(Book book);
-	
+
 	/**
 	 * Comprueba la disponibilidad de un libro dado su id.
 	 * 
 	 * @param id
 	 * @return
-	 * @throws BookNotFoundException 
+	 * @throws BookNotFoundException
 	 */
 	Boolean isAvailable(Integer id) throws BookNotFoundException;
-	
+
 	/**
 	 * Cambia el estado de un libro.
 	 * 
@@ -109,7 +109,7 @@ public interface BookService {
 	 * @param newStatus
 	 */
 	void changeStatus(Book book, BookEnum newStatus);
-	
+
 	/**
 	 * Realiza una migración de libros a partir de un servicio externo.
 	 */

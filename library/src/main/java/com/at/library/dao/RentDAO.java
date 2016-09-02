@@ -12,20 +12,20 @@ import com.at.library.model.Book;
 import com.at.library.model.Rent;
 
 @Repository
-public interface RentDAO extends CrudRepository<Rent, Integer>{
-	
+public interface RentDAO extends CrudRepository<Rent, Integer> {
+
 	public Rent findOneByBookAndReturnDateIsNull(Book book);
-	
-	@Query(value="SELECT r FROM Rent AS r WHERE r.returnDate IS NULL AND r.endDate < CURRENT_DATE")
+
+	@Query(value = "SELECT r FROM Rent AS r WHERE r.returnDate IS NULL AND r.endDate < CURRENT_DATE")
 	public List<Rent> findSanctionalbe();
-	
-	@Query(value="SELECT r FROM Rent AS r WHERE r.book.id = :id")
+
+	@Query(value = "SELECT r FROM Rent AS r WHERE r.book.id = :id")
 	public List<Rent> findAllByBookId(@Param("id") Integer id, Pageable pageable);
-	
-	@Query(value="SELECT r FROM Rent AS r WHERE r.user.id = :id")
+
+	@Query(value = "SELECT r FROM Rent AS r WHERE r.user.id = :id")
 	public List<Rent> findAllByUserId(@Param("id") Integer id, Pageable pageable);
-	
-	@Query(value="SELECT r FROM Rent AS r")
+
+	@Query(value = "SELECT r FROM Rent AS r")
 	public List<Rent> findAll(Pageable pageable);
-	
+
 }

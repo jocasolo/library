@@ -12,5 +12,5 @@ public interface EmployeeDAO extends CrudRepository<Employee, Integer> {
 
 	@Query(value = "SELECT e from Employee AS e")
 	public List<Employee> findAll(Pageable pageable);
-	
+
 }

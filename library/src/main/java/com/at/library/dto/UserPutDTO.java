@@ -13,7 +13,7 @@ public class UserPutDTO extends DTO implements Serializable {
 	private String name;
 
 	private String surname;
-	
+
 	public String getDni() {
 		return dni;
 	}

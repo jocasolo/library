@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class UserDTO extends DTO implements Serializable {
 
 	private static final long serialVersionUID = 3827455324138571715L;
-	
+
 	private Integer id;
 
 	private String dni;
@@ -13,7 +13,7 @@ public class UserDTO extends DTO implements Serializable {
 	private String name;
 
 	private String surname;
-	
+
 	public UserDTO(Integer id, String dni, String name, String surname) {
 		super();
 		this.id = id;

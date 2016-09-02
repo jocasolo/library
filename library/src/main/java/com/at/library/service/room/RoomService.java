@@ -41,7 +41,8 @@ public interface RoomService {
 	RoomDTO transform(Room room);
 
 	/**
-	 * Transforma un DTO en un objeto Room. 
+	 * Transforma un DTO en un objeto Room.
+	 * 
 	 * @param room
 	 * @return
 	 */

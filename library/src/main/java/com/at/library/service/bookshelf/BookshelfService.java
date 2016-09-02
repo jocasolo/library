@@ -22,7 +22,7 @@ public interface BookshelfService {
 	 * 
 	 * @param id
 	 * @return Sala correspondiente al id buscado.
-	 * @throws BookshelfNotFoundException 
+	 * @throws BookshelfNotFoundException
 	 */
 	BookshelfDTO findOne(Integer id) throws BookshelfNotFoundException;
 
@@ -43,7 +43,8 @@ public interface BookshelfService {
 	BookshelfDTO transform(Bookshelf bookshelf);
 
 	/**
-	 * Transforma un DTO en un objeto Shelf. 
+	 * Transforma un DTO en un objeto Shelf.
+	 * 
 	 * @param bookshelfDto
 	 * @return
 	 */

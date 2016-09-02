@@ -18,7 +18,7 @@ public interface UserService {
 	 * @return Listado de usuarios.
 	 */
 	List<UserDTO> findAll();
-	
+
 	/**
 	 * Busca todos los usuarios que concuerden con los campos de búsqueda.
 	 * 
@@ -30,11 +30,11 @@ public interface UserService {
 	List<UserDTO> search(String dni, String name, String surname, Pageable pageable);
 
 	/**
-	 * Realiza la bï¿½squeda de un usuario por id.
+	 * Realiza la búsqueda de un usuario por id.
 	 * 
 	 * @param id
 	 * @return Usuario correspondiente al id buscado.
-	 * @throws UserNotFoundException 
+	 * @throws UserNotFoundException
 	 */
 	User findOne(Integer id) throws UserNotFoundException;
 
@@ -50,7 +50,7 @@ public interface UserService {
 	 * Actualiza un usuario.
 	 * 
 	 * @param user
-	 * @throws UserWrongUpdateException 
+	 * @throws UserWrongUpdateException
 	 */
 	void update(Integer id, UserPutDTO userDto) throws UserWrongUpdateException;
 
@@ -58,7 +58,7 @@ public interface UserService {
 	 * Elimina el usuario correspondiente al id dado.
 	 * 
 	 * @param id
-	 * @throws UserNotFoundException 
+	 * @throws UserNotFoundException
 	 */
 	void delete(Integer id) throws UserNotFoundException;
 
@@ -71,19 +71,20 @@ public interface UserService {
 	UserDTO transform(User user);
 
 	/**
-	 * Transforma un DTO en un objeto User. 
+	 * Transforma un DTO en un objeto User.
+	 * 
 	 * @param user
 	 * @return
 	 */
 	<T> User transform(T userDto);
-	
+
 	/**
 	 * Transforma una lista de usuarios en una lista de usuarios DTO.
 	 * 
 	 * @param users
 	 * @return
 	 */
-	List<UserDTO> transform (List<User> users);
+	List<UserDTO> transform(List<User> users);
 
 	/**
 	 * Comprueba los usuarios a sancionar y los sanciona.
@@ -94,7 +95,7 @@ public interface UserService {
 	 * Perdona a los usuarios
 	 */
 	void forgive();
-	
+
 	/**
 	 * Comprueba si un usuario puede alquilar libros.
 	 * 

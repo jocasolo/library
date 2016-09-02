@@ -40,7 +40,7 @@ public class BookshelfServiceImpl implements BookshelfService {
 	@Transactional(readOnly = true)
 	public BookshelfDTO findOne(Integer id) throws BookshelfNotFoundException {
 		final Bookshelf shelf = shelfDao.findOne(id);
-		if(shelf == null)
+		if (shelf == null)
 			throw new BookshelfNotFoundException();
 		return transform(shelf);
 	}

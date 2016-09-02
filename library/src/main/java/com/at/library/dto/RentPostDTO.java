@@ -3,7 +3,7 @@ package com.at.library.dto;
 public class RentPostDTO extends DTO {
 
 	private static final long serialVersionUID = -3488560761627120367L;
-	
+
 	private Integer book;
 
 	private Integer user;
@@ -38,5 +38,5 @@ public class RentPostDTO extends DTO {
 	public String toString() {
 		return "RentPostDTO [book=" + book + ", user=" + user + ", employee=" + employee + "]";
 	}
-	
+
 }
