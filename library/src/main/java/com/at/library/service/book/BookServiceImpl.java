@@ -32,7 +32,7 @@ public class BookServiceImpl implements BookService {
 
 	@Autowired
 	private RestTemplate restTemplate;
-	
+
 	@Autowired
 	private CommonService commonService;
 
@@ -113,7 +113,7 @@ public class BookServiceImpl implements BookService {
 			book.setImage(volInfo.getImageLinks().get("thumbnail"));
 		}
 	}
-	
+
 	@Override
 	public void migration() {
 		final String url = "http://192.168.11.57:8080/rent";
