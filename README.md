@@ -24,7 +24,7 @@ Realizado para formación.
 - Git
 - JUnit
 
-##Algunas librerías incluidas
+##Algunas librerías y plugins incluidos 
 - [Dozer](http://dozer.sourceforge.net/)
 - [Swagger](http://swagger.io/)
 - [Mockito](http://mockito.org/)
@@ -35,5 +35,5 @@ Realizado para formación.
 Desde la carpeta library del proyecto:
 ```
 gradlew build
-java -jar build/libs/java/library-0.0.1-SNAPSHOT.jar
+java -jar build/libs/library-0.0.1-SNAPSHOT.jar
 ```
