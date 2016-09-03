@@ -1,4 +1,4 @@
-package com.at;
+package com.at.library;
 
 import org.junit.Test;
 
