@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.Pageable;
 
 import com.at.library.dto.BookDTO;
+import com.at.library.dto.BookPostDTO;
 import com.at.library.enums.BookEnum;
 import com.at.library.exceptions.BookNotFoundException;
 import com.at.library.exceptions.BookWrongUpdateException;
@@ -46,7 +47,7 @@ public interface BookService {
 	 * @param bookDTO
 	 * @return El libro creado.
 	 */
-	BookDTO create(BookDTO bookDto);
+	BookDTO create(BookPostDTO bookDto);
 
 	/**
 	 * Actualiza un libro.

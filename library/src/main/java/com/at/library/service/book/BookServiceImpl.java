@@ -14,6 +14,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.at.library.dao.BookDAO;
 import com.at.library.dto.BookDTO;
+import com.at.library.dto.BookPostDTO;
 import com.at.library.dto.RentDTO;
 import com.at.library.dto.external.BookApiDTO;
 import com.at.library.dto.external.VolumeInfoDTO;
@@ -60,7 +61,7 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public BookDTO create(BookDTO bookDto) {
+	public BookDTO create(BookPostDTO bookDto) {
 		Book book = commonService.transform(bookDto, Book.class);
 		book.setStartDate(new Date());
 		book.setStatus(BookEnum.OK);

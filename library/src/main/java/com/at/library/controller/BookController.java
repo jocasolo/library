@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.at.library.dto.BookDTO;
+import com.at.library.dto.BookPostDTO;
 import com.at.library.exceptions.BookNotFoundException;
 import com.at.library.exceptions.BookWrongUpdateException;
 import com.at.library.service.CommonService;
@@ -54,7 +55,7 @@ public class BookController {
 
 	@ApiOperation(value = "Crear un nuevo libro.")
 	@RequestMapping(method = { RequestMethod.POST })
-	public BookDTO create(@RequestBody BookDTO book) {
+	public BookDTO create(@RequestBody BookPostDTO book) {
 		log.debug(String.format("Creando el libro: %s", book));
 		return bookservice.create(book);
 	}

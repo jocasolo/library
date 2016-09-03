@@ -2,8 +2,6 @@ package com.at.library.dto;
 
 import java.io.Serializable;
 
-import com.at.library.enums.BookEnum;
-
 public class BookDTO extends DTO implements Serializable {
 
 	private static final long serialVersionUID = 1583585532736761521L;
@@ -16,26 +14,13 @@ public class BookDTO extends DTO implements Serializable {
 
 	private String author;
 
-	private BookEnum status;
+	private String status;
 
 	private Integer year;
 
 	private String image;
 
 	private String description;
-
-	public BookDTO(Integer id, String isbn, String title, String author, BookEnum status) {
-		super();
-		this.id = id;
-		this.isbn = isbn;
-		this.title = title;
-		this.author = author;
-		this.status = status;
-	}
-
-	public BookDTO() {
-		super();
-	}
 
 	public Integer getId() {
 		return id;
@@ -69,11 +54,11 @@ public class BookDTO extends DTO implements Serializable {
 		this.author = author;
 	}
 
-	public BookEnum getStatus() {
+	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(BookEnum status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 
