@@ -11,7 +11,7 @@ public interface RoomService {
 	/**
 	 * Realiza la busqueda de todas las salas existentes
 	 * 
-	 * @return listado de salas
+	 * @return Listado de salas
 	 */
 	List<RoomDTO> findAll(Pageable pageable);
 

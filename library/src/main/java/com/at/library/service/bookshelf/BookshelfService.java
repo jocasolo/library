@@ -12,7 +12,7 @@ public interface BookshelfService {
 	/**
 	 * Realiza la busqueda de todas las estanterías existentes
 	 * 
-	 * @return listado de estanterías
+	 * @return Listado de estanterías
 	 */
 	List<BookshelfDTO> findAll(Pageable pageable);
 
@@ -20,7 +20,7 @@ public interface BookshelfService {
 	 * Realiza la búsqueda de una estantería por id.
 	 * 
 	 * @param id
-	 * @return Sala correspondiente al id buscado.
+	 * @return Estantería correspondiente al id buscado.
 	 * @throws BookshelfNotFoundException
 	 */
 	BookshelfDTO findOne(Integer id) throws BookshelfNotFoundException;

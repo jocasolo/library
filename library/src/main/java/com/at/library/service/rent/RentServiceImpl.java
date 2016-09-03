@@ -50,9 +50,9 @@ public class RentServiceImpl implements RentService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<RentDTO> findAll(Pageable pageable) {
+	public List<HistoryRentedDTO> findAll(Pageable pageable) {
 		final List<Rent> rents = rentDao.findAll(pageable);
-		return commonService.transform(rents, RentDTO.class);
+		return commonService.transform(rents, HistoryRentedDTO.class);
 	}
 
 	@Override

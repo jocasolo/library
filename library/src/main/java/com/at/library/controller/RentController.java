@@ -71,7 +71,7 @@ public class RentController {
 	
 	@ApiOperation(value = "Obtener todos los alquileres.")
 	@RequestMapping(value = "/rent", method = { RequestMethod.GET })
-	public List<RentDTO> getAll(
+	public List<HistoryRentedDTO> getAll(
 			@RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
 			@RequestParam(value = "size", required = false, defaultValue = "10") Integer size) {
 		log.debug(String.format("Obteniedno todos los alquileres"));

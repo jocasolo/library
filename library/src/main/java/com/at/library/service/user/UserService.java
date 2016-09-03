@@ -25,7 +25,7 @@ public interface UserService {
 	 * @param dni
 	 * @param name
 	 * @param surname
-	 * @return
+	 * @return Listado de usuarios que concuerdan con los parámetros de búsqueda.
 	 */
 	List<UserDTO> search(String dni, String name, String surname, Pageable pageable);
 
@@ -49,7 +49,8 @@ public interface UserService {
 	/**
 	 * Actualiza un usuario.
 	 * 
-	 * @param user
+	 * @param id
+	 * @param userDto
 	 * @throws UserWrongUpdateException
 	 */
 	void update(Integer id, UserPutDTO userDto) throws UserWrongUpdateException;
@@ -76,7 +77,7 @@ public interface UserService {
 	 * Comprueba si un usuario puede alquilar libros.
 	 * 
 	 * @param user
-	 * @return
+	 * @return Si el usuario está sancionado o no.
 	 */
 	Boolean isBanned(User user);
 }

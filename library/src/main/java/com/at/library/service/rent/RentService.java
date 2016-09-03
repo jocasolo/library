@@ -22,16 +22,16 @@ public interface RentService {
 	 * Realiza la busqueda de todos los alquileres existentes
 	 * 
 	 * @param pageable
-	 * @return
+	 * @return Listado con el historial de alquileres.
 	 */
-	List<RentDTO> findAll(Pageable pageable);
+	List<HistoryRentedDTO> findAll(Pageable pageable);
 
 	/**
 	 * Realiza el alquiler de un libro a un determinado usario y realizado por
 	 * un determinado empleado.
 	 *
 	 * @param rentDto
-	 * @return
+	 * @return Alquiler creado.
 	 * @throws BookNotFoundException
 	 * @throws BookRentedException
 	 * @throws UserBannedException
@@ -46,7 +46,7 @@ public interface RentService {
 	 * alquiler.
 	 * 
 	 * @param idBook
-	 * @return
+	 * @return Alquiler devuelto.
 	 * @throws BookNotFoundException
 	 * @throws BookNotRentedException
 	 */
@@ -56,7 +56,7 @@ public interface RentService {
 	 * Calcula la fecha en que se debe devolver un libro dada la inicial.
 	 * 
 	 * @param initDate
-	 * @return
+	 * @return Fecha de devolución.
 	 */
 	Date calcReturnDate(Date initDate);
 
@@ -64,7 +64,7 @@ public interface RentService {
 	 * Busca todos los alquileres que aún no se han devuelto y que la fecha en
 	 * que debería haberse hecho ya ha pasado.
 	 * 
-	 * @return
+	 * @return Listado con el historial de alquileres retrasados.
 	 */
 	List<Rent> findSanctionable();
 
@@ -72,7 +72,7 @@ public interface RentService {
 	 * Obtiene el historial de alquileres de un libro.
 	 * 
 	 * @param idBook
-	 * @return
+	 * @return Listado con el historial de alquileres de un libro.
 	 */
 	List<HistoryRentedDTO> getBookHistory(Integer idBook, Pageable pageable);
 
@@ -80,7 +80,7 @@ public interface RentService {
 	 * Obtiene el historial de alquileres de un usuario.
 	 * 
 	 * @param idUser
-	 * @return
+	 * @return Listado con el historial de alquileres de un usuario.
 	 */
 	List<HistoryRentedDTO> getUserHistory(Integer idUser, Pageable pageable);
 

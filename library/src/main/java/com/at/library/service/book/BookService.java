@@ -15,7 +15,8 @@ public interface BookService {
 	/**
 	 * Realiza la búsqueda de todos los libros existentes.
 	 * 
-	 * @return Listado de todos los libros.
+	 * @param pageable
+	 * @return Listado de todos los libros
 	 */
 	List<BookDTO> findAll(Pageable pageable);
 
@@ -31,7 +32,11 @@ public interface BookService {
 	/**
 	 * Realiza una búsqueda de libros según los parámetros incluidos.
 	 * 
-	 * @return
+	 * @param isbn
+	 * @param title
+	 * @param author
+	 * @param pageable
+	 * @return Listado de libros que concuerden con los parámetros de búsqueda.
 	 */
 	List<BookDTO> search(String isbn, String title, String author, Pageable pageable);
 
@@ -64,12 +69,12 @@ public interface BookService {
 	 * Comprueba la disponibilidad de un libro.
 	 * 
 	 * @param book
-	 * @return
+	 * @return Si el libro está disponible o no.
 	 */
 	Boolean isAvailable(Book book);
 
 	/**
-	 * Cambia el estado de un libro.
+	 * Cambia el estado de un libro y lo guarda.
 	 * 
 	 * @param book
 	 * @param newStatus
@@ -82,7 +87,7 @@ public interface BookService {
 	void migration();
 
 	/**
-	 * Obtiene información sobre el libro consultando una api externa.
+	 * Completa información sobre el libro consultando api externa.
 	 * 
 	 * @param book
 	 */
