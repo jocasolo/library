@@ -17,6 +17,7 @@ import com.at.library.dto.UserDTO;
 import com.at.library.dto.UserPutDTO;
 import com.at.library.exceptions.UserNotFoundException;
 import com.at.library.exceptions.UserWrongUpdateException;
+import com.at.library.service.CommonService;
 import com.at.library.service.user.UserService;
 
 @RestController
@@ -25,6 +26,9 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private CommonService commonService;
 
 	private static final Logger log = LoggerFactory.getLogger(UserController.class);
 
@@ -48,7 +52,7 @@ public class UserController {
 	@RequestMapping(value = "/{id}", method = { RequestMethod.GET })
 	public UserDTO findOne(@PathVariable("id") Integer id) throws UserNotFoundException {
 		log.debug(String.format("Buscando el usuario con id: %s", id));
-		return userService.transform(userService.findOne(id));
+		return commonService.transform(userService.findOne(id), UserDTO.class);
 	}
 
 	@RequestMapping(value = "/{id}", method = { RequestMethod.PUT })

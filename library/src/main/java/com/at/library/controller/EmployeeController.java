@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.at.library.dto.EmployeeDTO;
 import com.at.library.exceptions.EmployeeNotFoundException;
+import com.at.library.service.CommonService;
 import com.at.library.service.employee.EmployeeService;
 
 @RestController
@@ -23,6 +24,9 @@ public class EmployeeController {
 
 	@Autowired
 	private EmployeeService employeeService;
+	
+	@Autowired
+	private CommonService commonService;
 
 	private static final Logger log = LoggerFactory.getLogger(EmployeeController.class);
 
@@ -44,7 +48,7 @@ public class EmployeeController {
 	@RequestMapping(value = "/{id}", method = { RequestMethod.GET })
 	public EmployeeDTO findOne(@PathVariable("id") Integer id) throws EmployeeNotFoundException {
 		log.debug(String.format("Buscando el empleado con id: %s", id));
-		return employeeService.transform(employeeService.findOne(id), EmployeeDTO.class);
+		return commonService.transform(employeeService.findOne(id), EmployeeDTO.class);
 	}
 
 	@RequestMapping(value = "/{id}", method = { RequestMethod.PUT })

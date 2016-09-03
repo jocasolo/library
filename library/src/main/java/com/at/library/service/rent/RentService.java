@@ -84,21 +84,4 @@ public interface RentService {
 	 */
 	List<HistoryRentedDTO> getUserHistory(Integer idUser, Pageable pageable);
 
-	/**
-	 * Transforma un Rent en un RentDTO
-	 * 
-	 * @param rent
-	 * @return
-	 */
-	<T> T transform(Rent rent, Class<T> destinationClass);
-
-	/**
-	 * Transformador genérico de una lista de alquileres a una lista de DTO.
-	 * 
-	 * @param rents
-	 * @param destinationClass
-	 * @return
-	 */
-	public <T> List<T> transform(List<Rent> rents, Class<T> destinationClass);
-
 }

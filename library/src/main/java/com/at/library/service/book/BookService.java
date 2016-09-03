@@ -61,46 +61,12 @@ public interface BookService {
 	void delete(Integer id) throws BookNotFoundException;
 
 	/**
-	 * Transfrma un libro en un libroDTO.
-	 * 
-	 * @param book
-	 * @return
-	 */
-	BookDTO transform(Book book);
-
-	/**
-	 * Transforma un DTO de libro en un libro.
-	 * 
-	 * @param book
-	 * @return
-	 */
-	<T> Book transform(T book);
-
-	/**
-	 * Transforma una lista de libros en una lista de libros DTO.
-	 * 
-	 * @param books
-	 * @param destinationClass
-	 * @return
-	 */
-	<T> List<T> transform(List<Book> books, Class<T> destinationClass);
-
-	/**
 	 * Comprueba la disponibilidad de un libro.
 	 * 
 	 * @param book
 	 * @return
 	 */
 	Boolean isAvailable(Book book);
-
-	/**
-	 * Comprueba la disponibilidad de un libro dado su id.
-	 * 
-	 * @param id
-	 * @return
-	 * @throws BookNotFoundException
-	 */
-	Boolean isAvailable(Integer id) throws BookNotFoundException;
 
 	/**
 	 * Cambia el estado de un libro.

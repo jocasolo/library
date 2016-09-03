@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -22,6 +21,7 @@ import com.at.library.enums.BookEnum;
 import com.at.library.exceptions.BookNotFoundException;
 import com.at.library.exceptions.BookWrongUpdateException;
 import com.at.library.model.Book;
+import com.at.library.service.CommonService;
 
 @Service
 public class BookServiceImpl implements BookService {
@@ -30,16 +30,16 @@ public class BookServiceImpl implements BookService {
 	private BookDAO bookDao;
 
 	@Autowired
-	private DozerBeanMapper dozer;
-
-	@Autowired
 	private RestTemplate restTemplate;
+	
+	@Autowired
+	private CommonService commonService;
 
 	@Override
 	@Transactional(readOnly = true)
 	public List<BookDTO> findAll(Pageable pageable) {
 		final List<Book> books = bookDao.findAll(pageable);
-		return transform(books, BookDTO.class);
+		return commonService.transform(books, BookDTO.class);
 	}
 
 	@Override
@@ -55,16 +55,17 @@ public class BookServiceImpl implements BookService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<BookDTO> search(String isbn, String title, String author, Pageable pageable) {
-		return transform(bookDao.search(isbn, title, author, pageable), BookDTO.class);
+		final List<Book> books = bookDao.search(isbn, title, author, pageable);
+		return commonService.transform(books, BookDTO.class);
 	}
 
 	@Override
 	public BookDTO create(BookDTO bookDto) {
-		Book book = transform(bookDto);
+		Book book = commonService.transform(bookDto, Book.class);
 		book.setStartDate(new Date());
 		book.setStatus(BookEnum.OK);
 		setVolumeInfo(book);
-		return transform(bookDao.save(book));
+		return commonService.transform(bookDao.save(book), BookDTO.class);
 	}
 
 	@Override
@@ -72,7 +73,7 @@ public class BookServiceImpl implements BookService {
 		if (bookDto.getId() != null && id != bookDto.getId())
 			throw new BookWrongUpdateException();
 
-		final Book book = transform(bookDto);
+		final Book book = commonService.transform(bookDto, Book.class);
 		setVolumeInfo(book);
 		bookDao.save(book);
 	}
@@ -90,46 +91,10 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public Boolean isAvailable(Integer id) throws BookNotFoundException {
-		final Book b = bookDao.findOne(id);
-		if (b == null)
-			throw new BookNotFoundException();
-		return b.getStatus().equals(BookEnum.OK);
-	}
-
-	@Override
 	public void changeStatus(Book book, BookEnum newStatus) {
 		if (!book.getStatus().equals(newStatus)) {
 			book.setStatus(newStatus);
 			bookDao.save(book);
-		}
-	}
-
-	@Override
-	public BookDTO transform(Book book) {
-		return dozer.map(book, BookDTO.class);
-	}
-
-	@Override
-	public void migration() {
-		final String url = "http://192.168.11.57:8080/rent";
-		final Integer size = 20;
-		Integer page = 0;
-		final List<Integer> books = new ArrayList<>();
-
-		RentDTO[] rents = restTemplate.getForObject(url + "?page=" + page + "&size=" + size, RentDTO[].class);
-		while (rents != null) {
-			final Iterator<RentDTO> iterator = Arrays.asList(rents).iterator();
-			while (iterator.hasNext()) {
-				Book book = transform(iterator.next().getBook());
-				if (!books.contains(book.getId())) {
-					books.add(book.getId());
-					book.setId(iterator.next().getBook().getId());
-					bookDao.save(book);
-				}
-			}
-			page++;
-			rents = restTemplate.getForObject(url + "?page=" + page + "&size=" + size, RentDTO[].class);
 		}
 	}
 
@@ -147,18 +112,28 @@ public class BookServiceImpl implements BookService {
 			book.setImage(volInfo.getImageLinks().get("thumbnail"));
 		}
 	}
-
+	
 	@Override
-	public <T> Book transform(T book) {
-		return dozer.map(book, Book.class);
-	}
+	public void migration() {
+		final String url = "http://192.168.11.57:8080/rent";
+		final Integer size = 20;
+		Integer page = 0;
+		final List<Integer> books = new ArrayList<>();
 
-	@Override
-	public <T> List<T> transform(List<Book> books, Class<T> destinationClass) {
-		List<T> res = new ArrayList<>();
-		for (Book book : books)
-			res.add(dozer.map(book, destinationClass));
-		return res;
+		RentDTO[] rents = restTemplate.getForObject(url + "?page=" + page + "&size=" + size, RentDTO[].class);
+		while (rents != null) {
+			final Iterator<RentDTO> iterator = Arrays.asList(rents).iterator();
+			while (iterator.hasNext()) {
+				Book book = commonService.transform(iterator.next().getBook(), Book.class);
+				if (!books.contains(book.getId())) {
+					books.add(book.getId());
+					book.setId(iterator.next().getBook().getId());
+					bookDao.save(book);
+				}
+			}
+			page++;
+			rents = restTemplate.getForObject(url + "?page=" + page + "&size=" + size, RentDTO[].class);
+		}
 	}
 
 }

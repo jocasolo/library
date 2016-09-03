@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import org.dozer.DozerBeanMapper;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.slf4j.Logger;
@@ -24,6 +23,7 @@ import com.at.library.exceptions.UserNotFoundException;
 import com.at.library.exceptions.UserWrongUpdateException;
 import com.at.library.model.Rent;
 import com.at.library.model.User;
+import com.at.library.service.CommonService;
 import com.at.library.service.rent.RentService;
 
 @Service
@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
 	private RentService rentService;
 
 	@Autowired
-	private DozerBeanMapper dozer;
+	private CommonService commonService;
 
 	@Override
 	@Transactional(readOnly = true)
@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
 		final List<UserDTO> res = new ArrayList<>();
 		while (iterator.hasNext()) {
 			final User r = iterator.next();
-			res.add(transform(r));
+			res.add(commonService.transform(r, UserDTO.class));
 		}
 		return res;
 	}
@@ -63,16 +63,16 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserDTO create(UserDTO userDto) {
-		User user = transform(userDto);
+		User user = commonService.transform(userDto, User.class);
 		user.setStatus(UserEnum.NORMAL);
-		return transform(userDao.save(user));
+		return commonService.transform(userDao.save(user), UserDTO.class);
 	}
 
 	@Override
 	public void update(Integer id, UserPutDTO userDto) throws UserWrongUpdateException {
 		if (userDto.getId() != null && id != userDto.getId())
 			throw new UserWrongUpdateException();
-		User user = transform(userDto);
+		User user = commonService.transform(userDto, User.class);
 		userDao.save(user);
 	}
 
@@ -139,24 +139,6 @@ public class UserServiceImpl implements UserService {
 				log.debug("Usuario %s perdonado", user);
 			}
 		}
-	}
-
-	@Override
-	public UserDTO transform(User user) {
-		return dozer.map(user, UserDTO.class);
-	}
-
-	@Override
-	public <T> User transform(T userDto) {
-		return dozer.map(userDto, User.class);
-	}
-
-	@Override
-	public List<UserDTO> transform(List<User> users) {
-		List<UserDTO> res = new ArrayList<>();
-		for (User u : users)
-			res.add(transform(u));
-		return res;
 	}
 
 }

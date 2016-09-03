@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -14,6 +13,7 @@ import com.at.library.dao.BookshelfDAO;
 import com.at.library.dto.BookshelfDTO;
 import com.at.library.exceptions.BookshelfNotFoundException;
 import com.at.library.model.Bookshelf;
+import com.at.library.service.CommonService;
 
 @Service
 public class BookshelfServiceImpl implements BookshelfService {
@@ -22,7 +22,7 @@ public class BookshelfServiceImpl implements BookshelfService {
 	private BookshelfDAO shelfDao;
 
 	@Autowired
-	private DozerBeanMapper dozer;
+	private CommonService commonService;
 
 	@Override
 	@Transactional(readOnly = true)
@@ -31,7 +31,7 @@ public class BookshelfServiceImpl implements BookshelfService {
 		final List<BookshelfDTO> res = new ArrayList<>();
 		while (iterator.hasNext()) {
 			final Bookshelf r = iterator.next();
-			res.add(transform(r));
+			res.add(commonService.transform(r, BookshelfDTO.class));
 		}
 		return res;
 	}
@@ -42,23 +42,13 @@ public class BookshelfServiceImpl implements BookshelfService {
 		final Bookshelf shelf = shelfDao.findOne(id);
 		if (shelf == null)
 			throw new BookshelfNotFoundException();
-		return transform(shelf);
+		return commonService.transform(shelf, BookshelfDTO.class);
 	}
 
 	@Override
 	public BookshelfDTO create(BookshelfDTO shelfDto) {
-		final Bookshelf shelf = transform(shelfDto);
-		return transform(shelfDao.save(shelf));
-	}
-
-	@Override
-	public BookshelfDTO transform(Bookshelf shelf) {
-		return dozer.map(shelf, BookshelfDTO.class);
-	}
-
-	@Override
-	public <T> Bookshelf transform(T shelfDto) {
-		return dozer.map(shelfDto, Bookshelf.class);
+		final Bookshelf shelf = commonService.transform(shelfDto, Bookshelf.class);
+		return commonService.transform(shelfDao.save(shelf), BookshelfDTO.class);
 	}
 
 }

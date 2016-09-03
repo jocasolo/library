@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.data.domain.Pageable;
 
 import com.at.library.dto.RoomDTO;
-import com.at.library.model.Room;
 
 public interface RoomService {
 
@@ -31,21 +30,5 @@ public interface RoomService {
 	 * @return La sala creada.
 	 */
 	RoomDTO create(RoomDTO roomDto);
-
-	/**
-	 * Transforma un Room en un RoomDTO
-	 * 
-	 * @param room
-	 * @return
-	 */
-	RoomDTO transform(Room room);
-
-	/**
-	 * Transforma un DTO en un objeto Room.
-	 * 
-	 * @param room
-	 * @return
-	 */
-	<T> Room transform(T roomDto);
 
 }

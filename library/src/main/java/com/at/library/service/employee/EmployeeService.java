@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.data.domain.Pageable;
 
-import com.at.library.dto.DTO;
 import com.at.library.dto.EmployeeDTO;
 import com.at.library.exceptions.EmployeeNotFoundException;
 import com.at.library.model.Employee;
@@ -34,31 +33,5 @@ public interface EmployeeService {
 	 * @return El empleado creado.
 	 */
 	EmployeeDTO create(EmployeeDTO employeeDto);
-
-	/**
-	 * Transforma un DTO de empleado en un empleado.
-	 * 
-	 * @param employeeDto
-	 * @return
-	 */
-	Employee transform(DTO employeeDto);
-
-	/**
-	 * Transforma un empleado en un empleado del tipo que se pase por parámetro.
-	 * 
-	 * @param employee
-	 * @param destinationClass
-	 * @return
-	 */
-	<T> T transform(Employee employee, Class<T> destinationClass);
-
-	/**
-	 * Transforma una lista de empleados en una lista de empleados del tipo que
-	 * se pase por parámetro.
-	 * 
-	 * @param employees
-	 * @param destinationClass
-	 * @return
-	 */
-	<T> List<T> transform(List<Employee> employees, Class<T> destinationClass);
+	
 }

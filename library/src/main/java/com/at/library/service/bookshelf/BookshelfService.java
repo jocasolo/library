@@ -6,7 +6,6 @@ import org.springframework.data.domain.Pageable;
 
 import com.at.library.dto.BookshelfDTO;
 import com.at.library.exceptions.BookshelfNotFoundException;
-import com.at.library.model.Bookshelf;
 
 public interface BookshelfService {
 
@@ -33,21 +32,5 @@ public interface BookshelfService {
 	 * @return La estantería creada.
 	 */
 	BookshelfDTO create(BookshelfDTO bookshelfDto);
-
-	/**
-	 * Transforma un Shelf en un ShelfDTO
-	 * 
-	 * @param bookshelfDto
-	 * @return
-	 */
-	BookshelfDTO transform(Bookshelf bookshelf);
-
-	/**
-	 * Transforma un DTO en un objeto Shelf.
-	 * 
-	 * @param bookshelfDto
-	 * @return
-	 */
-	<T> Bookshelf transform(T bookshelfDto);
 
 }

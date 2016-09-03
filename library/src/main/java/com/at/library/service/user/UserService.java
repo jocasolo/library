@@ -63,30 +63,6 @@ public interface UserService {
 	void delete(Integer id) throws UserNotFoundException;
 
 	/**
-	 * Transforma un User en un UserDTO
-	 * 
-	 * @param user
-	 * @return
-	 */
-	UserDTO transform(User user);
-
-	/**
-	 * Transforma un DTO en un objeto User.
-	 * 
-	 * @param user
-	 * @return
-	 */
-	<T> User transform(T userDto);
-
-	/**
-	 * Transforma una lista de usuarios en una lista de usuarios DTO.
-	 * 
-	 * @param users
-	 * @return
-	 */
-	List<UserDTO> transform(List<User> users);
-
-	/**
 	 * Comprueba los usuarios a sancionar y los sanciona.
 	 */
 	void penalize();

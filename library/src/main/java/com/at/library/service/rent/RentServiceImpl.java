@@ -1,10 +1,8 @@
 package com.at.library.service.rent;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.dozer.DozerBeanMapper;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeConstants;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +25,7 @@ import com.at.library.model.Book;
 import com.at.library.model.Employee;
 import com.at.library.model.Rent;
 import com.at.library.model.User;
+import com.at.library.service.CommonService;
 import com.at.library.service.book.BookService;
 import com.at.library.service.employee.EmployeeService;
 import com.at.library.service.user.UserService;
@@ -47,19 +46,19 @@ public class RentServiceImpl implements RentService {
 	private EmployeeService employeeService;
 
 	@Autowired
-	private DozerBeanMapper dozer;
+	private CommonService commonService;
 
 	@Override
 	@Transactional(readOnly = true)
 	public List<RentDTO> findAll(Pageable pageable) {
 		final List<Rent> rents = rentDao.findAll(pageable);
-		return transform(rents, RentDTO.class);
+		return commonService.transform(rents, RentDTO.class);
 	}
 
 	@Override
 	public RentDTO create(RentPostDTO rentDto) throws BookRentedException, UserBannedException,
 			EmployeeNotFoundException, BookNotFoundException, UserNotFoundException {
-		
+
 		final Book book = bookService.findOne(rentDto.getBook());
 		if (!bookService.isAvailable(book))
 			throw new BookRentedException();
@@ -79,7 +78,7 @@ public class RentServiceImpl implements RentService {
 		rent.setReturnDate(calcReturnDate(new Date()));
 
 		rentDao.save(rent);
-		return transform(rent, RentDTO.class);
+		return commonService.transform(rent, RentDTO.class);
 	}
 
 	@Override
@@ -93,16 +92,16 @@ public class RentServiceImpl implements RentService {
 		rent.setEndDate(new Date());
 
 		rentDao.save(rent);
-		return transform(rent, RentDTO.class);
+		return commonService.transform(rent, RentDTO.class);
 	}
 
 	@Override
 	public Date calcReturnDate(Date initDate) {
-		
+
 		DateTime returnDate = new DateTime(initDate);
 		returnDate = returnDate.plusDays(3);
 
-		if(returnDate.getDayOfWeek() == DateTimeConstants.SATURDAY)
+		if (returnDate.getDayOfWeek() == DateTimeConstants.SATURDAY)
 			returnDate = returnDate.plusDays(2);
 		if (returnDate.getDayOfWeek() == DateTimeConstants.SUNDAY)
 			returnDate = returnDate.plusDays(1);
@@ -117,25 +116,12 @@ public class RentServiceImpl implements RentService {
 
 	@Override
 	public List<HistoryRentedDTO> getBookHistory(Integer idBook, Pageable pageable) {
-		return transform(rentDao.findAllByBookId(idBook, pageable), HistoryRentedDTO.class);
+		return commonService.transform(rentDao.findAllByBookId(idBook, pageable), HistoryRentedDTO.class);
 	}
 
 	@Override
 	public List<HistoryRentedDTO> getUserHistory(Integer idUser, Pageable pageable) {
-		return transform(rentDao.findAllByUserId(idUser, pageable), HistoryRentedDTO.class);
-	}
-
-	@Override
-	public <T> T transform(Rent rent, Class<T> destinationClass) {
-		return dozer.map(rent, destinationClass);
-	}
-
-	@Override
-	public <T> List<T> transform(List<Rent> rents, Class<T> destinationClass) {
-		List<T> res = new ArrayList<>();
-		for (Rent rent : rents)
-			res.add(dozer.map(rent, destinationClass));
-		return res;
+		return commonService.transform(rentDao.findAllByUserId(idUser, pageable), HistoryRentedDTO.class);
 	}
 
 }
