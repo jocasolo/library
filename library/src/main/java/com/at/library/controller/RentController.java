@@ -24,6 +24,8 @@ import com.at.library.exceptions.UserBannedException;
 import com.at.library.exceptions.UserNotFoundException;
 import com.at.library.service.rent.RentService;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 public class RentController {
 
@@ -32,6 +34,7 @@ public class RentController {
 
 	private static final Logger log = LoggerFactory.getLogger(BookController.class);
 
+	@ApiOperation(value = "Obtener historial de alquileres de un determinado libro.")
 	@RequestMapping(value = "/book/{id}/rent", method = { RequestMethod.GET })
 	public List<HistoryRentedDTO> getBookHistory(
 			@PathVariable("id") Integer idBook,
@@ -41,12 +44,14 @@ public class RentController {
 		return rentService.getBookHistory(idBook, new PageRequest(page, size));
 	}
 
+	@ApiOperation(value = "Realizar la devolución de un libro.")
 	@RequestMapping(value = "/rent/{idBook}", method = { RequestMethod.DELETE }) // "/book/{id}/rent"
 	public RentDTO restore(@PathVariable("idBook") Integer idBook) throws BookNotFoundException, BookNotRentedException {
 		log.debug(String.format("Devolviendo alquiler con el libro con id: %s", idBook));
 		return rentService.restore(idBook);
 	}
 	
+	@ApiOperation(value = "Crear un nuevo alquiler.")
 	@RequestMapping(value = "/rent" , method = { RequestMethod.POST })  // "/book/{id}/rent"
 	public RentDTO create(
 			@RequestBody RentPostDTO rent) throws BookRentedException, BookNotFoundException, UserBannedException, UserNotFoundException, EmployeeNotFoundException {
@@ -54,6 +59,7 @@ public class RentController {
 		return rentService.create(rent);
 	}
 	
+	@ApiOperation(value = "Obtener historial de alquileres de un determinado usuario.")
 	@RequestMapping(value = "/user/{id}/rent", method = { RequestMethod.GET })
 	public List<HistoryRentedDTO> getUserHistoy(
 			@PathVariable("id") Integer idUser,
@@ -63,6 +69,7 @@ public class RentController {
 		return rentService.getUserHistory(idUser, new PageRequest(page, size));
 	}
 	
+	@ApiOperation(value = "Obtener todos los alquileres.")
 	@RequestMapping(value = "/rent", method = { RequestMethod.GET })
 	public List<RentDTO> getAll(
 			@RequestParam(value = "page", required = false, defaultValue = "0") Integer page,

@@ -19,6 +19,8 @@ import com.at.library.exceptions.BookWrongUpdateException;
 import com.at.library.service.CommonService;
 import com.at.library.service.book.BookService;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping(value = "/book")
 public class BookController {
@@ -31,12 +33,14 @@ public class BookController {
 
 	private static final Logger log = LoggerFactory.getLogger(BookController.class);
 
+	@ApiOperation(value = "Buscar un libro según su id.")
 	@RequestMapping(value = "/{id}", method = { RequestMethod.GET })
 	public BookDTO findOne(@PathVariable("id") Integer id) throws BookNotFoundException {
 		log.debug(String.format("Buscando el libro con id: %s", id));
 		return commonService.transform(bookservice.findOne(id), BookDTO.class);
 	}
 
+	@ApiOperation(value = "Buscar todos los libros que coincidan con los parámetros de búsqueda.")
 	@RequestMapping(method = { RequestMethod.GET })
 	public List<BookDTO> search(
 			@RequestParam(value = "isbn", required = false) String isbn,
@@ -48,12 +52,14 @@ public class BookController {
 		return bookservice.search(isbn, title, author, new PageRequest(page, size));
 	}
 
+	@ApiOperation(value = "Crear un nuevo libro.")
 	@RequestMapping(method = { RequestMethod.POST })
 	public BookDTO create(@RequestBody BookDTO book) {
 		log.debug(String.format("Creando el libro: %s", book));
 		return bookservice.create(book);
 	}
 
+	@ApiOperation(value = "Actualizar un libro según su id.")
 	@RequestMapping(value = "/{id}", method = { RequestMethod.PUT })
 	public void update(
 			@PathVariable("id") Integer id, 
@@ -62,6 +68,7 @@ public class BookController {
 		bookservice.update(id, bookDTO);
 	}
 
+	@ApiOperation(value = "Borrar un libro según su id.")
 	@RequestMapping(value = "/{id}", method = { RequestMethod.DELETE })
 	public void delete(@PathVariable("id") Integer id) throws BookNotFoundException {
 		log.debug(String.format("Borrando el libro con el id: %s", id));

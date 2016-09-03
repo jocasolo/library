@@ -18,6 +18,8 @@ import com.at.library.exceptions.EmployeeNotFoundException;
 import com.at.library.service.CommonService;
 import com.at.library.service.employee.EmployeeService;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping(value = "/employee")
 public class EmployeeController {
@@ -30,6 +32,7 @@ public class EmployeeController {
 
 	private static final Logger log = LoggerFactory.getLogger(EmployeeController.class);
 
+	@ApiOperation(value = "Obtener todos los empleados.")
 	@RequestMapping(method = { RequestMethod.GET })
 	public List<EmployeeDTO> getAll(
 			@RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
@@ -38,6 +41,7 @@ public class EmployeeController {
 		return employeeService.findAll(new PageRequest(page, size));
 	}
 
+	@ApiOperation(value = "Crear un nuevo empleado.")
 	@RequestMapping(method = { RequestMethod.POST })
 	public EmployeeDTO create(
 			@RequestBody EmployeeDTO employee) {
@@ -45,12 +49,14 @@ public class EmployeeController {
 		return employeeService.create(employee);
 	}
 
+	@ApiOperation(value = "Buscar un empleado según su id.")
 	@RequestMapping(value = "/{id}", method = { RequestMethod.GET })
 	public EmployeeDTO findOne(@PathVariable("id") Integer id) throws EmployeeNotFoundException {
 		log.debug(String.format("Buscando el empleado con id: %s", id));
 		return commonService.transform(employeeService.findOne(id), EmployeeDTO.class);
 	}
 
+	@ApiOperation(value = "Actualizar un empleado según su id.")
 	@RequestMapping(value = "/{id}", method = { RequestMethod.PUT })
 	public void update(
 			@PathVariable("id") Integer id, 
@@ -58,6 +64,7 @@ public class EmployeeController {
 		throw new UnsupportedOperationException("Aún no implementado.");
 	}
 
+	@ApiOperation(value = "Borrar un empleado según su id.")
 	@RequestMapping(value = "/{id}", method = { RequestMethod.DELETE })
 	public void delete(@PathVariable("id") Integer id) {
 		throw new UnsupportedOperationException("Aún no implementado.");

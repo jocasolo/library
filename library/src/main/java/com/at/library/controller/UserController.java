@@ -20,6 +20,8 @@ import com.at.library.exceptions.UserWrongUpdateException;
 import com.at.library.service.CommonService;
 import com.at.library.service.user.UserService;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping(value = "/user")
 public class UserController {
@@ -32,6 +34,7 @@ public class UserController {
 
 	private static final Logger log = LoggerFactory.getLogger(UserController.class);
 
+	@ApiOperation(value = "Buscar todos los usuarios que coincidan con los parámetros de búsqueda.")
 	@RequestMapping(method = { RequestMethod.GET })
 	public List<UserDTO> search(
 			@RequestParam(value = "dni", required = false) String dni,
@@ -43,18 +46,21 @@ public class UserController {
 		return userService.search(dni, name, surname, new PageRequest(page, size));
 	}
 
+	@ApiOperation(value = "Crear un nuevo usuario.")
 	@RequestMapping(method = { RequestMethod.POST })
 	public UserDTO create(@RequestBody UserDTO user) {
 		log.debug(String.format("Creando el usuario: %s", user));
 		return userService.create(user);
 	}
 
+	@ApiOperation(value = "Buscar un usuario según su id.")
 	@RequestMapping(value = "/{id}", method = { RequestMethod.GET })
 	public UserDTO findOne(@PathVariable("id") Integer id) throws UserNotFoundException {
 		log.debug(String.format("Buscando el usuario con id: %s", id));
 		return commonService.transform(userService.findOne(id), UserDTO.class);
 	}
 
+	@ApiOperation(value = "Actualizar un usuario según su id.")
 	@RequestMapping(value = "/{id}", method = { RequestMethod.PUT })
 	public void update(
 			@PathVariable("id") Integer id, 
@@ -63,6 +69,7 @@ public class UserController {
 		userService.update(id, userDTO);
 	}
 
+	@ApiOperation(value = "Borrar un usuario según su id.")
 	@RequestMapping(value = "/{id}", method = { RequestMethod.DELETE })
 	public void delete(@PathVariable("id") Integer id) throws UserNotFoundException {
 		log.debug(String.format("Borrando el usuario con el id: %s", id));
