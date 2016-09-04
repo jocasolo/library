@@ -15,6 +15,8 @@ public class HistoryRentedDTO {
 	private String title;
 
 	private Integer idBook;
+	
+	private Integer id;
 
 	public Date getInit() {
 		return init;
@@ -50,6 +52,16 @@ public class HistoryRentedDTO {
 	@Mapping(value = "book.id")
 	public void setIdBook(Integer idBook) {
 		this.idBook = idBook;
+	}
+
+	@Mapping(value = "book.id")
+	public Integer getId() {
+		return id;
+	}
+
+	@Mapping(value = "book.id")
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 }
