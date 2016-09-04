@@ -193,7 +193,7 @@ public class TestBookService {
 		bookService.update(2, bdto1);
 	}
 	
-	@Test(expected = BookWrongUpdateException.class)
+	@Test(expected = BookInvalidStatusException.class)
 	public void testErrorUpdate2() throws BookWrongUpdateException, BookInvalidStatusException {
 		final BookDTO b = new BookDTO();
 		b.setId(null);
