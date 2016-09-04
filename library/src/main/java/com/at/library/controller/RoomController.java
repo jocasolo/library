@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.at.library.dto.RoomDTO;
+import com.at.library.dto.RoomPostDTO;
+import com.at.library.exceptions.RoomAlreadyExistsException;
+import com.at.library.exceptions.RoomNotFoundException;
 import com.at.library.service.room.RoomService;
 
 import io.swagger.annotations.ApiOperation;
@@ -38,14 +41,14 @@ public class RoomController {
 
 	@ApiOperation(value = "Crear una nueva sala.")
 	@RequestMapping(method = { RequestMethod.POST })
-	public RoomDTO create(@RequestBody RoomDTO room) {
+	public RoomDTO create(@RequestBody RoomPostDTO room) throws RoomAlreadyExistsException {
 		log.debug(String.format("Creando la sala: %s", room));
 		return roomService.create(room);
 	}
 
 	@ApiOperation(value = "Buscar una sala según su id.")
 	@RequestMapping(value = "/{id}", method = { RequestMethod.GET })
-	public RoomDTO findOne(@PathVariable("id") Integer id) {
+	public RoomDTO findOne(@PathVariable("id") String id) throws RoomNotFoundException {
 		log.debug(String.format("Buscando la sala con id: %s", id));
 		return roomService.findOne(id);
 	}

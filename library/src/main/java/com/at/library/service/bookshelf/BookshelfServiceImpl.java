@@ -11,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.at.library.dao.BookshelfDAO;
 import com.at.library.dto.BookshelfDTO;
+import com.at.library.dto.BookshelfPostDTO;
+import com.at.library.exceptions.BookshelfAlreadyExistsException;
 import com.at.library.exceptions.BookshelfNotFoundException;
 import com.at.library.model.Bookshelf;
 import com.at.library.service.CommonService;
@@ -38,15 +40,17 @@ public class BookshelfServiceImpl implements BookshelfService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public BookshelfDTO findOne(Integer id) throws BookshelfNotFoundException {
-		final Bookshelf shelf = shelfDao.findOne(id);
+	public BookshelfDTO findOne(String code) throws BookshelfNotFoundException {
+		final Bookshelf shelf = shelfDao.findOne(code);
 		if (shelf == null)
 			throw new BookshelfNotFoundException();
 		return commonService.transform(shelf, BookshelfDTO.class);
 	}
 
 	@Override
-	public BookshelfDTO create(BookshelfDTO shelfDto) {
+	public BookshelfDTO create(BookshelfPostDTO shelfDto) throws BookshelfAlreadyExistsException {
+		if(shelfDao.findOne(shelfDto.getCode()) != null)
+			throw new BookshelfAlreadyExistsException();
 		final Bookshelf shelf = commonService.transform(shelfDto, Bookshelf.class);
 		return commonService.transform(shelfDao.save(shelf), BookshelfDTO.class);
 	}

@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.at.library.dto.BookshelfDTO;
+import com.at.library.dto.BookshelfPostDTO;
+import com.at.library.exceptions.BookshelfAlreadyExistsException;
 import com.at.library.exceptions.BookshelfNotFoundException;
 import com.at.library.service.bookshelf.BookshelfService;
 
@@ -39,14 +41,14 @@ public class BookshelfController {
 
 	@ApiOperation(value = "Crear una nueva estantería.")
 	@RequestMapping(method = { RequestMethod.POST })
-	public BookshelfDTO create(@RequestBody BookshelfDTO shelf) {
+	public BookshelfDTO create(@RequestBody BookshelfPostDTO shelf) throws BookshelfAlreadyExistsException {
 		log.debug(String.format("Creando la estantería: %s", shelf));
 		return shelfService.create(shelf);
 	}
 
 	@ApiOperation(value = "Buscar una estantería según su id.")
 	@RequestMapping(value = "/{id}", method = { RequestMethod.GET })
-	public BookshelfDTO findOne(@PathVariable("id") Integer id) throws BookshelfNotFoundException {
+	public BookshelfDTO findOne(@PathVariable("id") String id) throws BookshelfNotFoundException {
 		log.debug(String.format("Buscando la estantería con id: %s", id));
 		return shelfService.findOne(id);
 	}

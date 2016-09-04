@@ -22,6 +22,7 @@ import com.at.library.dto.external.BookApiDTO;
 import com.at.library.dto.external.ItemsDTO;
 import com.at.library.dto.external.VolumeInfoDTO;
 import com.at.library.enums.BookEnum;
+import com.at.library.exceptions.BookInvalidStatusException;
 import com.at.library.exceptions.BookNotFoundException;
 import com.at.library.exceptions.BookWrongUpdateException;
 import com.at.library.model.Book;
@@ -178,7 +179,7 @@ public class TestBookService {
 	}
 
 	@Test
-	public void testUpdate() throws BookWrongUpdateException {
+	public void testUpdate() throws BookWrongUpdateException, BookInvalidStatusException {
 		bookService.update(1, bdto1);
 		Assert.assertNotNull(bdto1);
 		Assert.assertEquals(TITLE.concat(" 1"), bdto1.getTitle());
@@ -188,12 +189,12 @@ public class TestBookService {
 	}
 	
 	@Test(expected = BookWrongUpdateException.class)
-	public void testErrorUpdate1() throws BookWrongUpdateException {
+	public void testErrorUpdate1() throws BookWrongUpdateException, BookInvalidStatusException {
 		bookService.update(2, bdto1);
 	}
 	
 	@Test(expected = BookWrongUpdateException.class)
-	public void testErrorUpdate2() throws BookWrongUpdateException {
+	public void testErrorUpdate2() throws BookWrongUpdateException, BookInvalidStatusException {
 		final BookDTO b = new BookDTO();
 		b.setId(null);
 		bookService.update(2, b);

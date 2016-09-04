@@ -46,9 +46,9 @@ public class RentController {
 
 	@ApiOperation(value = "Realizar la devolución de un libro.")
 	@RequestMapping(value = "/rent/{idBook}", method = { RequestMethod.DELETE }) // "/book/{id}/rent"
-	public RentDTO restore(@PathVariable("idBook") Integer idBook) throws BookNotFoundException, BookNotRentedException {
+	public void restore(@PathVariable("idBook") Integer idBook) throws BookNotFoundException, BookNotRentedException {
 		log.debug(String.format("Devolviendo alquiler con el libro con id: %s", idBook));
-		return rentService.restore(idBook);
+		rentService.restore(idBook);
 	}
 	
 	@ApiOperation(value = "Crear un nuevo alquiler.")

@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import com.at.library.dto.BookDTO;
 import com.at.library.dto.BookPostDTO;
 import com.at.library.enums.BookEnum;
+import com.at.library.exceptions.BookInvalidStatusException;
 import com.at.library.exceptions.BookNotFoundException;
 import com.at.library.exceptions.BookWrongUpdateException;
 import com.at.library.model.Book;
@@ -55,8 +56,9 @@ public interface BookService {
 	 * @param id
 	 * @param book
 	 * @throws BookWrongUpdateException
+	 * @throws BookInvalidStatusException 
 	 */
-	void update(Integer id, BookDTO bookDto) throws BookWrongUpdateException;
+	void update(Integer id, BookDTO bookDto) throws BookWrongUpdateException, BookInvalidStatusException;
 
 	/**
 	 * Elimina el libro correspondiente al id dado.
@@ -93,5 +95,13 @@ public interface BookService {
 	 * @param book
 	 */
 	void setVolumeInfo(Book book);
+	
+	/**
+	 * Comprueba que el estado sea válido.
+	 * 
+	 * @param status
+	 * @return
+	 */
+	boolean isValidStatus(String status);
 
 }

@@ -19,6 +19,7 @@ import com.at.library.dto.RentDTO;
 import com.at.library.dto.external.BookApiDTO;
 import com.at.library.dto.external.VolumeInfoDTO;
 import com.at.library.enums.BookEnum;
+import com.at.library.exceptions.BookInvalidStatusException;
 import com.at.library.exceptions.BookNotFoundException;
 import com.at.library.exceptions.BookWrongUpdateException;
 import com.at.library.model.Book;
@@ -70,9 +71,11 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public void update(Integer id, BookDTO bookDto) throws BookWrongUpdateException {
+	public void update(Integer id, BookDTO bookDto) throws BookWrongUpdateException, BookInvalidStatusException {
 		if (bookDto.getId() != null && id != bookDto.getId())
 			throw new BookWrongUpdateException();
+		if(!isValidStatus(bookDto.getStatus()))
+			throw new BookInvalidStatusException();
 
 		final Book book = commonService.transform(bookDto, Book.class);
 		setVolumeInfo(book);
@@ -135,6 +138,17 @@ public class BookServiceImpl implements BookService {
 			page++;
 			rents = restTemplate.getForObject(url + "?page=" + page + "&size=" + size, RentDTO[].class);
 		}
+	}
+
+	@Override
+	public boolean isValidStatus(String status) {
+		try{
+			BookEnum.valueOf(status);
+		}
+		catch(Exception e) {
+			return false;
+		}
+		return true;
 	}
 
 }

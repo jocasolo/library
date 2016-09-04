@@ -11,6 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.at.library.dao.RoomDAO;
 import com.at.library.dto.RoomDTO;
+import com.at.library.dto.RoomPostDTO;
+import com.at.library.exceptions.RoomAlreadyExistsException;
+import com.at.library.exceptions.RoomNotFoundException;
 import com.at.library.model.Room;
 import com.at.library.service.CommonService;
 
@@ -37,13 +40,17 @@ public class RoomServiceImpl implements RoomService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public RoomDTO findOne(Integer id) {
-		final Room room = roomDao.findOne(id);
+	public RoomDTO findOne(String code) throws RoomNotFoundException {
+		final Room room = roomDao.findOne(code);
+		if(room == null)
+			throw new RoomNotFoundException();
 		return commonService.transform(room, RoomDTO.class);
 	}
 
 	@Override
-	public RoomDTO create(RoomDTO roomDto) {
+	public RoomDTO create(RoomPostDTO roomDto) throws RoomAlreadyExistsException {
+		if(roomDao.findOne(roomDto.getCode()) != null)
+			throw new RoomAlreadyExistsException();
 		final Room room = commonService.transform(roomDto, Room.class);
 		return commonService.transform(roomDao.save(room), RoomDTO.class);
 	}

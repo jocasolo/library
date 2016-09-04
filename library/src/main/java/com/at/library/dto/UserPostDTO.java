@@ -2,9 +2,9 @@ package com.at.library.dto;
 
 import java.io.Serializable;
 
-public class EmployeeDTO extends DTO implements Serializable {
+public class UserPostDTO extends DTO implements Serializable {
 
-	private static final long serialVersionUID = -7059139813298343819L;
+	private static final long serialVersionUID = 4703006784730715928L;
 
 	private String dni;
 
@@ -38,7 +38,7 @@ public class EmployeeDTO extends DTO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "EmployeeDTO [dni=" + dni + ", name=" + name + ", surname=" + surname + "]";
+		return "UserPostDTO [dni=" + dni + ", name=" + name + ", surname=" + surname + "]";
 	}
 
 }

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.at.library.dto.UserDTO;
+import com.at.library.dto.UserPostDTO;
 import com.at.library.dto.UserPutDTO;
 import com.at.library.exceptions.UserNotFoundException;
 import com.at.library.exceptions.UserWrongUpdateException;
@@ -48,7 +49,7 @@ public class UserController {
 
 	@ApiOperation(value = "Crear un nuevo usuario.")
 	@RequestMapping(method = { RequestMethod.POST })
-	public UserDTO create(@RequestBody UserDTO user) {
+	public UserDTO create(@RequestBody UserPostDTO user) {
 		log.debug(String.format("Creando el usuario: %s", user));
 		return userService.create(user);
 	}

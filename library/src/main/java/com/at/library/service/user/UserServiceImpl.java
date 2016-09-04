@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.at.library.dao.UserDAO;
 import com.at.library.dto.UserDTO;
+import com.at.library.dto.UserPostDTO;
 import com.at.library.dto.UserPutDTO;
 import com.at.library.enums.UserEnum;
 import com.at.library.exceptions.UserNotFoundException;
@@ -62,7 +63,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserDTO create(UserDTO userDto) {
+	public UserDTO create(UserPostDTO userDto) {
 		User user = commonService.transform(userDto, User.class);
 		user.setStatus(UserEnum.NORMAL);
 		return commonService.transform(userDao.save(user), UserDTO.class);
@@ -72,8 +73,11 @@ public class UserServiceImpl implements UserService {
 	public void update(Integer id, UserPutDTO userDto) throws UserWrongUpdateException {
 		if (userDto.getId() != null && id != userDto.getId())
 			throw new UserWrongUpdateException();
-		User user = commonService.transform(userDto, User.class);
-		userDao.save(user);
+		User u = userDao.findOne(id);
+		u.setDni(userDto.getDni());
+		u.setName(userDto.getName());
+		u.setSurname(userDto.getSurname());
+		userDao.save(u);
 	}
 
 	@Override

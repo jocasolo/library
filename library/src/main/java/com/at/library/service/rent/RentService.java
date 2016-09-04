@@ -50,7 +50,7 @@ public interface RentService {
 	 * @throws BookNotFoundException
 	 * @throws BookNotRentedException
 	 */
-	RentDTO restore(Integer idBook) throws BookNotFoundException, BookNotRentedException;
+	void restore(Integer idBook) throws BookNotFoundException, BookNotRentedException;
 
 	/**
 	 * Calcula la fecha en que se debe devolver un libro dada la inicial.

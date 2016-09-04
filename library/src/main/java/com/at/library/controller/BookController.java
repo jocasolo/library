@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.at.library.dto.BookDTO;
 import com.at.library.dto.BookPostDTO;
+import com.at.library.exceptions.BookInvalidStatusException;
 import com.at.library.exceptions.BookNotFoundException;
 import com.at.library.exceptions.BookWrongUpdateException;
 import com.at.library.service.CommonService;
@@ -64,7 +65,7 @@ public class BookController {
 	@RequestMapping(value = "/{id}", method = { RequestMethod.PUT })
 	public void update(
 			@PathVariable("id") Integer id, 
-			@RequestBody BookDTO bookDTO) throws BookWrongUpdateException {
+			@RequestBody BookDTO bookDTO) throws BookWrongUpdateException, BookInvalidStatusException {
 		log.debug(String.format("Modificando el libro: %s", bookDTO));
 		bookservice.update(id, bookDTO);
 	}

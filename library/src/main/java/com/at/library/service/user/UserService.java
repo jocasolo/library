@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.Pageable;
 
 import com.at.library.dto.UserDTO;
+import com.at.library.dto.UserPostDTO;
 import com.at.library.dto.UserPutDTO;
 import com.at.library.exceptions.UserNotFoundException;
 import com.at.library.exceptions.UserWrongUpdateException;
@@ -44,7 +45,7 @@ public interface UserService {
 	 * @param userDTO
 	 * @return El usuario creado.
 	 */
-	UserDTO create(UserDTO userDto);
+	UserDTO create(UserPostDTO userDto);
 
 	/**
 	 * Actualiza un usuario.

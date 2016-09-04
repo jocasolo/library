@@ -5,6 +5,9 @@ import java.util.List;
 import org.springframework.data.domain.Pageable;
 
 import com.at.library.dto.RoomDTO;
+import com.at.library.dto.RoomPostDTO;
+import com.at.library.exceptions.RoomAlreadyExistsException;
+import com.at.library.exceptions.RoomNotFoundException;
 
 public interface RoomService {
 
@@ -18,17 +21,19 @@ public interface RoomService {
 	/**
 	 * Realiza la búsqueda de una sala por id.
 	 * 
-	 * @param id
+	 * @param code
 	 * @return Sala correspondiente al id buscado.
+	 * @throws RoomNotFoundException 
 	 */
-	RoomDTO findOne(Integer id);
+	RoomDTO findOne(String code) throws RoomNotFoundException;
 
 	/**
 	 * Crea una nueva sala.
 	 * 
 	 * @param roomDTO
 	 * @return La sala creada.
+	 * @throws RoomAlreadyExistsException 
 	 */
-	RoomDTO create(RoomDTO roomDto);
+	RoomDTO create(RoomPostDTO roomDto) throws RoomAlreadyExistsException;
 
 }

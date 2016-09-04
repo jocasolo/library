@@ -82,7 +82,7 @@ public class RentServiceImpl implements RentService {
 	}
 
 	@Override
-	public RentDTO restore(Integer idBook) throws BookNotFoundException, BookNotRentedException {
+	public void restore(Integer idBook) throws BookNotFoundException, BookNotRentedException {
 		Book book = bookService.findOne(idBook);
 		Rent rent = rentDao.findOneByBookAndEndDateIsNull(book);
 		if (rent == null)
@@ -92,7 +92,6 @@ public class RentServiceImpl implements RentService {
 		rent.setEndDate(new Date());
 
 		rentDao.save(rent);
-		return commonService.transform(rent, RentDTO.class);
 	}
 
 	@Override
