@@ -78,6 +78,7 @@ public class BookServiceImpl implements BookService {
 			throw new BookInvalidStatusException();
 
 		final Book book = commonService.transform(bookDto, Book.class);
+		book.setId(id);
 		setVolumeInfo(book);
 		bookDao.save(book);
 	}
